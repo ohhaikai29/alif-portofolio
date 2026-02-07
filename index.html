@@ -3,242 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIF OCTRIO | STRATEGIC DOSSIER</title>
-    <!-- Fonts yang mendekati Persona Style -->
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Archivo+Black&family=Bebas+Neue&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <title>ALIF OCTRIO | HUD_TERMINAL_V2</title>
+    
+    <!-- FONTS: Mengambil vibe Persona 3 & 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Montserrat:ital,wght@0,300;0,900;1,900&display=swap" rel="stylesheet">
+    
+    <!-- LIBRARY: Chart.js untuk Radar Stats -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        :root { 
-            --p3-blue: #00CCFF; 
+        /* CSS VARIABLES: Palette Persona 3 Reload */
+        :root {
+            --p3-blue: #00CCFF;
+            --p3-dark: #000B18;
+            --cyan: #00F0FF;
+            --white: #FFFFFF;
+            --gold: #FFD700;
             --p5-red: #D32F2F;
-            --navy: #000B18; 
-            --cyan: #00F0FF; 
-            --white: #FFFFFF; 
-            --gold: #FFD700; 
+            --glass: rgba(0, 163, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: var(--p3-dark); 
+            color: var(--white); 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        /* DYNAMIC BACKGROUND: Gaya Persona 3 Reload */
+        .bg-fixed { 
+            position: fixed; inset: 0; z-index: -1; 
+            background: radial-gradient(circle at 30% 30%, #001f3d 0%, #000 100%); 
         }
         
-        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
-        body { background-color: var(--navy); color: var(--white); font-family: 'Bebas Neue', cursive; overflow-x: hidden; }
+        .bubbles { 
+            position: fixed; inset: 0; z-index: -1; 
+            background-image: radial-gradient(var(--p3-blue) 1.5px, transparent 0); 
+            background-size: 60px 60px; opacity: 0.15; 
+            animation: floatBackground 100s linear infinite; 
+        }
+        @keyframes floatBackground { 
+            from { transform: translateY(0) rotate(0deg); } 
+            to { transform: translateY(-1000px) rotate(5deg); } 
+        }
 
-        /* GATEWAY SCREEN (Vibe: System Boot) */
+        .scanline {
+            position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 204, 255, 0.02) 50%);
+            background-size: 100% 4px;
+        }
+
+        /* --- GATEWAY SCREEN --- */
         #gateway {
-            position: fixed; inset: 0; z-index: 10000; background: var(--navy);
+            position: fixed; inset: 0; z-index: 10000; background: var(--p3-dark);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: all 1.2s cubic-bezier(0.85, 0, 0.15, 1);
         }
-        .scan-line {
-            width: 100%; height: 2px; background: var(--cyan); position: absolute;
-            top: 0; left: 0; box-shadow: 0 0 20px var(--cyan);
-            animation: scanning 2s linear infinite;
+        
+        .gateway-content { text-align: center; transform: rotate(-2deg); }
+        
+        .gateway-title { 
+            font-family: 'Permanent Marker', cursive; font-size: 7rem; 
+            color: var(--white); text-shadow: 8px 8px 0px var(--p3-blue);
+            margin-bottom: 20px; animation: glitch 3s infinite;
         }
-        @keyframes scanning { from { top: 0; } to { top: 100%; } }
-        .gateway-title { font-family: 'Permanent Marker'; font-size: 6rem; color: var(--white); transform: rotate(-5deg); text-shadow: 5px 5px var(--p3-blue); margin-bottom: 30px; }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            2% { transform: translate(-5px, 5px); color: var(--cyan); }
+            4% { transform: translate(5px, -5px); color: var(--p5-red); }
+            6% { transform: translate(0); }
+        }
+
         .enter-btn {
-            padding: 15px 50px; background: var(--white); color: var(--navy);
-            font-family: 'Archivo Black'; font-size: 1.2rem; border: none;
-            transform: skew(-15deg); transition: 0.3s;
+            padding: 20px 60px; background: none; border: 3px solid var(--p3-blue);
+            color: var(--p3-blue); font-family: 'Orbitron'; font-weight: 900;
+            font-size: 1.2rem; cursor: pointer; transition: 0.4s;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            letter-spacing: 5px;
         }
-        .enter-btn:hover { background: var(--cyan); transform: skew(-15deg) scale(1.1); box-shadow: 0 0 30px var(--cyan); }
-
-        /* BACKGROUND ELEMENTS */
-        .diagonal-stripes {
-            position: fixed; inset: 0; z-index: -1;
-            background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(0, 163, 255, 0.05) 40px, rgba(0, 163, 255, 0.05) 80px);
-        }
-        .glow-sphere {
-            position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0, 204, 255, 0.15) 0%, transparent 70%);
-            top: -200px; left: -200px; z-index: -1;
+        .enter-btn:hover { 
+            background: var(--p3-blue); color: var(--p3-dark); 
+            box-shadow: 0 0 50px var(--p3-blue); transform: scale(1.1);
         }
 
-        /* MAIN HUD CONTENT */
-        #main-hud { display: none; opacity: 0; transition: 1.5s; padding: 40px 60px; }
+        /* --- MAIN CONTENT HUD --- */
+        #main-content { display: none; opacity: 0; transition: 2s; padding: 40px 60px; }
+
         header { 
-            position: relative; margin-bottom: 50px; transform: rotate(-1deg);
             display: flex; justify-content: space-between; align-items: flex-end;
+            border-bottom: 4px solid var(--p3-blue); padding-bottom: 20px; margin-bottom: 40px;
         }
-        header h1 { font-family: 'Permanent Marker'; font-size: 4.5rem; line-height: 0.8; letter-spacing: -2px; text-shadow: 6px 6px 0px var(--p3-blue); }
-
-        .layout-grid { display: grid; grid-template-columns: 380px 1fr 280px; gap: 30px; }
-        @media (max-width: 1200px) { .layout-grid { grid-template-columns: 1fr; } }
-
-        /* SIDEBAR / CARDS */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.1); padding: 30px;
-            transform: rotate(1deg); border-left: 10px solid var(--p3-blue);
-            box-shadow: 20px 20px 0px rgba(0,0,0,0.5);
+        .agent-info h1 { 
+            font-family: 'Permanent Marker', cursive; font-size: 4rem; 
+            text-shadow: 4px 4px 0px var(--p3-blue); font-style: italic;
         }
-        .portrait-frame {
-            width: 100%; height: 350px; background: var(--white);
-            border: 6px solid var(--p3-blue); transform: rotate(-3deg);
-            overflow: hidden; margin-bottom: 25px; box-shadow: 15px 15px 0px var(--navy);
-        }
-        .portrait-frame img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.2); transition: 0.5s; }
-        .portrait-frame:hover img { transform: scale(1.1) rotate(3deg); }
 
-        /* MISSION RECORD - JAGGERED STYLE (P5 VIBE) */
+        .hud-grid { display: grid; grid-template-columns: 380px 1fr 300px; gap: 40px; }
+        @media (max-width: 1200px) { .hud-grid { grid-template-columns: 1fr; } }
+
+        /* SIDEBAR COMPONENTS */
+        .sidebar-card { 
+            background: var(--glass); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1); padding: 30px; 
+            border-left: 10px solid var(--p3-blue); margin-bottom: 30px;
+        }
+
+        .portrait { 
+            width: 100%; height: 380px; border: 5px solid var(--white); 
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            box-shadow: 0 0 30px rgba(0, 204, 255, 0.4); margin-bottom: 30px;
+        }
+        .portrait img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1); }
+
+        .stat-lvl { font-family: 'Orbitron'; font-size: 3rem; font-weight: 900; line-height: 1; }
+
+        /* MISSION RECORD COMPONENTS */
+        .mission-log h2 { font-family: 'Archivo Black'; font-size: 2.2rem; color: var(--p3-blue); margin-bottom: 25px; }
+
         .mission-bar {
-            background: var(--white); color: var(--navy); padding: 15px 30px;
-            margin-bottom: 12px; transform: skew(-15deg); cursor: pointer;
-            transition: 0.3s; border-left: 15px solid var(--p3-blue);
+            background: rgba(255,255,255,0.9); color: var(--p3-dark);
+            padding: 20px 35px; margin-bottom: 15px; cursor: pointer;
+            clip-path: polygon(0 0, 96% 0, 100% 100%, 4% 100%);
             display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .mission-bar:hover { background: var(--cyan); transform: skew(-15deg) translateX(20px); }
-        .mission-bar h3 { font-family: 'Archivo Black'; font-size: 1rem; margin: 0; text-transform: uppercase; }
+        .mission-bar:hover { 
+            background: var(--p3-blue); color: var(--white); 
+            transform: translateX(20px); box-shadow: -15px 0px 0px var(--white);
+        }
+        .mission-bar h3 { font-family: 'Archivo Black'; font-size: 1.1rem; }
 
-        .intel-box {
+        .intel-panel {
             display: none; background: rgba(0,0,0,0.9); border: 2px solid var(--cyan);
-            padding: 25px; margin-top: -10px; margin-bottom: 20px; font-family: 'Orbitron';
-            box-shadow: 0 0 50px rgba(0, 204, 255, 0.2); animation: reveal 0.4s cubic-bezier(0, 1, 0.5, 1);
+            padding: 30px; margin-top: -10px; margin-bottom: 25px;
+            box-shadow: 0 0 50px rgba(0, 204, 255, 0.3); border-left: 15px solid var(--cyan);
+            animation: slideDown 0.5s ease-out;
         }
-        @keyframes reveal { from { height: 0; opacity: 0; } to { height: auto; opacity: 1; } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* INVENTORY CARDS */
-        .inv-card {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--white);
-            padding: 15px; margin-bottom: 10px; transform: rotate(-2deg);
-            cursor: pointer; transition: 0.2s;
+        .intel-panel p { font-size: 0.9rem; line-height: 1.8; margin-bottom: 15px; }
+        .loot-tag { 
+            background: var(--p3-blue); color: var(--p3-dark); padding: 4px 12px;
+            font-weight: 900; font-size: 0.75rem; margin-right: 10px; display: inline-block;
+            font-family: 'Orbitron';
         }
-        .inv-card:hover { border-color: var(--cyan); background: rgba(0, 204, 255, 0.1); }
-        .legend-tag { color: var(--gold); font-size: 0.7rem; font-weight: 900; letter-spacing: 2px; }
 
-        /* SHOWTIME ACTION */
+        /* INVENTORY COMPONENTS */
+        .inv-section h2 { font-family: 'Orbitron'; font-size: 1.2rem; text-align: right; margin-bottom: 20px; color: var(--p3-blue); }
+        
+        .inv-item {
+            border: 1px solid rgba(255,255,255,0.1); padding: 15px; margin-bottom: 12px;
+            text-align: right; cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .inv-item:hover { background: var(--glass); border-color: var(--p3-blue); transform: translateX(-10px); }
+        .inv-item.legendary { border: 2px solid var(--gold); color: var(--gold); }
+        
+        .inv-item h4 { font-family: 'Archivo Black'; font-size: 0.85rem; letter-spacing: 1px; }
+        
+        .inv-detail { 
+            display: none; background: var(--white); color: var(--p3-dark); 
+            padding: 15px; margin-top: 10px; font-size: 0.75rem; font-weight: 800;
+            text-align: left; border-left: 8px solid var(--p3-blue);
+        }
+
+        /* THE ACTION BUTTON */
         .showtime-btn {
-            position: fixed; bottom: 40px; right: 60px;
+            position: fixed; bottom: 50px; right: 70px;
             background: var(--p3-blue); color: var(--white);
-            padding: 25px 60px; border: 4px solid var(--white);
-            font-family: 'Permanent Marker'; font-size: 2.5rem;
-            transform: rotate(-3deg); box-shadow: 10px 10px 0px var(--navy);
-            transition: 0.3s; z-index: 100;
+            padding: 25px 70px; border: 5px solid var(--white);
+            font-family: 'Permanent Marker'; font-size: 3rem;
+            transform: rotate(-3deg); cursor: pointer;
+            box-shadow: 15px 15px 0px var(--p3-dark);
+            z-index: 5000; transition: 0.3s;
         }
         .showtime-btn:hover { background: var(--p5-red); transform: rotate(0deg) scale(1.1); }
+
+        /* MODAL TERMINAL */
+        .modal {
+            display: none; position: fixed; inset: 0; z-index: 20000;
+            background: rgba(0, 10, 30, 0.98); justify-content: center; align-items: center;
+        }
+        .terminal {
+            background: #000; border: 5px solid var(--p3-blue); padding: 60px;
+            width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue);
+            transform: rotate(1deg);
+        }
+        .terminal h2 { font-family: 'Permanent Marker'; font-size: 4rem; color: var(--p3-blue); margin-bottom: 20px; }
     </style>
 </head>
-<body>
-    <div class="diagonal-stripes"></div>
-    <div class="glow-sphere"></div>
 
-    <!-- GATEWAY INTERFACE -->
+<body>
+    <div class="bg-fixed"></div>
+    <div class="bubbles"></div>
+    <div class="scanline"></div>
+
+    <!-- 1. GATEWAY SCREEN -->
     <div id="gateway">
-        <div class="scan-line"></div>
-        <p style="font-family: 'Orbitron'; letter-spacing: 10px; color: var(--cyan); margin-bottom: 10px;">AUTHORIZED PERSONNEL ONLY</p>
-        <div class="gateway-title">ALIF OCTRIO</div>
-        <button class="enter-btn" onclick="openDossier()">INITIATE_SCAN</button>
+        <div class="gateway-content">
+            <p style="font-family: 'Orbitron'; letter-spacing: 15px; color: var(--p3-blue); font-size: 1rem; margin-bottom: 20px;">S.E.E.S._INTEL_ACCESS</p>
+            <div class="gateway-title">ALIF OCTRIO</div>
+            <button class="enter-btn" onclick="initiateHUD()">[ INITIATE_ACCESS ]</button>
+        </div>
     </div>
 
-    <!-- MAIN TERMINAL HUD -->
-    <div id="main-hud">
+    <!-- 2. MAIN HUD CONTENT -->
+    <div id="main-content">
         <header>
-            <div>
-                <p style="font-family: 'Orbitron'; font-size: 0.8rem; color: var(--cyan);">AGENT_ID: 0813-3670-0117</p>
+            <div class="agent-info">
+                <p style="font-family: 'Orbitron'; color: var(--p3-blue); font-weight: 900; letter-spacing: 3px;">AGENT_DOSSIER // ACCESS_GRANTED</p>
                 <h1>Supreme Architect</h1>
             </div>
             <div style="text-align: right;">
-                <p style="font-size: 1.5rem; color: var(--p3-blue);">RANK: S_CLASS</p>
-                <p style="font-size: 0.8rem; opacity: 0.5;">LOCATION: JAKARTA_TERMINAL</p>
+                <p style="font-family: 'Archivo Black'; font-size: 2rem;">RANK S</p>
+                <p style="font-size: 0.8rem; opacity: 0.6;">Aug 2022 - Sept 2025</p>
             </div>
         </header>
 
-        <div class="layout-grid">
-            <!-- LEFT: STATUS -->
-            <div class="sidebar">
-                <div class="portrait-frame">
-                    <img src="alif.jpg" onerror="this.src='https://via.placeholder.com/400x600/000B18/00CCFF?text=AGENT_ALIF'">
+        <div class="hud-grid">
+            <!-- LEFT: STATS & PORTRAIT -->
+            <div class="side-col">
+                <div class="portrait">
+                    <img src="alif.jpg" onerror="this.src='https://via.placeholder.com/400x600/000B18/00CCFF?text=AGENT_FOUND'">
                 </div>
-                <div class="glass-card">
-                    <p style="font-family: 'Permanent Marker'; font-size: 2.5rem; color: var(--cyan); margin-bottom: -10px;">LVL 03</p>
-                    <p style="font-family: 'Orbitron'; font-size: 0.7rem; margin-bottom: 20px;">CERTIFIED_PRODUCT_ARCHITECT</p>
+                <div class="sidebar-card">
+                    <div class="stat-lvl">LVL 03</div>
+                    <p style="font-weight: 900; color: var(--p3-blue); font-size: 0.75rem; margin-bottom: 15px; font-family: 'Orbitron';">CERTIFIED_PRODUCT_&_AI_ARCHITECT</p>
                     <canvas id="radarChart"></canvas>
                 </div>
-                <div class="glass-card" style="margin-top: 20px; border-left-color: var(--gold);">
-                    <p style="font-size: 0.6rem; color: var(--gold);">SOCIAL_LINK: PHILOSOPHER</p>
-                    <p style="font-size: 1rem;">UGM_GRADUATE (GPA 3.06)</p>
-                    <p style="font-size: 0.7rem; opacity: 0.6; font-family: 'Orbitron';">Logics & Ethics Perk Active.</p>
+                <div class="sidebar-card" style="border-left-color: var(--gold);">
+                    <p style="font-size: 0.6rem; color: var(--gold); font-weight: 900; font-family: 'Orbitron';">SOCIAL_LINK: MAX_LEVEL</p>
+                    <p style="font-family: 'Archivo Black'; font-size: 1.2rem;">PHILOSOPHY (UGM)</p>
+                    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px; font-style: italic;">"Logics, Ethics, and Epistemology Mastery applied to AI Operations."</p>
                 </div>
             </div>
 
             <!-- CENTER: MISSIONS -->
             <div class="mission-log">
-                <h2 style="font-family: 'Permanent Marker'; font-size: 2.5rem; margin-bottom: 20px; text-shadow: 3px 3px var(--p3-blue);">[ MISSION_RECORD ]</h2>
-                
-                <div class="mission-bar" onclick="toggleIntel('q1')"><h3>Q1: PM & MARKET STRATEGY</h3><span>400+ SUBS/DAY</span></div>
-                <div id="q1" class="intel-box">
-                    <p style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 10px;">// ANALYSIS: SCALED OPERATIONS //</p>
-                    <p style="font-size: 0.85rem; line-height: 1.6;">Translated complex AI capabilities into actionable product roadmaps. Bridged the gap between R&D, Marketing, and user sentiment signals.</p>
+                <h2>[ MISSION_HISTORY ]</h2>
+
+                <!-- Q1 -->
+                <div class="mission-bar" onclick="toggleIntel('q1')">
+                    <h3>Q1: PM & MARKET STRATEGY</h3>
+                    <span style="font-weight: 900; font-size: 0.8rem;">SCALED >></span>
+                </div>
+                <div id="q1" class="intel-panel">
+                    <p style="font-family: 'Permanent Marker'; font-size: 1.8rem; color: var(--p3-blue); margin-bottom: 10px;">400+ DAILY SUBS REACHED</p>
+                    <p>Led strategic product initiatives by translating AI capabilities into data-driven decisions. Bridged the gap between Engineering, Marketing, and the Creator Economy.</p>
+                    <div style="margin-top: 15px;">
+                        <span class="loot-tag">★ KPI MASTERY</span>
+                        <span class="loot-tag">★ PRODUCT_MARKET_FIT</span>
+                    </div>
                 </div>
 
-                <div class="mission-bar" onclick="toggleIntel('q2')"><h3>Q2: LEAD AI & DATA OPS</h3><span>80% EFFICIENCY</span></div>
-                <div id="q2" class="intel-box">
-                    <p style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 10px;">// ANALYSIS: TIMELINE ACCELERATION //</p>
-                    <p style="font-size: 0.85rem; line-height: 1.6;">Optimized production pipelines and resolved operational bottlenecks, resulting in a measurable efficiency boost for the AI engineering team.</p>
+                <!-- Q2 -->
+                <div class="mission-bar" onclick="toggleIntel('q2')">
+                    <h3>Q2: LEAD AI & DATA OPS</h3>
+                    <span style="font-weight: 900; font-size: 0.8rem;">OPTIMIZED >></span>
+                </div>
+                <div id="q2" class="intel-panel">
+                    <p style="font-family: 'Permanent Marker'; font-size: 1.8rem; color: var(--p3-blue); margin-bottom: 10px;">80% EFFICIENCY BOOST</p>
+                    <p>Optimized execution workflows and resolved production bottlenecks for AI systems. Successfully translated R&D experiments into scalable pipelines.</p>
+                    <div style="margin-top: 15px;">
+                        <span class="loot-tag">★ OPS_SCALING</span>
+                        <span class="loot-tag">★ PIPELINE_ARCHITECTURE</span>
+                    </div>
                 </div>
 
-                <div class="mission-bar" onclick="toggleIntel('q3')"><h3>Q3: AI TECH BENCHMARK</h3><span>90% ACCURACY</span></div>
-                <div id="q3" class="intel-box">
-                    <p style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 10px;">// ANALYSIS: COMPETITIVE INTEL //</p>
-                    <p style="font-size: 0.85rem; line-height: 1.6;">Reverse-engineered competitor features to identify technical gaps. Conducted multi-day systematic benchmarking to ensure market leadership.</p>
+                <!-- Q3 -->
+                <div class="mission-bar" onclick="toggleIntel('q3')">
+                    <h3>Q3: AI TECH BENCHMARK</h3>
+                    <span style="font-weight: 900; font-size: 0.8rem;">DECRYPTED >></span>
+                </div>
+                <div id="q3" class="intel-panel">
+                    <p style="font-family: 'Permanent Marker'; font-size: 1.8rem; color: var(--p3-blue); margin-bottom: 10px;">90% CLIP ACCURACY</p>
+                    <p>Strengthened AI competitiveness through systematic technical benchmarking and reverse-engineering of competitor features to identify technical gaps.</p>
+                    <div style="margin-top: 15px;">
+                        <span class="loot-tag">★ REVERSE_ENGINEERING</span>
+                        <span class="loot-tag">★ BENCHMARKING_S_RANK</span>
+                    </div>
                 </div>
 
-                <div class="mission-bar" onclick="toggleIntel('q4')"><h3>Q4: DATA QUALITY (FB_GAMING)</h3><span>STABILITY +20%</span></div>
-                <div id="q4" class="intel-box">
-                    <p style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 10px;">// ANALYSIS: CORE_INTEGRITY //</p>
-                    <p style="font-size: 0.85rem; line-height: 1.6;">Fortified AI scalability through rigorous labeling validation and content analytics for the Facebook Gaming creator ecosystem.</p>
+                <!-- Q4 -->
+                <div class="mission-bar" onclick="toggleIntel('q4')">
+                    <h3>Q4: DATA QUALITY (FB GAMING)</h3>
+                    <span style="font-weight: 900; font-size: 0.8rem;">STABILIZED >></span>
+                </div>
+                <div id="q4" class="intel-panel">
+                    <p style="font-family: 'Permanent Marker'; font-size: 1.8rem; color: var(--p3-blue); margin-bottom: 10px;">STABILITY +20%</p>
+                    <p>Fortified AI scalability through Facebook Gaming creator content analytics and rigorous labeling validation cycles to ensure data reliability.</p>
+                    <div style="margin-top: 15px;">
+                        <span class="loot-tag">★ QA_PRECISION</span>
+                        <span class="loot-tag">★ DATA_FOUNDATION</span>
+                    </div>
                 </div>
             </div>
 
             <!-- RIGHT: INVENTORY -->
-            <div class="inventory">
-                <p style="font-family: 'Orbitron'; font-size: 0.8rem; color: var(--p3-blue); margin-bottom: 20px; text-align: right;">INVENTORY_SLOTS</p>
-                <div class="inv-card" onclick="window.open('ibm-cert.jpg')">
-                    <p class="legend-tag">LEGENDARY</p>
-                    <p>IBM_PM_CERTIFICATE</p>
+            <div class="inv-section">
+                <h2>INVENTORY_SLOTS</h2>
+                
+                <div class="inv-item legendary" onclick="toggleSkill('UGM')">
+                    <p style="font-size: 0.6rem;">LEGENDARY_ACADEMIC_ITEM</p>
+                    <h4>UGM BACHELOR DEGREE</h4>
+                    <div id="skill-UGM" class="inv-detail">
+                        Major: Philosophy | GPA: 3.06.<br>
+                        Skill: Advanced Decision Logic & Epistemology.<br>
+                        <a href="ijazah-ugm.jpg" target="_blank" style="color: blue;">[ OPEN_DOCUMENT ]</a>
+                    </div>
                 </div>
-                <div class="inv-card" onclick="window.open('ijazah-ugm.jpg')">
-                    <p class="legend-tag">LEGENDARY</p>
-                    <p>UGM_BACHELOR_DEGREE</p>
+
+                <div class="inv-item legendary" onclick="toggleSkill('IBM')">
+                    <p style="font-size: 0.6rem;">LEGENDARY_CERTIFICATION</p>
+                    <h4>IBM PROJECT MGMT.</h4>
+                    <div id="skill-IBM" class="inv-detail">
+                        Official IBM Certification via Coursera.<br>
+                        Verified ID: QXV93T9APC6A<br>
+                        <a href="ibm-cert.jpg" target="_blank" style="color: blue;">[ OPEN_CERTIFICATE ]</a>
+                    </div>
                 </div>
-                <div class="inv-card"><p>JIRA_Agile_Module</p></div>
-                <div class="inv-card"><p>WebScraping_Kit</p></div>
-                <div class="inv-card"><p>Prompt_Eng_Scroll</p></div>
+
+                <div class="inv-item" onclick="toggleSkill('Jira')">
+                    <h4>JIRA AGILE_MODULE</h4>
+                    <div id="skill-Jira" class="inv-detail">Sprint Planning & Iteration Tracking Mastery.</div>
+                </div>
+
+                <div class="inv-item" onclick="toggleSkill('Web')">
+                    <h4>WEB SCRAPING_KIT</h4>
+                    <div id="skill-Web" class="inv-detail">Automated Competitor Intel Extraction using Python.</div>
+                </div>
+
+                <div class="inv-item" onclick="toggleSkill('Prompt')">
+                    <h4>PROMPT_ENG_SCROLL</h4>
+                    <div id="skill-Prompt" class="inv-detail">LLM Output Optimization for Product Workflows.</div>
+                </div>
             </div>
+        </div>
+
+        <button class="showtime-btn" onclick="openTerminal()">SHOWTIME!</button>
+    </div>
+
+    <!-- 3. TERMINAL MODAL -->
+    <div id="terminal-modal" class="modal" onclick="closeTerminal()">
+        <div class="terminal" onclick="event.stopPropagation()">
+            <div style="background: var(--p3-blue); color: #000; padding: 5px 20px; font-weight: 900; font-size: 0.7rem; text-align: left; font-family: 'Orbitron';">LINK_ESTABLISHED</div>
+            <h2>CO-OP READY</h2>
+            <hr style="border-color: var(--p3-blue); margin-bottom: 20px;">
+            <p style="font-family: 'Orbitron'; font-size: 1.2rem; color: var(--p3-blue); margin-bottom: 10px;">AGENT: ALIF OCTRIO</p>
+            <p style="font-size: 1.5rem; font-weight: 900; letter-spacing: 2px;">MAIL: alifoctrio@gmail.com</p>
+            <p style="font-size: 1.3rem; font-weight: 900; letter-spacing: 2px;">TEL: +62 813-3670-0117</p>
+            <button class="enter-btn" style="margin-top: 40px; width: 100%;" onclick="closeTerminal()">[ CLOSE_TERMINAL ]</button>
         </div>
     </div>
 
-    <button class="showtime-btn" onclick="alert('Co-op Initiated: alifoctrio@gmail.com')">SHOWTIME!</button>
-
+    <!-- 4. JAVASCRIPT LOGIC -->
     <script>
-        function openDossier() {
+        function initiateHUD() {
             const gateway = document.getElementById('gateway');
             gateway.style.transform = 'translateY(-100%)';
-            const hud = document.getElementById('main-hud');
-            hud.style.display = 'block';
+            const main = document.getElementById('main-content');
+            main.style.display = 'block';
             setTimeout(() => { 
-                hud.style.opacity = '1';
-                renderRadar();
+                main.style.opacity = '1';
+                renderRadarChart();
             }, 600);
         }
 
         function toggleIntel(id) {
             const target = document.getElementById(id);
             const isVisible = target.style.display === 'block';
-            document.querySelectorAll('.intel-box').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.intel-panel').forEach(el => el.style.display = 'none');
             target.style.display = isVisible ? 'none' : 'block';
         }
 
-        function renderRadar() {
-            new Chart(document.getElementById('radarChart'), {
+        function toggleSkill(id) {
+            const detail = document.getElementById('skill-' + id);
+            const isVisible = detail.style.display === 'block';
+            document.querySelectorAll('.inv-detail').forEach(el => el.style.display = 'none');
+            detail.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function openTerminal() { document.getElementById('terminal-modal').style.display = 'flex'; }
+        function closeTerminal() { document.getElementById('terminal-modal').style.display = 'none'; }
+
+        function renderRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['STRAT', 'AI', 'BENCH', 'DATA', 'LOGIC'],
+                    labels: ['STRAT', 'AI_OPS', 'BENCH', 'DATA', 'LOGIC'],
                     datasets: [{
                         data: [98, 90, 92, 85, 95],
-                        backgroundColor: 'rgba(0, 204, 255, 0.2)',
-                        borderColor: '#00CCFF', borderWidth: 3, pointRadius: 0
+                        backgroundColor: 'rgba(0, 204, 255, 0.25)',
+                        borderColor: '#00CCFF',
+                        borderWidth: 3,
+                        pointRadius: 0
                     }]
                 },
-                options: { 
-                    scales: { r: { grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { display: false }, pointLabels: { color: '#fff', font: { size: 9, family: 'Orbitron' } }, ticks: { display: false }, min: 0, max: 100 } }, 
-                    plugins: { legend: { display: false } } 
+                options: {
+                    scales: {
+                        r: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            angleLines: { display: false },
+                            pointLabels: { color: '#888', font: { size: 9, family: 'Orbitron' } },
+                            ticks: { display: false },
+                            min: 0, max: 100
+                        }
+                    },
+                    plugins: { legend: { display: false } }
                 }
             });
         }
