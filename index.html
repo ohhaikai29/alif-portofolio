@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIF OCTRIO | SUPREME ARCHITECT HUD</title>
+    <title>ALIF OCTRIO | SUPREME ARCHITECT OS</title>
     
-    <!-- FONTS -->
+    <!-- FONTS: Otentik Persona Style -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Space+Mono&family=Montserrat:ital,wght@0,300;0,900;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -13,22 +13,23 @@
         :root {
             --p3-blue: #00CCFF; --p3-navy: #000B18; --cyan: #00F0FF; 
             --white: #FFFFFF; --gold: #FFD700; --red: #ff003c;
-            --glass: rgba(0, 163, 255, 0.05);
+            --glass: rgba(0, 163, 255, 0.12);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+        /* --- BASIC RESET --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             background-color: var(--p3-navy); color: var(--white); 
             font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100vh;
         }
 
-        /* --- ADVANCED BACKGROUND --- */
-        .bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 50%, #001f3d 0%, #000 100%); }
+        /* --- ADVANCED BACKGROUND (P3R VIBE) --- */
+        .bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #001f3d 0%, #000 100%); }
         .grid-dynamic {
             position: fixed; inset: -50%; width: 200%; height: 200%;
             background-image: linear-gradient(var(--p3-blue) 1px, transparent 1px), linear-gradient(90deg, var(--p3-blue) 1px, transparent 1px);
-            background-size: 80px 80px; opacity: 0.03; transform: rotateX(45deg) translateY(-20%);
-            animation: gridMove 20s linear infinite;
+            background-size: 80px 80px; opacity: 0.05; transform: rotateX(45deg);
+            animation: gridMove 30s linear infinite; z-index: -1;
         }
         @keyframes gridMove { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(80px); } }
 
@@ -38,103 +39,96 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: all 1s cubic-bezier(1, 0, 0, 1);
         }
-        .boot-text { font-family: 'Space Mono', monospace; color: var(--p3-blue); font-size: 0.8rem; margin-bottom: 20px; text-align: center; }
-        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 6.5rem; text-shadow: 10px 10px 0px var(--p3-blue); margin-bottom: 40px; transform: rotate(-2deg); }
-        
+        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 7rem; color: #fff; text-shadow: 10px 10px 0px var(--p3-blue); transform: rotate(-3deg); }
+        .enter-btn {
+            padding: 20px 60px; background: none; border: 3px solid var(--p3-blue);
+            color: var(--p3-blue); font-family: 'Orbitron'; font-weight: 900;
+            font-size: 1.2rem; cursor: pointer; transition: 0.4s;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        }
+        .enter-btn:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 50px var(--p3-blue); }
+
         /* --- MAIN INTERFACE GRID --- */
         #main-interface {
-            display: none; opacity: 0; height: 100vh; padding: 50px;
-            grid-template-columns: 400px 1fr; grid-template-rows: 100px 1fr;
-            gap: 30px; transition: 1.5s;
+            display: none; opacity: 0; height: 100vh; padding: 30px;
+            grid-template-columns: 350px 1fr; grid-template-rows: 80px 1fr;
+            gap: 20px; transition: 1.5s;
         }
 
-        /* --- HEADER (HOLOGRAPHIC) --- */
+        /* --- HEADER --- */
         header {
             grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid var(--p3-blue); position: relative;
+            border-bottom: 3px solid var(--p3-blue); padding: 0 20px;
         }
-        header::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 40%; height: 2px; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); }
-        .header-title { font-family: 'Archivo Black'; font-size: 2.5rem; font-style: italic; letter-spacing: -2px; }
+        .header-title { font-family: 'Archivo Black'; font-size: 2rem; font-style: italic; color: var(--white); }
 
-        /* --- SIDEBAR MENU (JAGGED STYLE) --- */
-        .nav-menu { display: flex; flex-direction: column; gap: 15px; perspective: 1000px; }
+        /* --- SIDEBAR MENU (P3R SHARP STYLE) --- */
+        .sidebar { display: flex; flex-direction: column; gap: 15px; }
         .nav-btn {
-            background: var(--white); color: var(--p3-navy); padding: 25px 40px;
-            font-family: 'Archivo Black'; font-size: 1.3rem; font-style: italic;
-            clip-path: polygon(0 0, 92% 0, 100% 100%, 8% 100%);
-            transform: rotateX(10deg) rotateY(-20deg); cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: none; text-align: left;
+            background: rgba(255,255,255,0.9); color: var(--p3-navy); padding: 20px;
+            font-family: 'Archivo Black'; font-size: 1.1rem; border: none;
+            clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
+            cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: left;
         }
         .nav-btn:hover, .nav-btn.active {
-            background: var(--p3-blue); color: #fff; transform: rotateX(0) rotateY(0) scale(1.1) translateX(30px);
-            box-shadow: -20px 0 0 #fff, 0 0 30px var(--p3-blue);
+            background: var(--p3-blue); color: #fff; transform: translateX(20px);
+            box-shadow: -10px 0px 0px var(--white);
         }
 
-        /* --- CONTENT CARDS --- */
-        .content-display { position: relative; perspective: 1000px; }
+        /* --- CONTENT PANEL SYSTEM --- */
+        .content-area { position: relative; perspective: 2000px; }
         .panel {
             display: none; position: absolute; inset: 0;
-            background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 163, 255, 0.2); padding: 40px;
-            animation: panelEntry 0.6s ease-out forwards;
+            background: var(--glass); backdrop-filter: blur(25px);
+            border: 2px solid rgba(0, 163, 255, 0.3); padding: 40px;
+            overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        @keyframes panelEntry {
-            from { opacity: 0; transform: rotateY(20deg) translateZ(-100px); filter: blur(10px); }
-            to { opacity: 1; transform: rotateY(0) translateZ(0); filter: blur(0); }
-        }
-        .panel.active { display: block; }
+        .panel.active { display: block; animation: panelFade 0.6s ease-out; }
+        @keyframes panelFade { from { opacity: 0; transform: translateZ(-200px) rotateY(10deg); } to { opacity: 1; transform: translateZ(0) rotateY(0); } }
 
-        /* --- PROFILE COMPONENTS --- */
-        .agent-card { display: grid; grid-template-columns: 320px 1fr; gap: 30px; }
+        /* --- PROFILE PANEL FIX (NO OVERLAP) --- */
+        .profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
         .portrait-frame {
-            width: 100%; height: 420px; border: 8px solid var(--white);
-            clip-path: polygon(0 0, 100% 0, 100% 88%, 88% 100%, 0 100%);
-            position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(0,204,255,0.3);
+            width: 100%; height: 400px; border: 5px solid var(--white);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            box-shadow: 0 0 30px rgba(0,204,255,0.4); overflow: hidden;
         }
-        .portrait-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.2); transition: 0.5s; }
-        .portrait-frame:hover img { filter: grayscale(0); transform: scale(1.05); }
+        .portrait-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- MISSION LOG STYLING --- */
+        /* --- MISSION LOG --- */
         .mission-item {
-            background: rgba(255,255,255,0.05); border-left: 15px solid var(--p3-blue);
-            margin-bottom: 20px; padding: 25px; cursor: pointer; position: relative;
-            transition: 0.3s;
+            background: rgba(255,255,255,0.03); border-left: 10px solid var(--p3-blue);
+            padding: 25px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
         }
-        .mission-item:hover { background: rgba(0, 204, 255, 0.15); transform: translateX(15px); }
-        .impact-badge { position: absolute; top: -10px; right: 20px; background: var(--white); color: #000; padding: 5px 15px; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; }
+        .mission-item:hover { background: rgba(0, 204, 255, 0.15); transform: scale(1.02); }
+        .impact-text { font-family: 'Permanent Marker'; font-size: 1.5rem; color: var(--cyan); }
 
-        /* --- INVENTORY (THE ARSENAL) --- */
-        .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        /* --- ARSENAL (INVENTORY) --- */
+        .inv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .inv-box {
-            background: rgba(0,0,0,0.5); border: 1px solid var(--p3-blue); padding: 20px;
-            text-align: center; transition: 0.3s; position: relative; overflow: hidden;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--p3-blue); padding: 25px;
+            transition: 0.3s; cursor: pointer;
         }
-        .inv-box:hover { border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan); }
-        .inv-box.legendary { border: 2px solid var(--gold); }
-        .inv-box.legendary::before { content: 'RARE'; position: absolute; top: 0; left: 0; background: var(--gold); color: #000; font-size: 0.5rem; font-weight: 900; padding: 2px 8px; }
+        .inv-box:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 20px var(--p3-blue); }
+        .legendary { border: 2px solid var(--gold); color: var(--gold); }
 
-        /* --- SPECIAL SHOWTIME BUTTON --- */
+        /* --- SHOWTIME BUTTON --- */
         .showtime-btn {
-            position: fixed; bottom: 50px; right: 60px;
-            background: var(--p3-blue); color: white; border: 4px solid white;
-            padding: 30px 80px; font-family: 'Permanent Marker'; font-size: 2.5rem;
-            transform: rotate(-3deg) skewX(-10deg); cursor: pointer;
-            box-shadow: 15px 15px 0px #000; z-index: 1000; transition: 0.3s;
+            position: fixed; bottom: 40px; right: 50px;
+            background: var(--p3-blue); color: #fff; border: 4px solid #fff;
+            padding: 20px 60px; font-family: 'Permanent Marker'; font-size: 2.2rem;
+            transform: rotate(-3deg); cursor: pointer; box-shadow: 10px 10px 0px #000;
+            z-index: 5000; transition: 0.3s;
         }
-        .showtime-btn:hover { background: var(--red); transform: rotate(0deg) scale(1.1); box-shadow: 20px 20px 0px #000; }
+        .showtime-btn:hover { background: var(--red); transform: scale(1.1) rotate(0deg); }
 
-        /* --- CONTACT MODAL --- */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,8,20,0.98); z-index: 20000; justify-content: center; align-items: center; }
-        .terminal {
-            background: #000; border: 5px solid var(--p3-blue); padding: 60px; width: 600px;
-            box-shadow: 0 0 100px var(--p3-blue); position: relative; text-align: center;
-        }
-        .terminal h2 { font-family: 'Permanent Marker'; font-size: 4rem; color: var(--p3-blue); }
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,10,25,0.98); z-index: 20000; justify-content: center; align-items: center; }
+        .terminal { background: #000; border: 5px solid var(--p3-blue); padding: 60px; width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue); }
 
         /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--p3-blue); }
     </style>
 </head>
@@ -142,98 +136,87 @@
     <div class="bg-layer"></div>
     <div class="grid-dynamic"></div>
 
-    <!-- STARTUP SCREEN -->
+    <!-- 1. GATEWAY SCREEN -->
     <div id="gateway">
-        <div class="boot-text" id="boot-log">
-            > INITIALIZING S.E.E.S. DATABASE...<br>
-            > BYPASSING FIREWALL...<br>
-            > DECRYPTING AGENT_OCTRIO_DOSSIER...<br>
-            > STATUS: ONLINE
-        </div>
+        <p style="font-family: 'Orbitron'; letter-spacing: 15px; color: var(--p3-blue); margin-bottom: 20px;">S.E.E.S._SYSTEM_BOOT</p>
         <h1 class="gateway-h1">ALIF OCTRIO</h1>
-        <button class="enter-btn" onclick="igniteHUD()">[ START_OS ]</button>
+        <button class="enter-btn" onclick="startOS()">[ INITIATE_ACCESS ]</button>
     </div>
 
-    <!-- MAIN INTERFACE -->
+    <!-- 2. MAIN INTERFACE -->
     <div id="main-interface">
         <header>
-            <div class="header-title">SUPREME_ARCHITECT_HUD</div>
-            <div style="font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 4px;">LVL_03 // RANK_S</div>
+            <div class="header-title">AGENT_DOUCOMENT_TERMINAL_V4</div>
+            <div style="font-family: 'Orbitron'; font-size: 0.8rem;">STATUS: ONLINE // LVL: 03</div>
         </header>
 
-        <!-- LEFT SIDEBAR MENU -->
-        <div class="nav-menu">
-            <div class="nav-btn active" onclick="switchPanel(this, 'profile')">01 // STATUS_CORE</div>
-            <div class="nav-btn" onclick="switchPanel(this, 'missions')">02 // MISSION_LOG</div>
-            <div class="nav-btn" onclick="switchPanel(this, 'arsenal')">03 // ARSENAL_GEAR</div>
-            <div class="nav-btn" onclick="switchPanel(this, 'academic')">04 // ACADEMIC_LINK</div>
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="sidebar">
+            <button class="nav-btn active" onclick="showPanel(this, 'profile')">01 // STATUS_CORE</button>
+            <button class="nav-btn" onclick="showPanel(this, 'missions')">02 // MISSION_LOG</button>
+            <button class="nav-btn" onclick="showPanel(this, 'arsenal')">03 // ARSENAL_GEAR</button>
+            <button class="nav-btn" onclick="showPanel(this, 'academic')">04 // ACADEMIC_LINK</button>
         </div>
 
-        <!-- RIGHT CONTENT AREA -->
+        <!-- CONTENT DISPLAY AREA -->
         <div class="content-area">
             
             <!-- PANEL: PROFILE -->
             <div id="profile" class="panel active">
-                <div class="agent-card">
+                <div class="profile-grid">
                     <div>
                         <div class="portrait"><img src="alif.jpg" alt="Alif Octrio"></div>
-                        <div style="background: var(--white); color: #000; padding: 15px; font-family: 'Archivo Black';">
-                            <p style="font-size: 0.7rem; letter-spacing: 2px;">CONFIDANT_RANK</p>
-                            <h2 style="font-size: 2.5rem;">MAX_LEVEL</h2>
+                        <div style="background:var(--white); color:#000; padding:15px; text-align:center;">
+                            <p style="font-family:'Orbitron'; font-size:0.6rem; font-weight:900;">CONFIDANT_STATUS</p>
+                            <h2 style="font-family:'Archivo Black'; font-size:2rem;">MAXED</h2>
                         </div>
                     </div>
                     <div>
-                        <h2 style="font-family: 'Permanent Marker'; font-size: 3rem; color: var(--p3-blue);">AGENT_BIO</h2>
-                        <p style="font-family: 'Space Mono'; line-height: 1.8; margin-top: 20px;">
-                            Strategic Product Manager & AI Ops Specialist. <br>
-                            Specialization: Competitive Reverse-Engineering & Market Domination. <br>
-                            Status: Active Operation Lead.
+                        <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue);">AGENT_BIO</h2>
+                        <p style="font-family:'Space Mono'; line-height:1.8; margin-top:20px; font-size:1.1rem;">
+                            Strategic Product Manager & AI Ops Specialist.<br>
+                            Specialization: Competitive Intelligence & Reverse-Engineering.<br>
+                            Logic-driven decision making via Philosophy foundation.
                         </p>
-                        <div style="margin-top: 30px; border-top: 1px solid var(--p3-blue); padding-top: 20px;">
+                        <div style="margin-top:30px; border-top:1px solid var(--p3-blue); padding-top:20px;">
                             <canvas id="radarChart" style="max-height: 250px;"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: MISSIONS (Q1-Q4) -->
+            <!-- PANEL: MISSIONS -->
             <div id="missions" class="panel">
-                <h2 style="font-family: 'Permanent Marker'; font-size: 4rem; color: var(--p3-blue); margin-bottom: 30px;">MISSION_LOG</h2>
+                <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">MISSION_RECORD</h2>
                 <div class="mission-item">
-                    <div class="impact-badge">RANK S</div>
-                    <p style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--cyan);">[ MISSION_Q1 ]</p>
-                    <h3 style="font-family: 'Archivo Black'; font-size: 1.5rem;">PM & MARKET STRATEGY</h3>
-                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Scaled product operations to 400+ daily subscriptions by translating AI signals into action.</p>
+                    <p class="impact-text">400+ SUBS/DAY</p>
+                    <p style="font-family:'Orbitron'; color:var(--cyan); font-size:0.7rem;">[ MISSION_Q1 ]</p>
+                    <h3 style="font-family:'Archivo Black'; font-size:1.5rem;">PM & MARKET STRATEGY</h3>
+                    <p style="margin-top:10px; opacity:0.7;">Scaled operations by translating AI signals into action roadmaps.</p>
                 </div>
                 <div class="mission-item">
-                    <div class="impact-badge">RANK S</div>
-                    <p style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--cyan);">[ MISSION_Q2 ]</p>
-                    <h3 style="font-family: 'Archivo Black'; font-size: 1.5rem;">LEAD AI & DATA OPS</h3>
-                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">80% Efficiency boost achieved through production pipeline optimization.</p>
+                    <p class="impact-text">80% EFFICIENCY</p>
+                    <p style="font-family:'Orbitron'; color:var(--cyan); font-size:0.7rem;">[ MISSION_Q2 ]</p>
+                    <h3 style="font-family:'Archivo Black'; font-size:1.5rem;">LEAD AI & DATA OPS</h3>
+                    <p style="margin-top:10px; opacity:0.7;">Optimized R&D experiments into scalable production pipelines.</p>
                 </div>
                 <div class="mission-item">
-                    <div class="impact-badge">RANK A+</div>
-                    <p style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--cyan);">[ MISSION_Q3 ]</p>
-                    <h3 style="font-family: 'Archivo Black'; font-size: 1.5rem;">AI TECH BENCHMARK</h3>
-                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Achieved 90% accuracy via systematic competitor reverse-engineering.</p>
-                </div>
-                <div class="mission-item">
-                    <div class="impact-badge">RANK B</div>
-                    <p style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--cyan);">[ MISSION_Q4 ]</p>
-                    <h3 style="font-family: 'Archivo Black'; font-size: 1.5rem;">DATA QUALITY (FACEBOOK GAMING)</h3>
-                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">20% Stability increase in creator content analytical frameworks.</p>
+                    <p class="impact-text">90% ACCURACY</p>
+                    <p style="font-family:'Orbitron'; color:var(--cyan); font-size:0.7rem;">[ MISSION_Q3 ]</p>
+                    <h3 style="font-family:'Archivo Black'; font-size:1.5rem;">AI TECH BENCHMARK</h3>
+                    <p style="margin-top:10px; opacity:0.7;">Systematic reverse-engineering of competitor features.</p>
                 </div>
             </div>
 
             <!-- PANEL: ARSENAL -->
             <div id="arsenal" class="panel">
-                <h2 style="font-family: 'Permanent Marker'; font-size: 4rem; color: var(--p3-blue); margin-bottom: 30px;">ARSENAL</h2>
+                <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">ARSENAL_GEAR</h2>
                 <div class="inv-grid">
                     <div class="inv-box legendary" onclick="window.open('ibm-cert.jpg')">
-                        <h4 style="font-family: 'Orbitron';">IBM_CERTIFICATE</h4>
-                        <p style="font-size: 0.6rem; margin-top: 5px;">[ CLICK_TO_INSPECT ]</p>
+                        <h4 style="font-family:'Orbitron';">IBM_CERTIFICATE</h4>
+                        <p style="font-size:0.6rem; margin-top:5px;">[ CLICK_TO_INSPECT ]</p>
                     </div>
-                    <div class="inv-box"><h4>JIRA_CLOUD</h4></div>
+                    <div class="inv-box"><h4>JIRA_AGILE</h4></div>
                     <div class="inv-box"><h4>WEB_SCRAPING</h4></div>
                     <div class="inv-box"><h4>PROMPT_ENGINEERING</h4></div>
                 </div>
@@ -241,53 +224,54 @@
 
             <!-- PANEL: ACADEMIC -->
             <div id="academic" class="panel">
-                <div style="border: 2px solid var(--gold); padding: 40px; background: rgba(251, 191, 36, 0.05);">
-                    <p style="font-family: 'Orbitron'; color: var(--gold); letter-spacing: 5px;">SOCIAL_LINK_MAX: PHILOSOPHER</p>
-                    <h2 style="font-family: 'Archivo Black'; font-size: 3rem; margin: 20px 0;">PHILOSOPHY (UGM)</h2>
-                    <p style="font-size: 1.2rem; line-height: 2;">Agent has mastered the art of <b>Logic, Ethics, and Epistemological Reasoning</b>. This perk grants +100% precision in AI decision-making and data ethics.</p>
-                    <button class="nav-btn" style="background: var(--gold); margin-top: 30px; color: #000;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH</button>
+                <div style="border:5px solid var(--gold); padding:40px; background:rgba(251,191,36,0.05);">
+                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:5px;">SOCIAL_LINK_MAX</p>
+                    <h2 style="font-family:'Archivo Black'; font-size:3rem; margin:10px 0;">PHILOSOPHY (UGM)</h2>
+                    <p style="font-size:1.2rem; line-height:2;">Agent mastered the application of <b>Logic and Epistemology</b>. This grants +100% precision in Strategic Alignment and AI Ethics.</p>
+                    <button class="nav-btn" style="background:var(--gold); margin-top:30px; color:#000;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH</button>
                 </div>
             </div>
 
         </div>
 
-        <button class="showtime-btn" onclick="openTerminal()">SHOWTIME!</button>
+        <button class="showtime-btn" onclick="openContact()">SHOWTIME!</button>
     </div>
 
-    <!-- TERMINAL MODAL -->
-    <div id="modal" class="modal" onclick="closeTerminal()">
+    <!-- MODAL -->
+    <div id="contact-modal" class="modal" onclick="closeContact()">
         <div class="terminal" onclick="event.stopPropagation()">
-            <h2 style="font-family: 'Permanent Marker';">CO-OP LINK</h2>
-            <hr style="border-color: var(--p3-blue); margin: 30px 0;">
-            <p style="font-family: 'Orbitron'; font-size: 1.2rem; color: var(--p3-blue);">AGENT: ALIF OCTRIO</p>
-            <p style="font-size: 2rem; font-weight: 900; margin-top: 20px;">📧 alifoctrio@gmail.com</p>
-            <p style="font-size: 1.5rem; font-weight: 900;">📱 +62 813-3670-0117</p>
-            <button class="nav-btn" style="margin-top: 40px; width: 100%; color: #000; text-align: center;" onclick="closeTerminal()">RETURN_TO_BASE</button>
+            <h2 style="font-family:'Permanent Marker'; font-size:3rem;">CO-OP_READY</h2>
+            <hr style="border-color:var(--p3-blue); margin:20px 0;">
+            <p style="font-family:'Orbitron'; color:var(--p3-blue);">AGENT: ALIF OCTRIO</p>
+            <p style="font-size:2rem; font-weight:900; margin-top:20px;">📧 alifoctrio@gmail.com</p>
+            <p style="font-size:1.5rem; font-weight:900;">📱 +62 813-3670-0117</p>
+            <button class="nav-btn" style="margin-top:40px; width:100%; color:#000; text-align:center;" onclick="closeContact()">RETURN_TO_BASE</button>
         </div>
     </div>
 
     <script>
-        function igniteHUD() {
+        function startOS() {
             document.getElementById('gateway').style.transform = 'translateY(-100%)';
             document.getElementById('main-interface').style.display = 'grid';
             setTimeout(() => { 
                 document.getElementById('main-interface').style.opacity = '1';
                 renderRadar();
-            }, 600);
+            }, 500);
         }
 
-        function switchPanel(btn, panelId) {
+        function showPanel(btn, panelId) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(panelId).classList.add('active');
             btn.classList.add('active');
         }
 
-        function openTerminal() { document.getElementById('modal').style.display = 'flex'; }
-        function closeTerminal() { document.getElementById('modal').style.display = 'none'; }
+        function openContact() { document.getElementById('contact-modal').style.display = 'flex'; }
+        function closeContact() { document.getElementById('contact-modal').style.display = 'none'; }
 
         function renderRadar() {
-            new Chart(document.getElementById('radarChart'), {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: ['STRATEGY', 'AI_OPS', 'BENCHMARK', 'DATA', 'LOGIC'],
@@ -297,9 +281,17 @@
                         borderColor: '#00CCFF', borderWidth: 3, pointRadius: 0
                     }]
                 },
-                options: { 
-                    scales: { r: { grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { display: false }, pointLabels: { color: '#fff', font: { size: 10, family: 'Orbitron', weight: '900' } }, ticks: { display: false }, min: 0, max: 100 } }, 
-                    plugins: { legend: { display: false } } 
+                options: {
+                    scales: {
+                        r: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            angleLines: { display: false },
+                            pointLabels: { color: '#fff', font: { size: 10, family: 'Orbitron', weight: '900' } },
+                            ticks: { display: false },
+                            min: 0, max: 100
+                        }
+                    },
+                    plugins: { legend: { display: false } }
                 }
             });
         }
