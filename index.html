@@ -5,252 +5,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALIF OCTRIO | SUPREME ARCHITECT OS</title>
     
-    <!-- FONTS: Otentik Persona Style -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Space+Mono&family=Montserrat:ital,wght@0,300;0,900;1,900&display=swap" rel="stylesheet">
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Space+Mono&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
             --p3-blue: #00CCFF; --p3-navy: #000B18; --cyan: #00F0FF; 
             --white: #FFFFFF; --gold: #FFD700; --red: #ff003c;
-            --glass: rgba(0, 163, 255, 0.12);
+            --glass-dark: rgba(0, 11, 24, 0.85);
+            --glass-light: rgba(0, 163, 255, 0.1);
         }
 
-        /* --- BASIC RESET --- */
+        /* --- BASIC RESET & CORE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             background-color: var(--p3-navy); color: var(--white); 
-            font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100vh;
+            font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh;
         }
 
-        /* --- ADVANCED BACKGROUND (P3R VIBE) --- */
-        .bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #001f3d 0%, #000 100%); }
+        /* --- DYNAMIC BACKGROUND --- */
+        .bg-layer { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at center, #002b4d 0%, #000 100%); }
         .grid-dynamic {
             position: fixed; inset: -50%; width: 200%; height: 200%;
             background-image: linear-gradient(var(--p3-blue) 1px, transparent 1px), linear-gradient(90deg, var(--p3-blue) 1px, transparent 1px);
-            background-size: 80px 80px; opacity: 0.05; transform: rotateX(45deg);
-            animation: gridMove 30s linear infinite; z-index: -1;
+            background-size: 80px 80px; opacity: 0.05; transform: rotateX(50deg);
+            animation: gridMove 40s linear infinite; z-index: -1;
         }
-        @keyframes gridMove { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(80px); } }
+        @keyframes gridMove { from { transform: rotateX(50deg) translateY(0); } to { transform: rotateX(50deg) translateY(80px); } }
 
-        /* --- GATEWAY (STARTUP SEQUENCE) --- */
+        /* --- GATEWAY (STARTUP) --- */
         #gateway {
             position: fixed; inset: 0; z-index: 10000; background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 1s cubic-bezier(1, 0, 0, 1);
+            transition: transform 1s cubic-bezier(1, 0, 0, 1);
         }
-        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 7rem; color: #fff; text-shadow: 10px 10px 0px var(--p3-blue); transform: rotate(-3deg); }
+        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 6rem; color: #fff; text-shadow: 10px 10px 0px var(--p3-blue); transform: rotate(-3deg); }
         .enter-btn {
             padding: 20px 60px; background: none; border: 3px solid var(--p3-blue);
             color: var(--p3-blue); font-family: 'Orbitron'; font-weight: 900;
-            font-size: 1.2rem; cursor: pointer; transition: 0.4s;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            cursor: pointer; transition: 0.4s; clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
         }
         .enter-btn:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 50px var(--p3-blue); }
 
-        /* --- MAIN INTERFACE GRID --- */
+        /* --- MAIN INTERFACE --- */
         #main-interface {
             display: none; opacity: 0; height: 100vh; padding: 30px;
             grid-template-columns: 350px 1fr; grid-template-rows: 80px 1fr;
-            gap: 20px; transition: 1.5s;
+            gap: 25px; transition: 1.5s;
         }
 
-        /* --- HEADER --- */
         header {
             grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 3px solid var(--p3-blue); padding: 0 20px;
+            border-bottom: 3px solid var(--p3-blue); padding: 0 20px; background: rgba(0,0,0,0.5);
         }
-        .header-title { font-family: 'Archivo Black'; font-size: 2rem; font-style: italic; color: var(--white); }
+        .header-title { font-family: 'Archivo Black'; font-size: 2rem; font-style: italic; letter-spacing: -1px; }
 
-        /* --- SIDEBAR MENU (P3R SHARP STYLE) --- */
-        .sidebar { display: flex; flex-direction: column; gap: 15px; }
+        /* --- SIDEBAR MENU --- */
+        .sidebar { display: flex; flex-direction: column; gap: 12px; }
         .nav-btn {
-            background: rgba(255,255,255,0.9); color: var(--p3-navy); padding: 20px;
-            font-family: 'Archivo Black'; font-size: 1.1rem; border: none;
+            background: rgba(255,255,255,0.9); color: var(--p3-navy); padding: 18px 25px;
+            font-family: 'Archivo Black'; font-size: 1rem; border: none;
             clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
-            cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: left;
+            cursor: pointer; transition: 0.3s; text-align: left;
         }
         .nav-btn:hover, .nav-btn.active {
-            background: var(--p3-blue); color: #fff; transform: translateX(20px);
+            background: var(--p3-blue); color: #fff; transform: translateX(15px);
             box-shadow: -10px 0px 0px var(--white);
         }
 
-        /* --- CONTENT PANEL SYSTEM --- */
-        .content-area { position: relative; perspective: 2000px; }
+        /* --- CONTENT AREA --- */
+        .content-area { position: relative; overflow: hidden; }
         .panel {
             display: none; position: absolute; inset: 0;
-            background: var(--glass); backdrop-filter: blur(25px);
+            background: var(--glass-dark); backdrop-filter: blur(30px);
             border: 2px solid rgba(0, 163, 255, 0.3); padding: 40px;
-            overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow-y: auto; box-shadow: 0 0 50px rgba(0,0,0,1);
         }
         .panel.active { display: block; animation: panelFade 0.6s ease-out; }
-        @keyframes panelFade { from { opacity: 0; transform: translateZ(-200px) rotateY(10deg); } to { opacity: 1; transform: translateZ(0) rotateY(0); } }
+        @keyframes panelFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PROFILE PANEL FIX (NO OVERLAP) --- */
-        .profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
+        /* --- PROFILE PANEL (FIXED NO OVERLAP) --- */
+        .profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start; }
+        .portrait-container { width: 100%; position: relative; }
         .portrait-frame {
-            width: 100%; height: 400px; border: 5px solid var(--white);
+            width: 100%; height: 400px; border: 4px solid var(--white);
             clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
-            box-shadow: 0 0 30px rgba(0,204,255,0.4); overflow: hidden;
+            overflow: hidden; background: #000;
         }
         .portrait-frame img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .bio-box { 
+            background: rgba(0, 163, 255, 0.1); padding: 25px; 
+            border-left: 10px solid var(--p3-blue);
+        }
 
-        /* --- MISSION LOG --- */
+        /* --- MISSIONS (URUTAN Q1-Q4 LENGKAP) --- */
         .mission-item {
-            background: rgba(255,255,255,0.03); border-left: 10px solid var(--p3-blue);
-            padding: 25px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
+            background: rgba(255,255,255,0.05); border-left: 8px solid var(--p3-blue);
+            margin-bottom: 20px; padding: 25px; cursor: pointer; transition: 0.3s;
+            position: relative;
         }
-        .mission-item:hover { background: rgba(0, 204, 255, 0.15); transform: scale(1.02); }
-        .impact-text { font-family: 'Permanent Marker'; font-size: 1.5rem; color: var(--cyan); }
+        .mission-item:hover { background: rgba(0, 204, 255, 0.2); transform: translateX(10px); }
+        .impact-label { font-family: 'Permanent Marker'; color: var(--cyan); font-size: 1.4rem; margin-bottom: 5px; }
+        .dossier-list { margin-top: 15px; padding-left: 20px; color: #ccc; font-size: 0.85rem; line-height: 1.6; }
 
-        /* --- ARSENAL (INVENTORY) --- */
-        .inv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        /* --- ARSENAL --- */
+        .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
         .inv-box {
-            background: rgba(0,0,0,0.4); border: 1px solid var(--p3-blue); padding: 25px;
-            transition: 0.3s; cursor: pointer;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--p3-blue);
+            padding: 20px; cursor: pointer; transition: 0.3s;
         }
-        .inv-box:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 20px var(--p3-blue); }
-        .legendary { border: 2px solid var(--gold); color: var(--gold); }
+        .inv-box:hover { border-color: var(--gold); background: rgba(251, 191, 36, 0.1); }
+        .legend-text { color: var(--gold); font-family: 'Orbitron'; font-size: 0.6rem; font-weight: 900; }
 
         /* --- SHOWTIME BUTTON --- */
         .showtime-btn {
             position: fixed; bottom: 40px; right: 50px;
             background: var(--p3-blue); color: #fff; border: 4px solid #fff;
-            padding: 20px 60px; font-family: 'Permanent Marker'; font-size: 2.2rem;
+            padding: 20px 60px; font-family: 'Permanent Marker'; font-size: 2.5rem;
             transform: rotate(-3deg); cursor: pointer; box-shadow: 10px 10px 0px #000;
-            z-index: 5000; transition: 0.3s;
+            z-index: 5000;
         }
-        .showtime-btn:hover { background: var(--red); transform: scale(1.1) rotate(0deg); }
+        .showtime-btn:hover { background: var(--red); transform: rotate(0deg) scale(1.1); }
 
-        /* --- MODAL --- */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,10,25,0.98); z-index: 20000; justify-content: center; align-items: center; }
-        .terminal { background: #000; border: 5px solid var(--p3-blue); padding: 60px; width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue); }
-
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--p3-blue); }
+        /* MODAL */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,10,25,0.99); z-index: 20000; justify-content: center; align-items: center; }
+        .terminal { background: #000; border: 5px solid var(--p3-blue); padding: 50px; width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue); }
     </style>
 </head>
 <body>
     <div class="bg-layer"></div>
     <div class="grid-dynamic"></div>
 
-    <!-- 1. GATEWAY SCREEN -->
+    <!-- STARTUP SCREEN -->
     <div id="gateway">
-        <p style="font-family: 'Orbitron'; letter-spacing: 15px; color: var(--p3-blue); margin-bottom: 20px;">S.E.E.S._SYSTEM_BOOT</p>
+        <p style="font-family: 'Orbitron'; letter-spacing: 15px; color: var(--p3-blue); margin-bottom: 20px;">S.E.E.S._SYSTEM_RELOAD</p>
         <h1 class="gateway-h1">ALIF OCTRIO</h1>
-        <button class="enter-btn" onclick="startOS()">[ INITIATE_ACCESS ]</button>
+        <button class="enter-btn" onclick="igniteOS()">[ INITIATE_SCAN ]</button>
     </div>
 
-    <!-- 2. MAIN INTERFACE -->
+    <!-- MAIN OS INTERFACE -->
     <div id="main-interface">
         <header>
-            <div class="header-title">AGENT_DOUCOMENT_TERMINAL_V4</div>
-            <div style="font-family: 'Orbitron'; font-size: 0.8rem;">STATUS: ONLINE // LVL: 03</div>
+            <div class="header-title">AGENT_DOSSIER_TERMINAL_v5.0</div>
+            <div style="font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 3px;">LVL_03 // STATUS: ACTIVE</div>
         </header>
 
-        <!-- SIDEBAR NAVIGATION -->
+        <!-- NAVIGATION -->
         <div class="sidebar">
-            <button class="nav-btn active" onclick="showPanel(this, 'profile')">01 // STATUS_CORE</button>
-            <button class="nav-btn" onclick="showPanel(this, 'missions')">02 // MISSION_LOG</button>
-            <button class="nav-btn" onclick="showPanel(this, 'arsenal')">03 // ARSENAL_GEAR</button>
-            <button class="nav-btn" onclick="showPanel(this, 'academic')">04 // ACADEMIC_LINK</button>
+            <button class="nav-btn active" onclick="switchPanel(this, 'profile')">01 // AGENT_CORE</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'missions')">02 // MISSION_LOGS</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'arsenal')">03 // ARSENAL_GEAR</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'academic')">04 // SOCIAL_LINK</button>
         </div>
 
-        <!-- CONTENT DISPLAY AREA -->
+        <!-- CONTENT -->
         <div class="content-area">
             
             <!-- PANEL: PROFILE -->
             <div id="profile" class="panel active">
                 <div class="profile-grid">
-                    <div>
+                    <div class="portrait-container">
                         <div class="portrait"><img src="alif.jpg" alt="Alif Octrio"></div>
-                        <div style="background:var(--white); color:#000; padding:15px; text-align:center;">
-                            <p style="font-family:'Orbitron'; font-size:0.6rem; font-weight:900;">CONFIDANT_STATUS</p>
-                            <h2 style="font-family:'Archivo Black'; font-size:2rem;">MAXED</h2>
+                        <div style="background:var(--white); color:#000; padding:15px; font-family:'Archivo Black'; text-align:center;">
+                            <p style="font-size:0.6rem;">CONFIDANT_RANK</p>
+                            <h2 style="font-size:2rem;">MAXED</h2>
                         </div>
                     </div>
-                    <div>
-                        <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue);">AGENT_BIO</h2>
-                        <p style="font-family:'Space Mono'; line-height:1.8; margin-top:20px; font-size:1.1rem;">
-                            Strategic Product Manager & AI Ops Specialist.<br>
-                            Specialization: Competitive Intelligence & Reverse-Engineering.<br>
-                            Logic-driven decision making via Philosophy foundation.
+                    <div class="bio-box">
+                        <h2 style="font-family: 'Permanent Marker'; font-size: 3rem; color: var(--p3-blue);">AGENT_PROFILE</h2>
+                        <p style="font-family: 'Space Mono'; line-height: 1.8; font-size: 1rem; margin-top: 15px;">
+                            > Strategic Product Manager & AI Operations Specialist.<br>
+                            > Specialized in Competitor Reverse-Engineering.<br>
+                            > Expert in high-precision technical roadmaps.<br>
+                            > Logic-driven decision making via UGM Philosophy background.
                         </p>
-                        <div style="margin-top:30px; border-top:1px solid var(--p3-blue); padding-top:20px;">
-                            <canvas id="radarChart" style="max-height: 250px;"></canvas>
+                        <div style="margin-top: 30px; border-top: 1px solid var(--p3-blue); padding-top: 20px;">
+                            <canvas id="radarChart" style="max-height: 230px;"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: MISSIONS -->
+            <!-- PANEL: MISSIONS (4 MISSIONS COMPLETE FROM CV) -->
             <div id="missions" class="panel">
-                <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">MISSION_RECORD</h2>
+                <h2 style="font-family: 'Permanent Marker'; font-size: 3.5rem; color: var(--p3-blue); margin-bottom: 30px;">MISSION_LOG</h2>
+                
                 <div class="mission-item">
-                    <p class="impact-text">400+ SUBS/DAY</p>
-                    <p style="font-family:'Orbitron'; color:var(--cyan); font-size:0.7rem;">[ MISSION_Q1 ]</p>
-                    <h3 style="font-family:'Archivo Black'; font-size:1.5rem;">PM & MARKET STRATEGY</h3>
-                    <p style="margin-top:10px; opacity:0.7;">Scaled operations by translating AI signals into action roadmaps.</p>
+                    <p class="impact-label">SCALED 400+ SUBS/DAY</p>
+                    <h3 style="font-family: 'Archivo Black';">Q1: PM & MARKET STRATEGY</h3>
+                    <ul class="dossier-list">
+                        <li>Led strategic product and business initiatives via AI capabilities translation.</li>
+                        <li>Built user sentiment analysis framework to support marketing pivots.</li>
+                        <li>Developed internal KPI tracking systems for NRU & submissions.</li>
+                    </ul>
                 </div>
+
                 <div class="mission-item">
-                    <p class="impact-text">80% EFFICIENCY</p>
-                    <p style="font-family:'Orbitron'; color:var(--cyan); font-size:0.7rem;">[ MISSION_Q2 ]</p>
-                    <h3 style="font-family:'Archivo Black'; font-size:1.5rem;">LEAD AI & DATA OPS</h3>
-                    <p style="margin-top:10px; opacity:0.7;">Optimized R&D experiments into scalable production pipelines.</p>
+                    <p class="impact-label">80% TIMELINE BOOST</p>
+                    <h3 style="font-family: 'Archivo Black';">Q2: LEAD AI & DATA OPS</h3>
+                    <ul class="dossier-list">
+                        <li>Increased operational success rate from 60% to 90%.</li>
+                        <li>Optimized R&D experiments into scalable production pipelines.</li>
+                        <li>Built performance monitoring frameworks for quality and reliability.</li>
+                    </ul>
                 </div>
+
                 <div class="mission-item">
-                    <p class="impact-text">90% ACCURACY</p>
-                    <p style="font-family:'Orbitron'; color:var(--cyan); font-size:0.7rem;">[ MISSION_Q3 ]</p>
-                    <h3 style="font-family:'Archivo Black'; font-size:1.5rem;">AI TECH BENCHMARK</h3>
-                    <p style="margin-top:10px; opacity:0.7;">Systematic reverse-engineering of competitor features.</p>
+                    <p class="impact-label">90% CLIP ACCURACY</p>
+                    <h3 style="font-family: 'Archivo Black';">Q3: AI TECH BENCHMARK</h3>
+                    <ul class="dossier-list">
+                        <li>Systematic benchmarking and competitive technical analysis.</li>
+                        <li>CONDUCTED REVERSE-ENGINEERING of competitor features to find gaps.</li>
+                        <li>Influenced feature prioritization and roadmap decisions.</li>
+                    </ul>
+                </div>
+
+                <div class="mission-item">
+                    <p class="impact-label">STABILITY +20%</p>
+                    <h3 style="font-family: 'Archivo Black';">Q4: DATA QUALITY (FB GAMING)</h3>
+                    <ul class="dossier-list">
+                        <li>Improved stability through large-scale training dataset QA.</li>
+                        <li>Performed precision labeling and bounding box correction.</li>
+                        <li>Integrated user feedback loops for continuous data improvement.</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- PANEL: ARSENAL -->
             <div id="arsenal" class="panel">
-                <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">ARSENAL_GEAR</h2>
+                <h2 style="font-family: 'Permanent Marker'; font-size: 3.5rem; color: var(--p3-blue); margin-bottom: 30px;">ARSENAL_GEAR</h2>
                 <div class="inv-grid">
                     <div class="inv-box legendary" onclick="window.open('ibm-cert.jpg')">
-                        <h4 style="font-family:'Orbitron';">IBM_CERTIFICATE</h4>
-                        <p style="font-size:0.6rem; margin-top:5px;">[ CLICK_TO_INSPECT ]</p>
+                        <p class="legend-text">LEGENDARY_CERT</p>
+                        <h4 style="font-family: 'Orbitron';">IBM_PROJECT_MGMT</h4>
+                        <p style="font-size: 0.6rem; margin-top: 10px;">[ CLICK TO INSPECT ]</p>
                     </div>
-                    <div class="inv-box"><h4>JIRA_AGILE</h4></div>
-                    <div class="inv-box"><h4>WEB_SCRAPING</h4></div>
-                    <div class="inv-box"><h4>PROMPT_ENGINEERING</h4></div>
+                    <div class="inv-box"><h4>JIRA_AGILE</h4><p style="font-size:0.6rem; opacity:0.6;">Sprint Management</p></div>
+                    <div class="inv-box"><h4>WEB_SCRAPING</h4><p style="font-size:0.6rem; opacity:0.6;">Competitor Intelligence</p></div>
+                    <div class="inv-box"><h4>PROMPT_ENG</h4><p style="font-size:0.6rem; opacity:0.6;">LLM Logic Design</p></div>
                 </div>
             </div>
 
             <!-- PANEL: ACADEMIC -->
             <div id="academic" class="panel">
-                <div style="border:5px solid var(--gold); padding:40px; background:rgba(251,191,36,0.05);">
-                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:5px;">SOCIAL_LINK_MAX</p>
-                    <h2 style="font-family:'Archivo Black'; font-size:3rem; margin:10px 0;">PHILOSOPHY (UGM)</h2>
-                    <p style="font-size:1.2rem; line-height:2;">Agent mastered the application of <b>Logic and Epistemology</b>. This grants +100% precision in Strategic Alignment and AI Ethics.</p>
-                    <button class="nav-btn" style="background:var(--gold); margin-top:30px; color:#000;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH</button>
+                <div style="border:4px solid var(--gold); padding:40px; background:rgba(251,191,36,0.05); transform:rotate(-1deg);">
+                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:10px;">SOCIAL_LINK_MAX</p>
+                    <h2 style="font-family:'Archivo Black'; font-size:3rem; margin:20px 0;">PHILOSOPHY (UGM)</h2>
+                    <p style="font-size:1.1rem; line-height:2; font-family:'Space Mono';">
+                        AGENT_SKILL: LOGICAL_EPITEMOLOGY.<br>
+                        Mastered the application of ethics and logic in data management. <br>
+                        GPA: 3.06 // Decision-making precision increased by 100%.
+                    </p>
+                    <button class="nav-btn" style="background:var(--gold); margin-top:30px; color:#000; text-align:center;" onclick="window.open('ijazah-ugm.jpg')">VIEW_DOCUMENT</button>
                 </div>
             </div>
 
         </div>
 
-        <button class="showtime-btn" onclick="openContact()">SHOWTIME!</button>
+        <button class="showtime-btn" onclick="openTerminal()">SHOWTIME!</button>
     </div>
 
-    <!-- MODAL -->
-    <div id="contact-modal" class="modal" onclick="closeContact()">
+    <!-- CONTACT MODAL -->
+    <div id="modal" class="modal" onclick="closeTerminal()">
         <div class="terminal" onclick="event.stopPropagation()">
-            <h2 style="font-family:'Permanent Marker'; font-size:3rem;">CO-OP_READY</h2>
-            <hr style="border-color:var(--p3-blue); margin:20px 0;">
+            <h2 style="font-family:'Permanent Marker';">INITIATE_CO-OP</h2>
+            <hr style="border-color:var(--p3-blue); margin:30px 0;">
             <p style="font-family:'Orbitron'; color:var(--p3-blue);">AGENT: ALIF OCTRIO</p>
             <p style="font-size:2rem; font-weight:900; margin-top:20px;">📧 alifoctrio@gmail.com</p>
             <p style="font-size:1.5rem; font-weight:900;">📱 +62 813-3670-0117</p>
-            <button class="nav-btn" style="margin-top:40px; width:100%; color:#000; text-align:center;" onclick="closeContact()">RETURN_TO_BASE</button>
+            <button class="nav-btn" style="margin-top:40px; width:100%; color:#000; text-align:center;" onclick="closeTerminal()">RETURN_TO_BASE</button>
         </div>
     </div>
 
     <script>
-        function startOS() {
+        function igniteOS() {
             document.getElementById('gateway').style.transform = 'translateY(-100%)';
             document.getElementById('main-interface').style.display = 'grid';
             setTimeout(() => { 
@@ -259,19 +289,18 @@
             }, 500);
         }
 
-        function showPanel(btn, panelId) {
+        function switchPanel(btn, id) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(panelId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             btn.classList.add('active');
         }
 
-        function openContact() { document.getElementById('contact-modal').style.display = 'flex'; }
-        function closeContact() { document.getElementById('contact-modal').style.display = 'none'; }
+        function openTerminal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeTerminal() { document.getElementById('modal').style.display = 'none'; }
 
         function renderRadar() {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctx, {
+            new Chart(document.getElementById('radarChart'), {
                 type: 'radar',
                 data: {
                     labels: ['STRATEGY', 'AI_OPS', 'BENCHMARK', 'DATA', 'LOGIC'],
@@ -281,17 +310,9 @@
                         borderColor: '#00CCFF', borderWidth: 3, pointRadius: 0
                     }]
                 },
-                options: {
-                    scales: {
-                        r: {
-                            grid: { color: 'rgba(255,255,255,0.1)' },
-                            angleLines: { display: false },
-                            pointLabels: { color: '#fff', font: { size: 10, family: 'Orbitron', weight: '900' } },
-                            ticks: { display: false },
-                            min: 0, max: 100
-                        }
-                    },
-                    plugins: { legend: { display: false } }
+                options: { 
+                    scales: { r: { grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { display: false }, pointLabels: { color: '#fff', font: { size: 10, family: 'Orbitron', weight: '900' } }, ticks: { display: false }, min: 0, max: 100 } }, 
+                    plugins: { legend: { display: false } } 
                 }
             });
         }
