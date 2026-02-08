@@ -3,190 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIF OCTRIO | SUPREME ARCHITECT OS v25.0</title>
+    <title>ALIF OCTRIO | SUPREME ARCHITECT OS v30.0</title>
     
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700&family=Montserrat:ital,wght@0,300;0,700;1,900&display=swap" rel="stylesheet">
+    <!-- EXTERNAL FONTS: Otentik Persona Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700&family=Montserrat:ital,wght@0,300;0,700;1,900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    
+    <!-- LIBRARY: Chart.js untuk Radar Stats -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
             --p3-blue: #00CCFF; --p3-navy: #000B18; --cyan: #00F0FF; 
             --white: #FFFFFF; --gold: #fbbf24; --red: #ff003c;
-            --glass: rgba(0, 163, 255, 0.1);
+            --glass: rgba(0, 163, 255, 0.08);
+            --glass-thick: rgba(0, 11, 24, 0.95);
         }
 
-        /* --- CORE SYSTEM --- */
+        /* --- CORE ARCHITECTURE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
         body { 
             background-color: var(--p3-navy); color: var(--white); 
             font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100vh;
         }
 
-        /* --- ADVANCED BACKGROUND --- */
-        .bg-layer { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at center, #001f3d 0%, #000 100%); }
+        /* --- ADVANCED HOLOGRAPHIC BACKGROUND --- */
+        .bg-system { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 50% 50%, #001f3d 0%, #000 100%); }
         .dynamic-grid {
-            position: fixed; inset: -50%; width: 200%; height: 200%;
-            background-image: linear-gradient(var(--p3-blue) 1px, transparent 1px), linear-gradient(90deg, var(--p3-blue) 1px, transparent 1px);
-            background-size: 80px 80px; opacity: 0.1; transform: rotateX(50deg);
-            animation: gridMove 40s linear infinite; z-index: -1;
+            position: fixed; inset: -100%; width: 300%; height: 300%;
+            background-image: 
+                linear-gradient(rgba(0, 204, 255, 0.1) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(0, 204, 255, 0.1) 1px, transparent 1px);
+            background-size: 80px 80px; transform: rotateX(60deg);
+            animation: gridScroll 40s linear infinite; z-index: -1;
         }
-        @keyframes gridMove { from { transform: rotateX(50deg) translateY(0); } to { transform: rotateX(50deg) translateY(80px); } }
+        @keyframes gridScroll { from { transform: rotateX(60deg) translateY(0); } to { transform: rotateX(60deg) translateY(100px); } }
+
+        .bubbles {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: radial-gradient(var(--p3-blue) 1.5px, transparent 0);
+            background-size: 50px 50px; opacity: 0.1;
+            animation: bubbleMove 60s linear infinite;
+        }
+        @keyframes bubbleMove { from { transform: translateY(0); } to { transform: translateY(-1000px); } }
+
+        /* --- HUD DECORATIONS --- */
+        .hud-ornament { position: fixed; font-family: 'Space Mono'; font-size: 0.6rem; color: var(--p3-blue); opacity: 0.4; pointer-events: none; z-index: 100; text-transform: uppercase; }
+        .top-l { top: 20px; left: 20px; border-left: 2px solid var(--p3-blue); padding-left: 10px; }
+        .top-r { top: 20px; right: 20px; text-align: right; border-right: 2px solid var(--p3-blue); padding-right: 10px; }
+        .bot-r { bottom: 20px; right: 20px; text-align: right; }
 
         /* --- STARTUP GATEWAY --- */
         #gateway {
             position: fixed; inset: 0; z-index: 10000; background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: 1s cubic-bezier(0.8, 0, 0.2, 1);
+            transition: all 1.2s cubic-bezier(1, 0, 0, 1);
         }
-        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 7rem; color: #fff; text-shadow: 10px 10px 0px var(--p3-blue); transform: rotate(-3deg); }
+        .boot-log { font-family: 'Space Mono'; color: var(--p3-blue); font-size: 0.8rem; margin-bottom: 30px; text-align: center; }
+        .glitch-title { font-family: 'Permanent Marker'; font-size: 8rem; color: #fff; text-shadow: 12px 12px 0 var(--p3-blue); transform: rotate(-3deg); margin-bottom: 40px; }
         .init-btn {
-            padding: 20px 80px; background: none; border: 4px solid var(--p3-blue);
-            color: var(--p3-blue); font-family: 'Orbitron'; font-weight: 900;
-            font-size: 1.2rem; cursor: pointer; transition: 0.4s;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            padding: 25px 80px; background: none; border: 4px solid var(--p3-blue);
+            color: var(--p3-blue); font-family: 'Orbitron'; font-weight: 900; letter-spacing: 10px;
+            cursor: pointer; transition: 0.5s; clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
         }
-        .init-btn:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 50px var(--p3-blue); }
+        .init-btn:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 60px var(--p3-blue); transform: scale(1.1); }
 
-        /* --- MAIN OS HUD --- */
+        /* --- MAIN OS HUD LAYOUT --- */
         #main-os {
             display: none; opacity: 0; height: 100vh; padding: 40px;
-            grid-template-columns: 350px 1fr; grid-template-rows: 80px 1fr;
-            gap: 25px; transition: 2s;
+            grid-template-columns: 380px 1fr; grid-template-rows: 100px 1fr;
+            gap: 25px; transition: 1.5s;
         }
 
-        header {
-            grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 3px solid var(--p3-blue); padding: 0 20px;
-        }
-        .header-title { font-family: 'Archivo Black'; font-size: 2rem; font-style: italic; }
+        header { grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--p3-blue); padding: 0 20px; background: rgba(0,0,0,0.4); }
+        .header-title { font-family: 'Archivo Black'; font-size: 2.2rem; font-style: italic; letter-spacing: -2px; }
 
         /* --- SIDEBAR NAVIGATION --- */
-        .sidebar { display: flex; flex-direction: column; gap: 10px; grid-row: 2 / 3; }
+        .sidebar { grid-row: 2 / 3; display: flex; flex-direction: column; gap: 12px; }
         .nav-btn {
             background: rgba(255,255,255,0.9); color: var(--p3-navy); padding: 22px;
-            font-family: 'Archivo Black'; font-size: 0.9rem; border: none;
+            font-family: 'Archivo Black'; font-size: 1rem; border: none;
             clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
             cursor: pointer; transition: 0.3s; text-align: left;
         }
         .nav-btn:hover, .nav-btn.active {
             background: var(--p3-blue); color: #fff; transform: translateX(20px);
-            box-shadow: -10px 0px 0px var(--white), 0 0 30px var(--p3-blue);
+            box-shadow: -15px 0px 0px var(--white), 0 0 30px var(--p3-blue);
         }
 
-        /* --- CONTENT AREA --- */
+        /* --- CONTENT DISPLAY AREA --- */
         .content-area { grid-row: 2 / 3; position: relative; perspective: 2000px; }
         .panel {
             display: none; position: absolute; inset: 0;
-            background: rgba(0, 11, 24, 0.92); backdrop-filter: blur(30px);
+            background: var(--glass-thick); backdrop-filter: blur(40px);
             border: 2px solid rgba(0, 163, 255, 0.3); padding: 50px;
-            overflow-y: auto; box-shadow: 0 0 50px rgba(0,0,0,1);
+            overflow-y: auto; box-shadow: 0 0 100px rgba(0,0,0,1);
         }
         .panel.active { display: block; animation: panelFade 0.6s ease-out; }
         @keyframes panelFade { from { opacity: 0; transform: translateZ(-200px); } to { opacity: 1; transform: translateZ(0); } }
 
-        /* --- STATUS PANEL --- */
+        /* --- TABS: CONTENT STYLING --- */
         .profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
         .portrait-frame {
             width: 320px; height: 400px; border: 5px solid var(--white);
             clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
-            overflow: hidden; background: #000;
+            overflow: hidden; background: #000; position: relative;
         }
         .portrait-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* --- MISSION INTEL (FULL JOB DESC FROM CV) --- */
-        .intel-item {
-            background: rgba(255,255,255,0.03); border-left: 5px solid var(--cyan);
-            margin-bottom: 25px; padding: 25px;
+        .portrait-frame::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,204,255,0.1) 2px, transparent 2px); background-size: 100% 4px;
         }
-        .intel-item h3 { font-family: 'Archivo Black'; font-size: 1.2rem; color: var(--cyan); margin-bottom: 12px; }
-        .intel-list { padding-left: 15px; font-size: 0.9rem; color: #cbd5e1; line-height: 1.8; list-style-type: square; }
 
-        /* --- ACHIEVEMENT RECORD (MASSIVE LOOT BOXES) --- */
-        .record-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        /* --- MISSION INTEL (JOB DESC) --- */
+        .intel-card {
+            background: rgba(255,255,255,0.03); border-left: 10px solid var(--cyan);
+            margin-bottom: 25px; padding: 30px;
+        }
+        .intel-card h3 { font-family: 'Archivo Black'; font-size: 1.3rem; color: var(--cyan); margin-bottom: 15px; }
+        .intel-list { padding-left: 20px; line-height: 2; font-size: 0.9rem; color: #cbd5e1; list-style-type: square; }
+
+        /* --- ACHIEVEMENTS (LOOT BOX STYLE) --- */
+        .loot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .loot-box {
-            background: rgba(0, 163, 255, 0.1); border: 1px solid var(--cyan);
-            padding: 25px; position: relative; overflow: hidden;
-            transition: 0.3s; cursor: pointer;
+            background: rgba(0, 163, 255, 0.05); border: 2px solid var(--cyan);
+            padding: 30px; cursor: pointer; transition: 0.3s; position: relative;
         }
-        .loot-box:hover { background: var(--p3-blue); color: #000; transform: scale(1.02); }
+        .loot-box:hover { background: var(--p3-blue); color: #000; transform: scale(1.05); }
         .loot-tag { 
-            background: var(--p3-blue); color: #000; padding: 5px 12px; 
+            background: var(--p3-blue); color: #000; padding: 5px 15px; 
             font-weight: 900; font-size: 0.7rem; display: inline-flex; align-items: center; gap: 5px;
             margin-bottom: 15px; font-family: 'Orbitron';
         }
-        .loot-title { font-family: 'Permanent Marker'; font-size: 1.8rem; margin-bottom: 10px; }
+        .loot-title { font-family: 'Permanent Marker'; font-size: 2.2rem; margin-bottom: 10px; }
 
-        /* --- ARSENAL (TOOLS WITH DESCRIPTIONS) --- */
+        /* --- ARSENAL GEAR --- */
         .gear-card {
             background: rgba(255,255,255,0.03); border: 1px solid var(--p3-blue);
-            padding: 25px; transition: 0.3s; cursor: pointer; margin-bottom: 15px;
+            padding: 30px; margin-bottom: 20px; transition: 0.3s;
         }
-        .gear-card:hover { border-color: var(--cyan); background: rgba(0, 163, 255, 0.1); transform: translateY(-5px); }
-        .gear-card h3 { font-family: 'Orbitron'; color: var(--cyan); margin-bottom: 10px; }
-        .gear-intel { font-family: 'Space Mono'; font-size: 0.8rem; line-height: 1.5; color: #ccc; }
-        .gear-card.rare { border: 2px solid var(--gold); }
+        .gear-card:hover { border-color: var(--gold); background: rgba(251, 191, 36, 0.05); transform: translateY(-5px); }
+        .gear-card h3 { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--cyan); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; }
+        .gear-desc { font-family: 'Space Mono'; font-size: 0.85rem; line-height: 1.6; color: #ccc; }
+        .gear-desc b { color: var(--gold); }
 
         /* --- SHOWTIME PINDAH KE KIRI --- */
         .showtime-btn {
             position: fixed; bottom: 40px; left: 50px; 
             background: var(--p3-blue); color: #fff; border: 4px solid #fff;
-            padding: 20px 60px; font-family: 'Permanent Marker'; font-size: 2.5rem;
+            padding: 25px 80px; font-family: 'Permanent Marker'; font-size: 2.5rem;
             transform: rotate(-3deg); cursor: pointer; box-shadow: 10px 10px 0px #000;
             z-index: 5000; transition: 0.3s;
         }
         .showtime-btn:hover { background: var(--red); transform: scale(1.1) rotate(0deg); }
 
         /* --- MODALS --- */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,10,25,0.98); z-index: 20000; justify-content: center; align-items: center; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,5,15,0.99); z-index: 20000; justify-content: center; align-items: center; }
         .terminal { background: #000; border: 5px solid var(--p3-blue); padding: 60px; width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue); }
+        
+        #evidence-modal { overflow-y: auto; padding: 50px; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 30000; }
         .evidence-container { max-width: 1000px; margin: auto; text-align: center; }
-        .evidence-img { width: 100%; border: 4px solid var(--p3-blue); margin-bottom: 20px; }
+        .evidence-img { width: 100%; border: 4px solid var(--cyan); margin-bottom: 30px; box-shadow: 0 0 50px var(--p3-blue); }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--p3-blue); }
     </style>
 </head>
 <body>
-    <div class="bg-layer"></div>
+    <div class="bg-system"></div>
     <div class="dynamic-grid"></div>
+    <div class="bubbles"></div>
+
+    <!-- HUD ORNAMENTS -->
+    <div class="hud-ornament top-l">SYSTEM: S.E.E.S._ARCHITECT_v30.0<br>STATUS: DEPLOYED_ON_GITHUB<br>UPTIME: 100%</div>
+    <div class="hud-ornament top-r">DATA_ENCRYPTION: MAX<br>AGENT_RANK: SUPREME<br>CO-OP_LINK: ACTIVE</div>
+    <div class="hud-ornament bot-r">© 2024 AGENT_OCTRIO<br>SUPREME_ARCHITECT_OS</div>
 
     <!-- STARTUP -->
     <div id="gateway">
-        <p style="font-family: 'Orbitron'; letter-spacing: 15px; color: var(--p3-blue); margin-bottom: 20px;">S.E.E.S._OPERATING_SYSTEM</p>
+        <div class="boot-log">
+            > INITIALIZING NEURAL LINK... OK<br>
+            > BYPASSING NETLIFY LIMITS... OK<br>
+            > LOADING OMNI-HUD... 100%
+        </div>
         <h1 class="gateway-h1">ALIF OCTRIO</h1>
-        <button class="init-btn" onclick="startOS()">[ START_OS ]</button>
+        <button class="init-btn" onclick="igniteOS()">[ START_OS ]</button>
     </div>
 
     <!-- MAIN INTERFACE -->
     <div id="main-os">
         <header>
-            <div class="header-title">AGENT_ARCHITECT_HUD_v25.0</div>
-            <div style="font-family: 'Orbitron'; font-weight: 900;">AGENT_ACCESS: GRANTED // STATUS: SUPREME</div>
+            <div class="header-title">ARCHITECT_OS_SUPREME_HUD</div>
+            <div style="font-family: 'Orbitron'; font-weight: 900;">AGENT_ID: 2908_OCT // LVL 03</div>
         </header>
 
         <div class="sidebar">
-            <button class="nav-btn active" onclick="switchPanel(this, 'status')">01 // AGENT_STATUS</button>
+            <button class="nav-btn active" onclick="switchPanel(this, 'status')">01 // STATUS_CORE</button>
             <button class="nav-btn" onclick="switchPanel(this, 'missions')">02 // MISSION_INTEL</button>
-            <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // ACHIEVEMENTS</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // ACHIEVEMENT_LOG</button>
             <button class="nav-btn" onclick="switchPanel(this, 'arsenal')">04 // ARSENAL_GEAR</button>
             <button class="nav-btn" onclick="switchPanel(this, 'academic')">05 // ACADEMIC_LINK</button>
         </div>
 
         <div class="content-area">
             
-            <!-- PANEL: STATUS -->
+            <!-- PANEL 01: STATUS -->
             <div id="status" class="panel active">
                 <div class="profile-grid">
                     <div>
                         <div class="portrait-frame"><img src="alif.jpg" alt="Alif Octrio"></div>
                         <div style="background:var(--p3-blue); color:#000; padding:15px; text-align:center; margin-top:10px; font-family:'Archivo Black';">
-                            <h2>RANK S // MAXED</h2>
+                            <h2 style="font-size:2rem;">RANK S // MAXED</h2>
                         </div>
                     </div>
                     <div>
                         <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue);">AGENT_CORE</h2>
-                        <p style="font-family:'Space Mono'; line-height:1.8; margin-top:20px; border-bottom:1px solid var(--p3-blue); padding-bottom:20px;">
-                            > Strategic Project Manager & AI Ops Lead.<br>
-                            > Specialization: Competitive Intelligence & Reverse-Engineering.<br>
-                            > Foundation: Philosophy (Logic, Ethics, Epistemology).
+                        <p style="font-family:'Space Mono'; line-height:2; font-size:1.1rem; margin-top:20px; border-bottom:1px solid var(--p3-blue); padding-bottom:20px;">
+                            > Strategic Product Manager & AI Ops Lead.<br>
+                            > Specialized in Competitive Intelligence.<br>
+                            > Data-Driven Strategic Execution Mastery.
                         </p>
                         <div style="margin-top:20px;">
                             <canvas id="radarChart" style="max-height: 250px;"></canvas>
@@ -195,170 +229,147 @@
                 </div>
             </div>
 
-            <!-- PANEL: MISSION INTEL (FULL DETAILS FROM CV) -->
+            <!-- PANEL 02: MISSION INTEL (JOB DESC) -->
             <div id="missions" class="panel">
                 <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">MISSION_INTEL</h2>
-                
-                <div class="intel-item">
-                    <h3>PROJECT MANAGER & MARKET STRATEGY (HYPE GAMES)</h3>
+                <div class="intel-card">
+                    <h3>PROJECT MANAGER & MARKET STRATEGY</h3>
                     <ul class="intel-list">
                         <li>Led strategic product initiatives by translating AI capabilities into data-driven decisions.</li>
-                        <li>Led market intelligence through web scraping and competitor research.</li>
                         <li>Built user sentiment analysis framework to support marketing pivots.</li>
-                        <li>Developed internal KPI tracking systems (NRU & 400+ daily submissions).</li>
+                        <li>Developed internal KPI tracking systems for 400+ daily submissions.</li>
                         <li>Acted as a strategic bridge between Product, Marketing, and AI teams.</li>
                     </ul>
                 </div>
-
-                <div class="intel-item">
+                <div class="intel-card">
                     <h3>AI TECHNICAL BENCHMARK & COMPETITIVE ANALYSIS</h3>
                     <ul class="intel-list">
-                        <li>Improved AI clip detection accuracy from 60% to 90% via technical benchmarking.</li>
+                        <li>Strengthened AI accuracy through systematic benchmarking and technical analysis.</li>
                         <li>CONDUCTED REVERSE-ENGINEERING of competitor features to identify technical gaps.</li>
-                        <li>Delivered benchmarking insights that influenced feature prioritization.</li>
-                        <li>Reduced iteration cycles by identifying high-impact improvements early.</li>
+                        <li>Delivered insights that influenced AI feature prioritization and roadmap decisions.</li>
                     </ul>
                 </div>
-
-                <div class="intel-item">
+                <div class="intel-card">
                     <h3>LEAD AI & DATA OPTIMIZATION</h3>
                     <ul class="intel-list">
-                        <li>Increased AI operational success rate from 60% to 90%.</li>
-                        <li>Boosted AI team efficiency by ~80% through process optimization.</li>
+                        <li>Owned AI execution and operational optimization for scalable production systems.</li>
+                        <li>Boosted team efficiency by ~80% through bottleneck resolution.</li>
                         <li>Built performance monitoring frameworks to track quality and reliability.</li>
-                        <li>Collaborated with Product and Engineering to align AI output with business needs.</li>
                     </ul>
                 </div>
-
-                <div class="intel-item">
+                <div class="intel-card">
                     <h3>AI DATA OPS (PT. MAINGAMES)</h3>
                     <ul class="intel-list">
                         <li>Improved AI system stability by 20% through training dataset QA.</li>
                         <li>Performed labeling validation, bounding box correction, and dataset audits.</li>
-                        <li>Monitored Facebook Gaming creator content performance via data entry.</li>
-                        <li>Integrated App Store feedback into continuous data improvement cycles.</li>
+                        <li>Integrated user feedback loops for continuous data improvement.</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- PANEL: ACHIEVEMENTS (THE LOOT GRID) -->
+            <!-- PANEL 03: ACHIEVEMENTS (LOOT SYSTEM WITH IMAGE PROOF) -->
             <div id="achievements" class="panel">
                 <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">ACHIEVEMENT_LOG</h2>
                 <div class="record-grid">
-                    <div class="loot-box" onclick="openEvidence('hype')">
+                    <!-- SCALING: COD & DBD -->
+                    <div class="loot-box" onclick="openEvidence('scaling')">
                         <div class="loot-tag">★ MAJOR_SCALING</div>
-                        <p class="loot-title">400+ SUBS/DAY</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Scaled product operations via AI market signals. [ VIEW DATA ]</p>
+                        <p class="loot-title">400+ SUBS</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Call of Duty & Dead by Daylight Performance Scaling. [ VIEW DATA ]</p>
                     </div>
-                    <div class="loot-box" onclick="openEvidence('bench')">
+                    <!-- PRECISION: R6 & MULTI-KILL -->
+                    <div class="loot-box" onclick="openEvidence('precision')">
                         <div class="loot-tag">★ PRECISION_BUFF</div>
                         <p class="loot-title">90% ACCURACY</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Improved AI detection via technical benchmarking. [ VIEW DOSSIER ]</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">AI clip detection accuracy boost via Technical Benchmarking. [ VIEW DOSSIER ]</p>
+                    </div>
+                    <!-- SENTIMENT: Borderlands, NBA, Tarkov, Calendar -->
+                    <div class="loot-box" onclick="openEvidence('sentiment')">
+                        <div class="loot-tag">★ MARKET_INTEL</div>
+                        <p class="loot-title">SENTIMENT_AI</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Competitor Sentiment Analysis (Borderlands, NBA, Tarkov). [ VIEW ANALYTICS ]</p>
                     </div>
                     <div class="loot-box">
                         <div class="loot-tag">★ OPS_OPTIMIZATION</div>
                         <p class="loot-title">80% EFFICIENCY</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Resolved production bottlenecks for AI team execution.</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ SYSTEM_STABILITY</div>
-                        <p class="loot-title">+20% UPTIME</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Enhanced system stability through dataset audits.</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ STRATEGIC_BRIDGE</div>
-                        <p class="loot-title">CROSS-DEPT</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Aligned Product, Marketing, and AI engineering goals.</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ MARKET_INTEL</div>
-                        <p class="loot-title">SENTIMENT_AI</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Automated competitor intelligence extraction frameworks.</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Resolved production bottlenecks for high-scale AI timelining.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: ARSENAL -->
+            <!-- PANEL 04: ARSENAL (TOOLS DOSSIER) -->
             <div id="arsenal" class="panel">
                 <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">ARSENAL_GEAR</h2>
-                <div class="record-grid">
-                    <div class="loot-box" onclick="window.open('ibm-cert.jpg')">
-                        <div class="loot-tag">★ LEGENDARY</div>
-                        <h3 style="font-family:'Orbitron';">IBM_PROJECT_MGMT</h3>
-                        <p style="font-size:0.8rem; margin-top:10px;">Mastery in Strategic Planning & Risk Mgmt. [ INSPECT ]</p>
-                    </div>
-                    <div class="loot-box" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
-                        <div class="loot-tag">★ SOURCE_CODE</div>
-                        <h3 style="font-family:'Orbitron';">PYTHON_SCRAPER</h3>
-                        <p style="font-size:0.8rem; margin-top:10px;">Automated intel extraction logic. [ OPEN NOTEBOOK ]</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ SYSTEM_TOOL</div>
-                        <h3>JIRA_AGILE_OPS</h3>
-                        <p style="font-size:0.8rem; margin-top:10px;">Managed AI iteration cycles & Sprint transparency.</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ STRATEGY_TOOL</div>
-                        <h3>ADVANCED_EXCEL</h3>
-                        <p style="font-size:0.8rem; margin-top:10px;">Built complex KPI dashboards for NRU tracking.</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ AI_OPTIMIZER</div>
-                        <h3>PROMPT_ENG</h3>
-                        <p style="font-size:0.8rem; margin-top:10px;">LLM logic optimization for sentiment precision.</p>
-                    </div>
-                    <div class="loot-box">
-                        <div class="loot-tag">★ OPS_TOOL</div>
-                        <h3>ASANA_FLOW</h3>
-                        <p style="font-size:0.8rem; margin-top:10px;">Cross-functional alignment for GTM operations.</p>
-                    </div>
+                <div class="gear-card" style="border-color:var(--gold);" onclick="window.open('ibm-cert.jpg')">
+                    <p style="color:var(--gold); font-size:0.6rem; font-weight:900;">LEGENDARY_CERT</p>
+                    <h3>IBM_PROJECT_MGMT</h3>
+                    <p class="gear-desc">Mastery in <b>Agile Execution, Risk Mitigation, and Sprint Planning</b>. Verified ID: QXV93T9APC6A.</p>
+                </div>
+                <div class="gear-card" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
+                    <p style="color:var(--cyan); font-size:0.6rem; font-weight:900;">SOURCE_CODE_EXTRACTED</p>
+                    <h3>PYTHON_SENTIMENT_SCRAPER</h3>
+                    <p class="gear-desc"><b>Action:</b> Automated market signal extraction. <b>Outcome:</b> Enabled real-time competitive analysis. [ CLICK TO VIEW NOTEBOOK ]</p>
+                </div>
+                <div class="gear-card">
+                    <h3>JIRA_AGILE_OPS</h3>
+                    <p class="gear-desc"><b>Action:</b> Managed AI iteration cycles. <b>Outcome:</b> 100% transparency between R&D and Production.</p>
+                </div>
+                <div class="gear-card">
+                    <h3>ADVANCED_EXCEL_HUD</h3>
+                    <p class="gear-desc"><b>Action:</b> Built automated KPI Dashboards for NRU tracking. <b>Outcome:</b> Real-time data visualization for stakeholders.</p>
                 </div>
             </div>
 
-            <!-- PANEL: ACADEMIC -->
+            <!-- PANEL 05: ACADEMIC -->
             <div id="academic" class="panel">
                 <div style="border:5px solid var(--gold); padding:50px; background:rgba(251,191,36,0.05); transform:rotate(-1deg);">
-                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:10px;">SOCIAL_LINK: RANK_MAX</p>
+                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:10px; font-weight:900;">SOCIAL_LINK: RANK_MAX</p>
                     <h2 style="font-family:'Archivo Black'; font-size:3.5rem; margin:20px 0;">PHILOSOPHY (UGM)</h2>
                     <p style="font-size:1.3rem; line-height:2; font-family:'Space Mono';">
                         Agent Alif mastered the Arcana of <b>LOGIC & ETHICS</b>. <br>
-                        Applying Philosophical reasoning to AI governance and technical leadership. <br>
-                        GPA: 3.06 // Academic Intelligence: 100%.
+                        Applying Philosophical reasoning to AI governance and high-precision technical leadership. <br>
+                        GPA: 3.06 // Decision Intelligence: 100%.
                     </p>
-                    <button class="nav-btn" style="background:var(--gold); margin-top:30px; color:#000; text-align:center;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH_DOC</button>
+                    <button style="background:var(--gold); color:#000; padding:15px 40px; border:none; font-family:'Archivo Black'; cursor:pointer; margin-top:30px;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH_DOC</button>
                 </div>
             </div>
         </div>
 
-        <button class="showtime-btn" onclick="openC()">SHOWTIME!</button>
+        <!-- SHOWTIME PINDAH KIRI -->
+        <button class="showtime-btn" onclick="document.getElementById('modal-c').style.display='flex'">SHOWTIME!</button>
     </div>
 
-    <!-- EVIDENCE MODAL -->
-    <div id="evidence-modal" class="modal" onclick="this.style.display='none'">
-        <div class="evidence-container" onclick="event.stopPropagation()">
-            <h2 id="evidence-title" style="font-family:'Permanent Marker'; font-size:3rem; color:var(--p3-blue); margin-bottom:20px;"></h2>
-            <div id="evidence-gallery" style="display:flex; flex-direction:column; gap:20px;"></div>
-            <button style="background:var(--red); color:white; padding:15px 40px; border:none; font-family:'Archivo Black'; cursor:pointer; margin-top:30px;" onclick="document.getElementById('evidence-modal').style.display='none'">CLOSE_DOSSIER</button>
+    <!-- EVIDENCE MODAL (GALLERY) -->
+    <div id="evidence-modal" onclick="this.style.display='none'">
+        <div class="evidence-container">
+            <h2 id="evidence-title" style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;"></h2>
+            <div id="evidence-gallery" style="display:flex; flex-direction:column; gap:30px;"></div>
+            <p style="color:white; font-family:'Orbitron'; margin-top:30px;">[ CLICK ANYWHERE TO CLOSE ]</p>
         </div>
     </div>
 
     <!-- CONTACT MODAL -->
-    <div id="modal" class="modal" onclick="closeC()">
+    <div id="modal-c" class="modal" onclick="this.style.display='none'">
         <div class="terminal" onclick="event.stopPropagation()">
-            <h2 style="font-family:'Permanent Marker';">CO-OP_INITIATE</h2>
+            <h2 style="font-family:'Permanent Marker'; font-size:4rem; color:var(--p3-blue);">CO-OP_READY</h2>
             <hr style="border-color:var(--p3-blue); margin:30px 0;">
             <p style="font-size:2rem; font-weight:900;">📧 alifoctrio@gmail.com</p>
             <p style="font-size:1.5rem; font-weight:900; margin-top:10px;">📱 +62 813-3670-0117</p>
-            <button class="nav-btn" style="margin-top:50px; width:100%; color:#000; text-align:center;" onclick="closeC()">RETURN</button>
+            <button style="background:white; color:black; padding:15px 40px; border:none; font-family:'Archivo Black'; cursor:pointer; margin-top:40px;" onclick="document.getElementById('modal-c').style.display='none'">RETURN</button>
         </div>
     </div>
 
+    <!-- JAVASCRIPT: THE BRAIN -->
     <script>
-        function startOS() {
+        function igniteOS() {
             document.getElementById('gateway').style.transform = 'translateY(-100%)';
             document.getElementById('main-os').style.display = 'grid';
-            setTimeout(() => { document.getElementById('main-os').style.opacity = '1'; renderR(); }, 600);
+            setTimeout(() => { 
+                document.getElementById('main-os').style.opacity = '1';
+                renderR();
+            }, 600);
         }
+
         function switchPanel(btn, id) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -366,22 +377,26 @@
             btn.classList.add('active');
             if(id === 'status') renderR();
         }
+
         function openEvidence(type) {
             const modal = document.getElementById('evidence-modal');
             const gallery = document.getElementById('evidence-gallery');
             const title = document.getElementById('evidence-title');
             gallery.innerHTML = '';
             modal.style.display = 'block';
-            if(type === 'bench') {
-                title.innerText = "MISSION: AI BENCHMARKING DATA";
+
+            if(type === 'scaling') {
+                title.innerText = "MISSION_INTEL: PERFORMANCE SCALING";
+                gallery.innerHTML = '<img class="evidence-img" src="scaling1.png"><img class="evidence-img" src="scaling2.png">';
+            } else if(type === 'precision') {
+                title.innerText = "MISSION_INTEL: BENCHMARKING PRECISION";
                 gallery.innerHTML = '<img class="evidence-img" src="bench1.png"><img class="evidence-img" src="bench2.png">';
-            } else {
-                title.innerText = "MISSION: HYPE GAMES DATA";
-                gallery.innerHTML = '<img class="evidence-img" src="hype1.png"><img class="evidence-img" src="hype2.png"><img class="evidence-img" src="hype3.png"><img class="evidence-img" src="hype4.png">';
+            } else if(type === 'sentiment') {
+                title.innerText = "MISSION_INTEL: SENTIMENT ANALYSIS";
+                gallery.innerHTML = '<img class="evidence-img" src="hype3.png"><img class="evidence-img" src="hype1.png"><img class="evidence-img" src="hype2.png"><img class="evidence-img" src="hype4.png">';
             }
         }
-        function openC() { document.getElementById('modal').style.display = 'flex'; }
-        function closeC() { document.getElementById('modal').style.display = 'none'; }
+
         function renderR() {
             const ctx = document.getElementById('radarChart').getContext('2d');
             new Chart(ctx, {
