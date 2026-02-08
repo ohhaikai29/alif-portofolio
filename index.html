@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIF OCTRIO | ARCHITECT OS v14.0</title>
+    <title>ALIF OCTRIO | SUPREME HUD v16.0</title>
     
-    <!-- FONTS: Otentik Persona Style -->
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron:wght@400;700;900&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700&family=Montserrat:ital,wght@0,300;0,700;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -37,22 +37,21 @@
         #gateway {
             position: fixed; inset: 0; z-index: 10000; background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1);
+            transition: 1s cubic-bezier(0.8, 0, 0.2, 1);
         }
-        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 7rem; color: #fff; text-shadow: 10px 10px 0px var(--p3-blue); transform: rotate(-3deg); }
+        .gateway-h1 { font-family: 'Permanent Marker'; font-size: 7rem; text-shadow: 10px 10px 0px var(--p3-blue); margin-bottom: 40px; transform: rotate(-3deg); }
         .init-btn {
             padding: 20px 80px; background: none; border: 4px solid var(--p3-blue);
             color: var(--p3-blue); font-family: 'Orbitron'; font-weight: 900;
-            font-size: 1.2rem; cursor: pointer; transition: 0.4s;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            cursor: pointer; transition: 0.4s; clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
         }
         .init-btn:hover { background: var(--p3-blue); color: #000; box-shadow: 0 0 50px var(--p3-blue); }
 
         /* --- MAIN OS LAYOUT --- */
         #main-os {
             display: none; opacity: 0; height: 100vh; padding: 40px;
-            grid-template-columns: 380px 1fr; grid-template-rows: 80px 1fr;
-            gap: 25px; transition: 2s;
+            grid-template-columns: 350px 1fr; grid-template-rows: 80px 1fr;
+            gap: 30px; transition: 1.5s;
         }
 
         header {
@@ -62,88 +61,96 @@
         .header-title { font-family: 'Archivo Black'; font-size: 2rem; font-style: italic; }
 
         /* --- SIDEBAR NAVIGATION --- */
-        .sidebar { display: flex; flex-direction: column; gap: 10px; }
+        .sidebar { display: flex; flex-direction: column; gap: 10px; grid-row: 2 / 3; }
         .nav-btn {
-            background: rgba(255,255,255,0.9); color: var(--p3-navy); padding: 20px;
+            background: rgba(255,255,255,0.9); color: var(--p3-navy); padding: 22px;
             font-family: 'Archivo Black'; font-size: 0.9rem; border: none;
             clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
             cursor: pointer; transition: 0.3s; text-align: left;
         }
         .nav-btn:hover, .nav-btn.active {
             background: var(--p3-blue); color: #fff; transform: translateX(20px);
-            box-shadow: -10px 0px 0px var(--white);
+            box-shadow: -10px 0px 0px var(--white), 0 0 30px var(--p3-blue);
         }
 
-        /* --- CONTENT PANELS --- */
-        .content-area { position: relative; perspective: 2000px; }
+        /* --- CONTENT AREA --- */
+        .content-area { grid-row: 2 / 3; position: relative; perspective: 2000px; }
         .panel {
             display: none; position: absolute; inset: 0;
-            background: rgba(0, 11, 24, 0.9); backdrop-filter: blur(30px);
-            border: 2px solid rgba(0, 163, 255, 0.3); padding: 40px;
+            background: rgba(0, 11, 24, 0.92); backdrop-filter: blur(30px);
+            border: 2px solid rgba(0, 163, 255, 0.3); padding: 50px;
             overflow-y: auto; box-shadow: 0 0 50px rgba(0,0,0,1);
         }
         .panel.active { display: block; animation: panelFade 0.6s ease-out; }
         @keyframes panelFade { from { opacity: 0; transform: translateZ(-200px); } to { opacity: 1; transform: translateZ(0); } }
 
-        /* --- AGENT STATUS CORE --- */
-        .profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
-        .portrait-frame {
-            width: 320px; height: 400px; border: 5px solid var(--white);
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
-            overflow: hidden; background: #000;
+        /* --- ARSENAL (PERBAIKAN - ADA PENJELASAN) --- */
+        .arsenal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .gear-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--p3-blue);
+            padding: 25px; transition: 0.3s;
         }
-        .portrait-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .gear-card:hover { border-color: var(--cyan); background: rgba(0, 163, 255, 0.1); transform: translateY(-5px); }
+        .gear-card h3 { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--p3-blue); margin-bottom: 10px; border-bottom: 1px solid rgba(0, 163, 255, 0.3); padding-bottom: 5px; }
+        .gear-intel { font-family: 'Space Mono'; font-size: 0.8rem; color: #ccc; line-height: 1.5; }
+        .gear-intel b { color: var(--gold); }
+        .gear-card.rare { border: 2px solid var(--gold); }
 
-        /* --- MISSION INTEL (JOB DESC) --- */
-        .intel-item {
-            background: rgba(255,255,255,0.03); border-left: 5px solid var(--cyan);
-            margin-bottom: 15px; padding: 20px;
+        /* --- MISSIONS (JOB DESC) --- */
+        .mission-intel-item {
+            background: rgba(255,255,255,0.02); border-left: 5px solid var(--cyan);
+            padding: 20px; margin-bottom: 15px;
         }
-        .intel-item h3 { font-family: 'Orbitron'; font-size: 1rem; color: var(--p3-blue); margin-bottom: 10px; }
-        .intel-list { padding-left: 15px; font-size: 0.85rem; color: #ccc; line-height: 1.6; }
+        .mission-intel-item h3 { font-family: 'Archivo Black'; font-size: 1.2rem; color: var(--cyan); margin-bottom: 10px; }
+        .intel-list { padding-left: 20px; line-height: 1.8; font-size: 0.9rem; color: #cbd5e1; }
 
-        /* --- ACHIEVEMENT RECORD (LOOT STYLE - PERBAIKAN) --- */
+        /* --- ACHIEVEMENTS (LOOT BOX STYLE) --- */
         .record-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .loot-box {
-            background: rgba(0, 163, 255, 0.1); border: 1px solid var(--cyan);
-            padding: 20px; position: relative; overflow: hidden;
+            background: rgba(0, 163, 255, 0.1); border: 2px solid var(--cyan);
+            padding: 25px; position: relative; overflow: hidden;
             transition: 0.3s;
         }
-        .loot-box:hover { background: var(--p3-blue); color: #000; }
+        .loot-box:hover { background: var(--p3-blue); color: #000; transform: scale(1.02); }
         .loot-tag { 
             background: var(--p3-blue); color: #000; padding: 5px 12px; 
             font-weight: 900; font-size: 0.7rem; display: inline-flex; align-items: center; gap: 5px;
-            margin-bottom: 10px; font-family: 'Orbitron';
+            margin-bottom: 15px; font-family: 'Orbitron';
         }
-        .loot-title { font-family: 'Permanent Marker'; font-size: 1.8rem; margin-bottom: 5px; }
+        .loot-title { font-family: 'Permanent Marker'; font-size: 2.2rem; margin-bottom: 10px; }
 
-        /* --- SHOWTIME PINDAH KE KIRI --- */
+        /* --- ACADEMIC --- */
+        .academic-hero { border: 5px solid var(--gold); padding: 50px; background: rgba(251,191,36,0.05); }
+
+        /* --- SHOWTIME --- */
         .showtime-btn {
-            position: fixed; bottom: 40px; left: 50px; /* PINDAH KE KIRI */
+            position: fixed; bottom: 40px; left: 50px;
             background: var(--p3-blue); color: #fff; border: 4px solid #fff;
-            padding: 20px 60px; font-family: 'Permanent Marker'; font-size: 2.5rem;
+            padding: 25px 80px; font-family: 'Permanent Marker'; font-size: 2.5rem;
             transform: rotate(-3deg); cursor: pointer; box-shadow: 10px 10px 0px #000;
             z-index: 5000; transition: 0.3s;
         }
         .showtime-btn:hover { background: var(--red); transform: scale(1.1) rotate(0deg); }
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,10,25,0.98); z-index: 20000; justify-content: center; align-items: center; }
-        .terminal { background: #000; border: 5px solid var(--p3-blue); padding: 50px; width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue); }
+        .terminal { background: #000; border: 5px solid var(--p3-blue); padding: 60px; width: 600px; text-align: center; box-shadow: 0 0 100px var(--p3-blue); }
     </style>
 </head>
 <body>
     <div class="bg-system"></div>
     <div class="dynamic-grid"></div>
 
+    <!-- STARTUP -->
     <div id="gateway">
         <h1 class="gateway-h1">ALIF OCTRIO</h1>
-        <button class="init-btn" onclick="igniteOS()">[ START_OS ]</button>
+        <button class="init-btn" onclick="startOS()">[ START_OS ]</button>
     </div>
 
+    <!-- MAIN INTERFACE -->
     <div id="main-os">
         <header>
-            <div class="header-title">ARCHITECT_HUD_v14.0</div>
-            <div style="font-family: 'Orbitron'; font-weight: 900;">AGENT_ACCESS: GRANTED</div>
+            <div class="header-title">AGENT_ARCHITECT_HUD_v16.0</div>
+            <div style="font-family: 'Orbitron'; font-weight: 900;">AGENT_ACCESS: GRANTED // LVL 03</div>
         </header>
 
         <div class="sidebar">
@@ -158,117 +165,140 @@
             
             <!-- PANEL: STATUS -->
             <div id="status" class="panel active">
-                <div class="profile-grid">
+                <div style="display: grid; grid-template-columns: 320px 1fr; gap: 40px;">
                     <div>
-                        <div class="portrait-frame"><img src="alif.jpg" alt="Alif Octrio"></div>
+                        <div style="width: 320px; height: 400px; border: 5px solid white; clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%); overflow: hidden;">
+                            <img src="alif.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
                         <div style="background:var(--p3-blue); color:#000; padding:15px; text-align:center; margin-top:10px; font-family:'Archivo Black';">
                             <h2>RANK S // MAXED</h2>
                         </div>
                     </div>
                     <div>
                         <h2 style="font-family:'Permanent Marker'; font-size:3rem; color:var(--p3-blue);">AGENT_CORE</h2>
-                        <p style="font-family:'Space Mono'; line-height:1.8; margin-top:20px;">
+                        <p style="font-family:'Space Mono'; line-height:1.8; margin-top:20px; border-bottom:1px solid var(--p3-blue); padding-bottom:20px;">
                             > Strategic Product Manager & AI Ops Lead.<br>
                             > Specialized in Competitive Intelligence.<br>
                             > Data-Driven Strategic Execution Mastery.
                         </p>
-                        <div style="margin-top:30px; border-top:1px solid var(--p3-blue); padding-top:20px;">
+                        <div style="margin-top:20px;">
                             <canvas id="radarChart" style="max-height: 250px;"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: MISSION INTEL (JOB DESC) -->
+            <!-- PANEL: MISSION INTEL -->
             <div id="missions" class="panel">
                 <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">MISSION_INTEL</h2>
-                <div class="intel-item">
-                    <h3>Q1: PROJECT MANAGER & MARKET STRATEGY</h3>
+                <div class="mission-intel-item">
+                    <h3>PROJECT MANAGER & MARKET STRATEGY</h3>
                     <ul class="intel-list">
                         <li>Led strategic product initiatives by translating AI capabilities into data-driven decisions.</li>
                         <li>Built user sentiment analysis framework to support marketing pivots.</li>
-                        <li>Developed internal KPI tracking systems for campaign performance.</li>
+                        <li>Developed internal KPI tracking systems for 400+ daily submissions.</li>
                         <li>Acted as a strategic bridge between Product, Marketing, and AI teams.</li>
                     </ul>
                 </div>
-                <div class="intel-item">
-                    <h3>Q2: LEAD AI & DATA OPTIMIZATION</h3>
+                <div class="mission-intel-item">
+                    <h3>AI TECHNICAL BENCHMARK & COMPETITIVE ANALYSIS</h3>
                     <ul class="intel-list">
-                        <li>Owned AI execution and operational optimization for scalable systems.</li>
-                        <li>Translated R&D experiments into production pipelines with product impact.</li>
-                        <li>Collaborated with engineering to align output with user business needs.</li>
+                        <li>Strengthened AI accuracy through systematic benchmarking and technical analysis.</li>
+                        <li>CONDUCTED REVERSE-ENGINEERING of competitor features to identify technical gaps.</li>
+                        <li>Delivered insights that influenced AI feature prioritization and roadmap decisions.</li>
                     </ul>
                 </div>
-                <div class="intel-item">
-                    <h3>Q3: AI TECHNICAL BENCHMARK</h3>
+                <div class="mission-intel-item">
+                    <h3>LEAD AI & DATA OPTIMIZATION</h3>
                     <ul class="intel-list">
-                        <li>Strengthened AI accuracy through systematic benchmarking.</li>
-                        <li>Delivered benchmarking insights for feature prioritization.</li>
-                        <li>Maintained competitive intelligence documentation for evaluation.</li>
+                        <li>Owned AI execution and operational optimization for production systems.</li>
+                        <li>Boosted team efficiency by ~80% through bottleneck resolution.</li>
+                        <li>Built performance monitoring frameworks to track quality and reliability.</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- PANEL: ACHIEVEMENT RECORD (RESULTS & LOOT) -->
+            <!-- PANEL: ACHIEVEMENTS -->
             <div id="achievements" class="panel">
                 <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">ACHIEVEMENT_RECORD</h2>
                 <div class="record-grid">
                     <div class="loot-box">
                         <div class="loot-tag">★ MAJOR_SCALING</div>
                         <p class="loot-title">400+ DAILY SUBS</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Scaled product operations to peak capacity via strategic AI signal translation.</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Scaled product operations to peak subscription volume via AI market signals.</p>
                     </div>
                     <div class="loot-box">
                         <div class="loot-tag">★ OPS_OPTIMIZATION</div>
                         <p class="loot-title">80% EFFICIENCY</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Boosted AI team efficiency by resolving technical bottlenecks.</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Resolved production bottlenecks to accelerate team-wide execution timelines.</p>
                     </div>
                     <div class="loot-box">
                         <div class="loot-tag">★ PRECISION_BUFF</div>
                         <p class="loot-title">90% ACCURACY</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Improved AI clip detection accuracy from 60% to 90% via benchmarking.</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Improved AI clip detection accuracy from 60% to 90% via technical benchmarking.</p>
                     </div>
                     <div class="loot-box">
                         <div class="loot-tag">★ SYSTEM_STABILITY</div>
                         <p class="loot-title">+20% UPTIME</p>
-                        <p style="font-size:0.8rem; opacity:0.7;">Increased AI system stability through rigorous training dataset QA.</p>
+                        <p style="font-size:0.8rem; opacity:0.7;">Enhanced system stability through rigorous training dataset quality assurance.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: ARSENAL -->
+            <!-- PANEL: ARSENAL (DIISI DENGAN PENJELASAN KEREN) -->
             <div id="arsenal" class="panel">
                 <h2 style="font-family:'Permanent Marker'; font-size:3.5rem; color:var(--p3-blue); margin-bottom:30px;">ARSENAL_GEAR</h2>
-                <div class="record-grid">
-                    <div class="loot-box" onclick="window.open('ibm-cert.jpg')">
-                        <div class="loot-tag">★ LEGENDARY</div>
-                        <h3 style="font-family:'Orbitron';">IBM_CERTIFICATE</h3>
-                        <p style="font-size:0.6rem; margin-top:5px;">[ CLICK TO INSPECT ]</p>
+                <div class="arsenal-grid">
+                    <div class="gear-card rare" onclick="window.open('ibm-cert.jpg')">
+                        <h3>IBM_PROJECT_MGMT</h3>
+                        <p class="gear-intel">Official Professional Certification. Mastery in <b>Strategic Planning, Risk Management, and Agile Execution</b>. Verified ID: QXV93T9APC6A.</p>
                     </div>
-                    <div class="loot-box"><h3>JIRA_AGILE</h3></div>
-                    <div class="loot-box"><h3>WEB_SCRAPING</h3></div>
-                    <div class="loot-box"><h3>PROMPT_ENG</h3></div>
+                    <div class="gear-card">
+                        <h3>JIRA_AGILE</h3>
+                        <p class="gear-intel">Used for managing <b>Agile Sprints & AI Iteration Cycles</b>. Resulted in 100% project tracking transparency across Product and R&D teams.</p>
+                    </div>
+                    <div class="gear-card">
+                        <h3>WEB_SCRAPING</h3>
+                        <p class="gear-intel">Engineered automated Python extraction pipelines for <b>Competitive Intelligence</b>. Enabled real-time market gap identification.</p>
+                    </div>
+                    <div class="gear-card">
+                        <h3>PROMPT_ENGINEERING</h3>
+                        <p class="gear-intel">Optimized LLM prompts for <b>Sentiment Analysis Frameworks</b>. Successfully reduced AI hallucination rates by 30%.</p>
+                    </div>
+                    <div class="gear-card">
+                        <h3>ADVANCED_EXCEL</h3>
+                        <p class="gear-intel">Developed complex <b>KPI Dashboards</b> for NRU and daily submissions tracking. Automated reporting for C-level stakeholders.</p>
+                    </div>
+                    <div class="gear-card">
+                        <h3>ASANA_WORKFLOW</h3>
+                        <p class="gear-intel">Orchestrated <b>Cross-functional Operations</b> between Marketing and Engineering to align GTM strategies with technical output.</p>
+                    </div>
                 </div>
             </div>
 
             <!-- PANEL: ACADEMIC -->
             <div id="academic" class="panel">
-                <div style="border:5px solid var(--gold); padding:50px; background:rgba(251,191,36,0.05);">
-                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:10px;">SOCIAL_LINK: MAX</p>
-                    <h2 style="font-family:'Archivo Black'; font-size:3rem; margin:20px 0;">PHILOSOPHY (UGM)</h2>
-                    <p style="font-size:1.1rem; line-height:2;">Agent Alif mastered <b>Logic & Ethics</b>. Applied to AI decision-making. GPA: 3.06.</p>
-                    <button class="nav-btn" style="background:var(--gold); margin-top:30px; color:#000; text-align:center;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH</button>
+                <div class="academic-hero">
+                    <p style="font-family:'Orbitron'; color:var(--gold); letter-spacing:10px; font-weight:900;">SOCIAL_LINK: RANK_MAX</p>
+                    <h2 style="font-family:'Archivo Black'; font-size:3.5rem; margin:20px 0;">PHILOSOPHY (UGM)</h2>
+                    <p style="font-size:1.3rem; line-height:2; font-family:'Space Mono';">
+                        Agent Alif mastered the Arcana of <b>LOGIC, ETHICS & EPISTEMOLOGY</b>.<br>
+                        Applying Philosophical reasoning to AI governance and technical leadership.<br>
+                        GPA: 3.06 // Academic Intelligence: 100%.
+                    </p>
+                    <button class="nav-btn" style="background:var(--gold); margin-top:40px; color:#000; text-align:center;" onclick="window.open('ijazah-ugm.jpg')">VIEW_IJAZAH_DOC</button>
                 </div>
             </div>
+
         </div>
 
         <button class="showtime-btn" onclick="openC()">SHOWTIME!</button>
     </div>
 
-    <!-- CONTACT MODAL -->
+    <!-- MODAL -->
     <div id="modal" class="modal" onclick="closeC()">
         <div class="terminal" onclick="event.stopPropagation()">
-            <h2 style="font-family:'Permanent Marker';">CO-OP_READY</h2>
+            <h2 style="font-family:'Permanent Marker'; font-size:3.5rem;">CO-OP_READY</h2>
             <hr style="border-color:var(--p3-blue); margin:30px 0;">
             <p style="font-size:2rem; font-weight:900;">📧 alifoctrio@gmail.com</p>
             <p style="font-size:1.5rem; font-weight:900; margin-top:10px;">📱 +62 813-3670-0117</p>
@@ -277,7 +307,7 @@
     </div>
 
     <script>
-        function igniteOS() {
+        function startOS() {
             document.getElementById('gateway').style.transform = 'translateY(-100%)';
             document.getElementById('main-os').style.display = 'grid';
             setTimeout(() => { document.getElementById('main-os').style.opacity = '1'; renderR(); }, 600);
