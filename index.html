@@ -3,337 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alif Octrio | Strategic Lead & AI Operations</title>
+    <title>ALIF OCTRIO | STRATEGIC ARCHITECT OS</title>
     
-    <!-- FONTS: Inter for cleanliness, JetBrains for tech accents -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FONTS: High-End Tech Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            --bg: #030712; /* Deep Black/Blue */
-            --card-bg: rgba(17, 24, 39, 0.7);
-            --accent: #38bdf8; /* Sky Blue */
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --border: rgba(255, 255, 255, 0.08);
-            --emerald: #10b981;
+            --bg: #020617; --card: #0f172a; --accent: #22d3ee; 
+            --text: #f8fafc; --dim: #94a3b8; --gold: #fbbf24;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
+        /* --- CORE ARCHITECTURE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            background-color: var(--bg); 
-            color: var(--text-primary); 
-            font-family: 'Inter', sans-serif; 
-            line-height: 1.6;
-            overflow: hidden;
-            height: 100vh;
+            background-color: var(--bg); color: var(--text); 
+            font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh;
         }
 
-        /* --- BACKGROUND GRADIENT --- */
-        .ambient-bg {
-            position: fixed; inset: 0; z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+        /* --- AMBIENT TECH BACKGROUND --- */
+        .bg-layer { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 20%, #0c4a6e 0%, #020617 100%); }
+        .grid-dynamic {
+            position: fixed; inset: -50%; width: 200%; height: 200%;
+            background-image: linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.1; transform: rotateX(45deg);
+            animation: gridMove 60s linear infinite; z-index: -1;
+        }
+        @keyframes gridMove { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(50px); } }
+
+        /* --- GATEWAY (STARTUP) --- */
+        #gateway {
+            position: fixed; inset: 0; z-index: 10000; background: var(--bg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .gateway-title { font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 20px; }
+        .init-btn {
+            padding: 15px 40px; background: none; border: 2px solid var(--accent);
+            color: var(--accent); font-family: 'JetBrains Mono'; font-weight: 700;
+            cursor: pointer; transition: 0.3s; letter-spacing: 5px;
+        }
+        .init-btn:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 50px var(--accent); }
+
+        /* --- MAIN INTERFACE (2-COLUMN GRID) --- */
+        #main-os {
+            display: none; opacity: 0; height: 100vh; padding: 40px;
+            grid-template-columns: 320px 1fr; grid-template-rows: 80px 1fr;
+            gap: 30px; transition: 1.5s;
         }
 
-        /* --- LAYOUT STRUCTURE --- */
-        #app-container {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            height: 100vh;
-            max-width: 1400px;
-            margin: auto;
-            border-left: 1px solid var(--border);
-            border-right: 1px solid var(--border);
+        header {
+            grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); padding: 0 10px;
+        }
+        .header-title { font-family: 'Archivo Black'; font-size: 1.8rem; letter-spacing: -1px; }
+
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar { display: flex; flex-direction: column; gap: 10px; }
+        .nav-btn {
+            background: transparent; color: var(--dim); padding: 15px 20px;
+            font-weight: 700; font-size: 0.8rem; border: 1px solid transparent;
+            cursor: pointer; transition: 0.3s; text-align: left;
+            letter-spacing: 1px; border-radius: 4px;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(34, 211, 238, 0.1); color: var(--accent);
+            border-color: var(--accent); padding-left: 30px;
         }
 
-        /* --- SIDEBAR NAV --- */
-        aside {
-            background: rgba(3, 7, 18, 0.8);
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--border);
+        /* --- CONTENT AREA --- */
+        .content-area { position: relative; }
+        .panel {
+            display: none; position: absolute; inset: 0;
+            background: var(--card); border: 1px solid var(--border);
+            padding: 40px; overflow-y: auto; border-radius: 8px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
+        .panel.active { display: block; animation: panelFade 0.5s ease-out; }
+        @keyframes panelFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .identity { margin-bottom: 50px; }
-        .identity h2 { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; }
-        .identity p { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 0.7rem; text-transform: uppercase; }
-
-        .nav-item {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 12px 0;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* --- PROFILE PANEL --- */
+        .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 40px; }
+        .portrait-box {
+            width: 100%; height: 380px; border-radius: 8px; border: 1px solid var(--accent);
+            overflow: hidden; background: #000;
         }
-        .nav-item:hover, .nav-item.active { color: var(--text-primary); }
-        .nav-item.active::before { content: ''; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+        .portrait-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- MAIN CONTENT --- */
-        main { padding: 60px; overflow-y: auto; scroll-behavior: smooth; position: relative; }
-
-        .view-section { display: none; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .view-section.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        h1 { font-size: 3rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; }
-        .section-tag { font-family: 'JetBrains Mono'; color: var(--accent); font-size: 0.8rem; margin-bottom: 40px; display: block; }
-
-        /* --- CARDS & GRIDS --- */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            transition: 0.3s;
+        /* --- MISSION CARDS (ACCURATE JOB DESC) --- */
+        .mission-card {
+            background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent);
+            padding: 25px; margin-bottom: 20px; border-radius: 4px;
         }
-        .glass-card:hover { border-color: rgba(56, 189, 248, 0.3); transform: translateY(-2px); }
+        .mission-card h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 10px; }
+        .mission-list { padding-left: 20px; color: var(--dim); font-size: 0.85rem; line-height: 1.8; }
 
-        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            padding: 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s;
+        /* --- ACHIEVEMENT LOOT BOXES (PERBAIKAN SESUAI GAMBAR) --- */
+        .loot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .loot-box {
+            background: #000; border: 1px solid var(--accent);
+            padding: 30px; cursor: pointer; transition: 0.3s;
         }
-        .stat-card:hover { background: rgba(56, 189, 248, 0.05); border-color: var(--accent); }
-        .stat-value { font-size: 2.2rem; font-weight: 800; color: var(--text-primary); display: block; }
-        .stat-label { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
-
-        /* --- EVIDENCE MODAL --- */
-        #modal {
-            display: none; position: fixed; inset: 0; z-index: 1000;
-            background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px);
-            padding: 60px; overflow-y: auto;
+        .loot-box:hover { border-color: #fff; background: rgba(34, 211, 238, 0.05); transform: translateY(-5px); }
+        .loot-tag { 
+            background: var(--accent); color: #000; padding: 4px 12px; 
+            font-weight: 900; font-size: 0.65rem; display: inline-flex; align-items: center; gap: 5px;
+            margin-bottom: 15px; font-family: 'JetBrains Mono'; text-transform: uppercase;
         }
-        .modal-content { max-width: 1000px; margin: auto; }
-        .modal-img { width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .loot-title { font-family: 'Archivo Black'; font-size: 2.2rem; margin-bottom: 5px; color: var(--text); }
+        .loot-desc { color: var(--dim); font-size: 0.8rem; margin-top: 10px; }
 
-        /* --- BUTTONS --- */
-        .btn-primary {
-            background: var(--text-primary); color: var(--bg);
-            padding: 14px 28px; border-radius: 8px; border: none;
-            font-weight: 700; font-size: 0.9rem; cursor: pointer;
-            transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        /* --- ARSENAL --- */
+        .gear-card {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            padding: 25px; border-radius: 8px; transition: 0.3s; cursor: pointer;
         }
-        .btn-primary:hover { background: var(--accent); transform: scale(1.02); }
+        .gear-card:hover { border-color: var(--accent); transform: scale(1.02); }
+        .gear-card.rare { border-color: var(--gold); }
 
-        .profile-pic { width: 100%; height: 320px; border-radius: 12px; object-fit: cover; margin-bottom: 24px; border: 1px solid var(--border); }
+        /* --- SHOWTIME (BOTTOM LEFT) --- */
+        .showtime-btn {
+            position: fixed; bottom: 40px; left: 40px; /* PINDAH KE KIRI */
+            background: var(--accent); color: var(--bg);
+            padding: 20px 60px; font-family: 'Archivo Black'; font-size: 2rem;
+            border-radius: 4px; border: none; cursor: pointer;
+            box-shadow: 0 0 30px var(--accent-glow);
+            z-index: 5000; transition: 0.3s; font-style: italic;
+        }
+        .showtime-btn:hover { transform: scale(1.1); filter: brightness(1.2); }
 
-        /* CUSTOM SCROLLBAR */
+        /* --- MODALS --- */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 30000; padding: 50px; overflow-y: auto; }
+        .modal-container { max-width: 1000px; margin: auto; text-align: center; }
+        .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--accent); }
+
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent); }
     </style>
 </head>
 <body>
-    <div class="ambient-bg"></div>
+    <div class="bg-layer"></div>
+    <div class="grid-dynamic"></div>
 
-    <div id="app-container">
+    <!-- STARTUP -->
+    <div id="gateway">
+        <div style="font-family: 'JetBrains Mono'; color: var(--accent); font-size: 0.8rem; margin-bottom: 20px;">
+            [ SYSTEM_INITIALIZATION: COMPLETED ]<br>
+            [ AGENT_ID: OCTRIO_ALIF_2908 ]
+        </div>
+        <h1 class="gateway-title">ALIF OCTRIO</h1>
+        <button class="init-btn" onclick="igniteOS()">[ ENTER_TERMINAL ]</button>
+    </div>
+
+    <!-- MAIN INTERFACE -->
+    <div id="main-os">
+        <header>
+            <div class="header-title">ALIF_OCTRIO // STRATEGIC_INTELLIGENCE</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--accent);">LVL 03 // AUG 2022 - SEP 2025</div>
+        </header>
+
         <!-- NAVIGATION -->
-        <aside>
-            <div class="identity">
-                <h2>Alif Octrio</h2>
-                <p>Strategic Architect</p>
-            </div>
-            <nav>
-                <div class="nav-item active" onclick="switchTab(this, 'overview')">Executive Summary</div>
-                <div class="nav-item" onclick="switchTab(this, 'experience')">Professional Experience</div>
-                <div class="nav-item" onclick="switchTab(this, 'outcomes')">Strategic Outcomes</div>
-                <div class="nav-item" onclick="switchTab(this, 'tech')">Technical Proficiency</div>
-                <div class="nav-item" onclick="switchTab(this, 'academic')">Academic Foundation</div>
-            </nav>
-            <div style="margin-top: auto;">
-                <button class="btn-primary" onclick="alert('Contact: alifoctrio@gmail.com')">Get In Touch</button>
-            </div>
-        </aside>
+        <div class="sidebar">
+            <button class="nav-btn active" onclick="switchPanel(this, 'profile')">01 // EXECUTIVE_SUMMARY</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'missions')">02 // MISSION_INTEL</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // PERFORMANCE_RECORD</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'arsenal')">04 // ARSENAL_GEAR</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'academic')">05 // ACADEMIC_FOUNDATION</button>
+        </div>
 
-        <!-- MAIN VIEW -->
-        <main>
-            <!-- SECTION: OVERVIEW -->
-            <section id="overview" class="view-section active">
-                <span class="section-tag">// EXECUTIVE_SUMMARY</span>
-                <h1>Engineering Value <br>through Data & Strategy.</h1>
-                <div class="glass-card" style="display: grid; grid-template-columns: 300px 1fr; gap: 40px;">
+        <div class="content-area">
+            
+            <!-- PANEL: SUMMARY -->
+            <div id="profile" class="panel active">
+                <div class="profile-grid">
                     <div>
-                        <img src="alif.jpg" class="profile-pic" alt="Portrait">
-                        <div class="stat-card" style="text-align: center;">
-                            <span class="stat-label">Seniority Level</span>
-                            <span class="stat-value">L3</span>
+                        <div class="portrait-box"><img src="alif.jpg" alt="Alif Octrio"></div>
+                        <div style="background:var(--accent); color:#000; padding:15px; text-align:center; margin-top:10px; border-radius:4px;">
+                            <h2 style="font-family:'Archivo Black'; font-size:1.5rem;">RANK S</h2>
                         </div>
                     </div>
                     <div>
-                        <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px;">
-                            Strategic Product Manager and AI Operations Specialist with 3.5 years of experience in high-growth gaming platforms. 
-                            Expert in translating complex technical signals into actionable business roadmaps.
+                        <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:20px;">Agent Profile.</h2>
+                        <p style="font-size:1.1rem; line-height:1.8; color:var(--dim); margin-bottom:30px;">
+                            Strategic Product Manager & AI Operations Specialist. Proven expertise in Competitive Intelligence and Technical Reverse-Engineering. Logic-driven decision making powered by a foundation in Philosophy.
                         </p>
-                        <canvas id="radarChart"></canvas>
+                        <canvas id="radarChart" style="max-height: 250px;"></canvas>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- SECTION: EXPERIENCE -->
-            <section id="experience" class="view-section">
-                <span class="section-tag">// PROFESSIONAL_EXPERIENCE</span>
-                <h1>Operational Record.</h1>
+            <!-- PANEL: MISSION INTEL (JOB DESC) -->
+            <div id="missions" class="panel">
+                <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Mission Intel.</h2>
                 
-                <div class="glass-card">
-                    <h3 style="color: var(--accent);">Lead AI & Data Optimization</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 15px;">Eklipse.gg | Apr 2024 - Sept 2025</p>
-                    <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
-                        <li>Orchestrated end-to-end AI operations, scaling success rates from 60% to 90%.</li>
-                        <li>Directed multi-day technical benchmarking against market leaders.</li>
-                        <li>Translated R&D experiments into high-impact production pipelines.</li>
+                <div class="mission-card">
+                    <h3>PROJECT MANAGER & MARKET STRATEGY (HYPE GAMES)</h3>
+                    <ul class="mission-list">
+                        <li>Led strategic product initiatives by translating AI capabilities into data-driven decisions.</li>
+                        <li>Built user sentiment analysis framework to support marketing pivot decisions.</li>
+                        <li>Developed internal KPI tracking systems for 400+ daily submissions.</li>
+                        <li>Acted as a strategic bridge between Product, Marketing, and AI teams.</li>
                     </ul>
                 </div>
-
-                <div class="glass-card">
-                    <h3 style="color: var(--accent);">Product Manager & Market Strategy</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 15px;">Hype Games | Feb 2024 - Sept 2025</p>
-                    <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
-                        <li>Developed KPI architectures supporting 400+ daily subscriptions.</li>
-                        <li>Engineered sentiment analysis frameworks to drive marketing pivot decisions.</li>
+                <div class="mission-card">
+                    <h3>AI TECH BENCHMARK & COMPETITIVE ANALYSIS</h3>
+                    <ul class="mission-list">
+                        <li>Strengthened AI accuracy through systematic benchmarking and technical analysis.</li>
+                        <li>CONDUCTED REVERSE-ENGINEERING of competitor features to identify technical gaps.</li>
+                        <li>Delivered insights that influenced AI feature prioritization and roadmap decisions.</li>
                     </ul>
                 </div>
-            </section>
+                <div class="mission-card">
+                    <h3>LEAD AI & DATA OPTIMIZATION</h3>
+                    <ul class="mission-list">
+                        <li>Increased operational success rate from 60% to 90% by improving workflows.</li>
+                        <li>Boosted AI team efficiency by ~80% through bottleneck resolution.</li>
+                        <li>Built AI performance monitoring frameworks to track quality and reliability.</li>
+                    </ul>
+                </div>
+                <div class="mission-card">
+                    <h3>AI DATA OPS (PT. MAINGAMES)</h3>
+                    <ul class="mission-list">
+                        <li>Fortified AI scalability through rigorous training dataset audits.</li>
+                        <li>Performed precision labeling validation and bounding box correction.</li>
+                        <li>Integrated user feedback loops for continuous data improvement.</li>
+                    </ul>
+                </div>
+            </div>
 
-            <!-- SECTION: OUTCOMES (LOOT) -->
-            <section id="outcomes" class="view-section">
-                <span class="section-tag">// STRATEGIC_OUTCOMES</span>
-                <h1>Quantifiable Impact.</h1>
-                <div class="grid-stats">
-                    <div class="stat-card" onclick="openModal('scaling')">
-                        <span class="stat-label">Product Scaling</span>
-                        <span class="stat-value">400+</span>
-                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Daily Subscriptions Scaled. [Click for Evidence]</p>
+            <!-- PANEL: ACHIEVEMENTS (LOOT - WITH IMAGE MAPPING) -->
+            <div id="achievements" class="panel">
+                <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Achievement Record.</h2>
+                <div class="record-grid">
+                    <!-- SCALING -->
+                    <div class="loot-box" onclick="openEvidence('scaling')">
+                        <div class="loot-tag">★ MAJOR_SCALING</div>
+                        <p class="loot-title">400+ SUBS/DAY</p>
+                        <p class="loot-desc">Call of Duty & DBD Performance Data. [ CLICK TO VIEW PROOF ]</p>
                     </div>
-                    <div class="stat-card" onclick="openModal('precision')">
-                        <span class="stat-label">AI Accuracy</span>
-                        <span class="stat-value">90%</span>
-                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Benchmarked Precision Result. [Click for Evidence]</p>
+                    <!-- PRECISION -->
+                    <div class="loot-box" onclick="openEvidence('precision')">
+                        <div class="loot-tag">★ PRECISION_BUFF</div>
+                        <p class="loot-title">90% ACCURACY</p>
+                        <p class="loot-desc">Rainbow Six Benchmarking & Logic Workflow. [ CLICK TO VIEW PROOF ]</p>
                     </div>
-                    <div class="stat-card" onclick="openModal('sentiment')">
-                        <span class="stat-label">Sentiment AI</span>
-                        <span class="stat-value">22K+</span>
-                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Data Points Analyzed. [Click for Evidence]</p>
+                    <!-- SENTIMENT -->
+                    <div class="loot-box" onclick="openEvidence('sentiment')">
+                        <div class="loot-tag">★ MARKET_INTEL</div>
+                        <p class="loot-title">SENTIMENT_AI</p>
+                        <p class="loot-desc">Multi-Game Sentiment Analysis & Hype Calendar. [ CLICK TO VIEW PROOF ]</p>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-label">Team Efficiency</span>
-                        <span class="stat-value">80%</span>
-                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Timeline Acceleration.</p>
+                    <div class="loot-box">
+                        <div class="loot-tag">★ EFFICIENCY_PERK</div>
+                        <p class="loot-title">80% BOOST</p>
+                        <p class="loot-desc">Accelerated AI engineering timeline via bottleneck resolution.</p>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- SECTION: TECH -->
-            <section id="tech" class="view-section">
-                <span class="section-tag">// TECHNICAL_PROFICIENCY</span>
-                <h1>The Stack.</h1>
-                <div class="glass-card" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
-                    <h3 style="color: var(--accent);">Python Sentiment Analysis Engine</h3>
-                    <p style="margin: 10px 0; font-size: 0.9rem; color: var(--text-secondary);">
-                        Custom scraper and analysis tool utilizing VADER and Google API for market intelligence.
-                    </p>
-                    <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; border: 1px solid var(--accent); padding: 4px 10px; border-radius: 4px;">SOURCE_CODE_AVAILABLE</span>
-                </div>
-                <div class="grid-stats" style="margin-top: 24px;">
-                    <div class="stat-card"><h3>Jira Agile</h3></div>
-                    <div class="stat-card"><h3>Prompt Eng.</h3></div>
-                    <div class="stat-card"><h3>Web Scraping</h3></div>
-                </div>
-            </section>
-
-            <!-- SECTION: ACADEMIC -->
-            <section id="academic" class="view-section">
-                <span class="section-tag">// ACADEMIC_FOUNDATION</span>
-                <h1>Logical Framework.</h1>
-                <div class="glass-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h2 style="font-weight: 800;">Universitas Gadjah Mada</h2>
-                        <span style="background: var(--emerald); color: black; font-weight: 800; font-size: 0.7rem; padding: 4px 12px; border-radius: 20px;">GPA 3.06</span>
+            <!-- PANEL: ARSENAL (REFINED) -->
+            <div id="arsenal" class="panel">
+                <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Arsenal Gear.</h2>
+                <div class="record-grid">
+                    <div class="gear-card rare" onclick="window.open('ibm-cert.jpg')">
+                        <div class="loot-tag">★ LEGENDARY</div>
+                        <h3>IBM_PROJECT_MGMT</h3>
+                        <p style="font-size:0.8rem; color:var(--dim); margin-top:10px;">Mastery in Strategic Planning & Risk Mitigation. ID: QXV93T9APC6A.</p>
                     </div>
-                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
-                        Bachelor of Philosophy. Specialized in Logic and Epistemology. 
-                        Applying philosophical rigor to high-stakes data ethics and product decision-making.
-                    </p>
-                    <button class="btn-primary" onclick="window.open('ijazah-ugm.jpg')">View Certification</button>
-                    <button class="btn-primary" onclick="window.open('ibm-cert.jpg')" style="background: none; border: 1px solid var(--border); color: var(--white); margin-left: 10px;">IBM Project Management</button>
+                    <div class="gear-card rare" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
+                        <div class="loot-tag">★ SOURCE_CODE</div>
+                        <h3>PYTHON_SCRAPER</h3>
+                        <p style="font-size:0.8rem; color:var(--dim); margin-top:10px;">Automated intel extraction via Google & Reddit API. [ VIEW NOTEBOOK ]</p>
+                    </div>
+                    <div class="gear-card">
+                        <h3>JIRA_AGILE_OPS</h3>
+                        <p style="font-size:0.8rem; color:var(--dim); margin-top:10px;">Managed AI iteration cycles and sprint transparency.</p>
+                    </div>
+                    <div class="gear-card">
+                        <h3>PROMPT_ENGINEERING</h3>
+                        <p style="font-size:0.8rem; color:var(--dim); margin-top:10px;">LLM output optimization for sentiment analysis precision.</p>
+                    </div>
                 </div>
-            </section>
-        </main>
+            </div>
+
+            <!-- PANEL: ACADEMIC -->
+            <div id="academic" class="panel">
+                <div style="border:1px solid var(--gold); padding:50px; background:rgba(251,191,36,0.05); border-radius:12px;">
+                    <p style="font-family:'JetBrains Mono'; color:var(--gold); letter-spacing:10px;">SOCIAL_LINK: MAX</p>
+                    <h2 style="font-family:'Archivo Black'; font-size:3.5rem; margin:20px 0;">PHILOSOPHY (UGM)</h2>
+                    <p style="font-size:1.2rem; line-height:2; color:var(--dim);">Agent Alif has mastered the application of <b>Logic & Epistemology</b>. Integrated philosophical reasoning into technical AI leadership. GPA: 3.06.</p>
+                    <button class="init-btn" style="border-color:var(--gold); color:var(--gold); margin-top:40px;" onclick="window.open('ijazah-ugm.jpg')">VIEW_DOCUMENT</button>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="showtime-btn" onclick="openContact()">SHOWTIME!</button>
     </div>
 
     <!-- EVIDENCE MODAL -->
-    <div id="modal" onclick="this.style.display='none'">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="modal-title" style="margin-bottom: 24px; font-weight: 800;"></h2>
-            <div id="modal-gallery"></div>
-            <button class="btn-primary" onclick="document.getElementById('modal').style.display='none'">Close Dossier</button>
+    <div id="evidence-modal" class="modal" onclick="this.style.display='none'">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <h2 id="ev-title" style="font-family:'Archivo Black'; font-size:2.5rem; margin-bottom:30px; color:var(--accent);"></h2>
+            <div id="ev-gallery" style="display:flex; flex-direction:column; gap:30px;"></div>
+            <button class="init-btn" style="margin-top:40px;" onclick="document.getElementById('evidence-modal').style.display='none'">[ CLOSE_DOSSIER ]</button>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal" class="modal" onclick="this.style.display='none'">
+        <div class="terminal" onclick="event.stopPropagation()">
+            <h2 style="font-family:'Archivo Black';">CO-OP_INITIATE</h2>
+            <hr style="border-color:var(--accent); margin:30px 0;">
+            <p style="font-size:1.5rem; font-weight:900;">📧 alifoctrio@gmail.com</p>
+            <p style="font-size:1.2rem; font-weight:900; margin-top:10px;">📱 +62 813-3670-0117</p>
+            <button class="init-btn" style="margin-top:50px; width:100%;" onclick="document.getElementById('contact-modal').style.display='none'">[ RETURN ]</button>
         </div>
     </div>
 
     <script>
-        function switchTab(btn, id) {
-            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(btn) btn.classList.add('active');
-            if(id === 'overview') initChart();
+        function igniteOS() {
+            document.getElementById('gateway').style.transform = 'translateY(-100%)';
+            document.getElementById('main-os').style.display = 'grid';
+            setTimeout(() => { document.getElementById('main-os').style.opacity = '1'; renderR(); }, 600);
         }
 
-        function openModal(type) {
-            const m = document.getElementById('modal');
-            const g = document.getElementById('modal-gallery');
-            const t = document.getElementById('modal-title');
+        function switchPanel(btn, id) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+            if(id === 'profile') renderR();
+        }
+
+        function openEvidence(type) {
+            const m = document.getElementById('evidence-modal');
+            const g = document.getElementById('ev-gallery');
+            const t = document.getElementById('ev-title');
             g.innerHTML = ''; m.style.display = 'block';
 
             if(type === 'scaling') {
-                t.innerText = "Performance Evidence: Scaling Results";
+                t.innerText = "SCALING: COD & DBD PERFORMANCE";
                 g.innerHTML = '<img class="modal-img" src="scaling1.png"><img class="modal-img" src="scaling2.png">';
             } else if(type === 'precision') {
-                t.innerText = "Technical Evidence: AI Benchmarking";
+                t.innerText = "ACCURACY: BENCHMARKING DATA";
                 g.innerHTML = '<img class="modal-img" src="bench1.png"><img class="modal-img" src="bench2.png">';
             } else if(type === 'sentiment') {
-                t.innerText = "Analytical Evidence: Sentiment Engine";
-                g.innerHTML = '<img class="modal-img" src="hype3.png"><img class="modal-img" src="hype1.png"><img class="modal-img" src="hype2.png"><img class="modal-img" src="hype4.png">';
+                t.innerText = "SENTIMENT AI & HYPE CALENDAR";
+                g.innerHTML = '<img class="modal-img" src="hype3.png"><img class="modal-img" src="hype1.png"><img class="modal-img" src="hype2.png"><img class="evidence-img" src="hype4.png">';
             }
         }
 
-        function initChart() {
+        function openContact() { document.getElementById('contact-modal').style.display = 'flex'; }
+
+        function renderR() {
             const ctx = document.getElementById('radarChart').getContext('2d');
-            if (window.myChart) window.myChart.destroy();
-            window.myChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['Strategy', 'AI Ops', 'Benchmark', 'Data', 'Logic'],
+                    labels: ['STRATEGY', 'AI_OPS', 'BENCHMARK', 'DATA', 'LOGIC'],
                     datasets: [{
                         data: [98, 90, 92, 85, 95],
-                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
-                        borderColor: '#38bdf8', borderWidth: 2, pointRadius: 0
+                        backgroundColor: 'rgba(34, 211, 238, 0.25)',
+                        borderColor: '#22d3ee', borderWidth: 4, pointRadius: 0
                     }]
                 },
-                options: {
-                    scales: {
-                        r: { grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { display: false }, pointLabels: { color: '#9ca3af', font: { size: 10 } }, ticks: { display: false }, min: 0, max: 100 }
-                    },
-                    plugins: { legend: { display: false } }
-                }
+                options: { scales: { r: { grid: { color: 'rgba(255,255,255,0.1)' }, pointLabels: { color: '#fff', font: { size: 10, family: 'Orbitron' } }, ticks: { display: false }, min: 0, max: 100 } }, plugins: { legend: { display: false } } }
             });
         }
-        window.onload = initChart;
     </script>
 </body>
 </html>
