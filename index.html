@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alif Octrio | Strategic Lead & AI Operations</title>
+    <title>Alif Octrio | Supreme Strategic Architect</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -14,48 +14,35 @@
             --text: #f8fafc; --dim: #94a3b8; --gold: #fbbf24;
             --border: rgba(255, 255, 255, 0.1);
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; }
-
         .bg-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 20%, #0c4a6e 0%, #020617 100%); }
         .grid-dynamic { position: fixed; inset: -50%; width: 200%; height: 200%; background-image: linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.1; transform: rotateX(45deg); animation: gridMove 60s linear infinite; z-index: -1; }
         @keyframes gridMove { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(50px); } }
-
         #gateway { position: fixed; inset: 0; z-index: 10000; background: var(--bg); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1.2s cubic-bezier(0.8, 0, 0.2, 1); }
         .gateway-title { font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 20px; }
         .init-btn { padding: 15px 40px; background: none; border: 2px solid var(--accent); color: var(--accent); font-family: 'JetBrains Mono'; font-weight: 700; cursor: pointer; transition: 0.3s; letter-spacing: 5px; }
-
         #main-os { display: none; opacity: 0; height: 100vh; padding: 40px; grid-template-columns: 320px 1fr; grid-template-rows: 80px 1fr; gap: 30px; transition: 1.5s; }
         header { grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding: 0 10px; }
         .header-title { font-family: 'Archivo Black'; font-size: 1.8rem; letter-spacing: -1px; }
-
         .sidebar { display: flex; flex-direction: column; gap: 10px; }
         .nav-btn { background: transparent; color: var(--dim); padding: 15px 20px; font-weight: 700; font-size: 0.8rem; border: 1px solid transparent; cursor: pointer; transition: 0.3s; text-align: left; letter-spacing: 1px; border-radius: 4px; }
         .nav-btn:hover, .nav-btn.active { background: rgba(34, 211, 238, 0.1); color: var(--accent); border-color: var(--accent); padding-left: 30px; }
-
-        .content-area { position: relative; }
-        .panel { display: none; position: absolute; inset: 0; background: var(--card); border: 1px solid var(--border); padding: 40px; overflow-y: auto; border-radius: 8px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .panel { display: none; position: absolute; inset: 0; background: var(--card); border: 1px solid var(--border); padding: 40px; overflow-y: auto; border-radius: 8px; }
         .panel.active { display: block; animation: panelFade 0.5s ease-out; }
         @keyframes panelFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
         .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 40px; }
-        .portrait-box { width: 100%; height: 380px; border-radius: 8px; border: 1px solid var(--accent); overflow: hidden; background: #000; }
+        .portrait-box { width: 100%; height: 380px; border-radius: 8px; border: 1px solid var(--accent); overflow: hidden; }
         .portrait-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .mission-card { background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); padding: 25px; margin-bottom: 20px; border-radius: 4px; }
+        .mission-card { background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); padding: 25px; margin-bottom: 20px; }
         .mission-card h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 10px; }
         .mission-list { padding-left: 20px; color: var(--dim); font-size: 0.85rem; line-height: 1.8; }
-
         .loot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .loot-box { background: #000; border: 1px solid var(--accent); padding: 30px; cursor: pointer; transition: 0.3s; }
-        .loot-box:hover { border-color: #fff; background: rgba(34, 211, 238, 0.05); transform: translateY(-5px); }
+        .loot-box:hover { border-color: #fff; transform: translateY(-5px); }
         .loot-tag { background: var(--accent); color: #000; padding: 4px 12px; font-weight: 900; font-size: 0.65rem; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 15px; font-family: 'JetBrains Mono'; text-transform: uppercase; }
         .loot-title { font-family: 'Archivo Black'; font-size: 2.2rem; margin-bottom: 5px; }
-
-        /* SHOWTIME DI KIRI */
         .showtime-btn { position: fixed; bottom: 40px; left: 40px; background: var(--accent); color: var(--bg); padding: 20px 60px; font-family: 'Archivo Black'; font-size: 2rem; border-radius: 4px; border: none; cursor: pointer; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); z-index: 5000; transition: 0.3s; font-style: italic; }
-
         #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 30000; padding: 50px; overflow-y: auto; }
         .modal-container { max-width: 1000px; margin: auto; text-align: center; }
         .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--accent); }
@@ -66,99 +53,74 @@
 
     <div id="gateway">
         <h1 class="gateway-title">ALIF OCTRIO</h1>
-        <button class="init-btn" onclick="igniteOS()">[ ENTER_TERMINAL ]</button>
+        <button class="init-btn" onclick="igniteOS()">[ START_TERMINAL ]</button>
     </div>
 
     <div id="main-os">
         <header>
-            <div class="header-title">ALIF_OCTRIO // STRATEGIC_INTELLIGENCE</div>
-            <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--accent);">LVL 03 // ARCHITECT</div>
+            <div class="header-title">ARCHITECT_OS // v41.0</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--accent);">STATUS: ONLINE // RANK_S</div>
         </header>
 
         <div class="sidebar">
             <button class="nav-btn active" onclick="switchPanel(this, 'profile')">01 // SUMMARY</button>
             <button class="nav-btn" onclick="switchPanel(this, 'missions')">02 // 4_MAJOR_MISSIONS</button>
-            <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // PERFORMANCE_RECORD</button>
+            <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // PERFORMANCE_LOG</button>
             <button class="nav-btn" onclick="switchPanel(this, 'arsenal')">04 // ARSENAL_&_SCRAPER</button>
             <button class="nav-btn" onclick="switchPanel(this, 'academic')">05 // ACADEMIC</button>
         </div>
 
         <div class="content-area">
+            <!-- PANEL: SUMMARY -->
             <div id="profile" class="panel active">
                 <div class="profile-grid">
                     <div>
                         <div class="portrait-box"><img src="alif.jpg" alt="Alif Octrio"></div>
-                        <div style="background:var(--accent); color:#000; padding:15px; text-align:center; margin-top:10px;"><h2>RANK S</h2></div>
                     </div>
                     <div>
                         <h2 style="font-family:'Archivo Black'; font-size:2.5rem;">Agent Summary.</h2>
-                        <p style="font-size:1rem; line-height:1.8; color:var(--dim); margin:20px 0;">Strategic Product Manager & AI Ops Lead. Expert in Competitive Intelligence and Technical Reverse-Engineering.</p>
+                        <p style="font-size:1rem; line-height:1.8; color:var(--dim); margin:20px 0;">Strategic Product Manager & AI Ops Lead. Expert in translating Technical R&D into high-scale products.</p>
                         <canvas id="radarChart" style="max-height: 250px;"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: 4 MISSIONS LENGKAP -->
+            <!-- PANEL: 4 MISSIONS -->
             <div id="missions" class="panel">
                 <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Strategic Missions.</h2>
-                
-                <div class="mission-card">
-                    <h3>MISSION 01: LEAD AI & DATA OPTIMIZATION (EKLIPSE.GG)</h3>
-                    <ul class="mission-list">
-                        <li>Increased operational success rate from 60% to 90%.</li>
-                        <li>Boosted AI team efficiency by ~80% through bottleneck resolution.</li>
-                        <li>Translated R&D experiments into high-impact production pipelines.</li>
-                    </ul>
-                </div>
-                <div class="mission-card">
-                    <h3>MISSION 02: AI TECH BENCHMARK LEAD (EKLIPSE.GG)</h3>
-                    <ul class="mission-list">
-                        <li>CONDUCTED REVERSE-ENGINEERING of competitor features to identify gaps.</li>
-                        <li>Delivered benchmarking insights that influenced AI feature prioritization.</li>
-                        <li>Reduced iteration cycles by identifying high-impact improvements early.</li>
-                    </ul>
-                </div>
-                <div class="mission-card">
-                    <h3>MISSION 03: PRODUCT MANAGER & STRATEGY (HYPE GAMES)</h3>
-                    <ul class="mission-list">
-                        <li>Developed KPI architectures supporting 400+ daily subscriptions.</li>
-                        <li>Engineered sentiment analysis frameworks for marketing pivots.</li>
-                        <li>Acted as a strategic bridge between Product, Marketing, and AI teams.</li>
-                    </ul>
-                </div>
-                <div class="mission-card">
-                    <h3>MISSION 04: AI DATA OPS STAFF (PT. MAINGAMES)</h3>
-                    <ul class="mission-list">
-                        <li>Improved system stability by 20% through rigorous dataset QA.</li>
-                        <li>Managed labeling validation, bounding box correction, and audits.</li>
-                        <li>Integrated user feedback loops for continuous data improvement.</li>
-                    </ul>
-                </div>
+                <div class="mission-card"><h3>01: LEAD AI & DATA OPTIMIZATION</h3><ul class="mission-list"><li>Success rates 60% → 90% via technical benchmarking.</li></ul></div>
+                <div class="mission-card"><h3>02: AI TECH BENCHMARK LEAD</h3><ul class="mission-list"><li>Reverse-engineered competitor features to identify technical gaps.</li></ul></div>
+                <div class="mission-card"><h3>03: PRODUCT MANAGER & STRATEGY</h3><ul class="mission-list"><li>Scaled operations to 400+ daily subscriptions.</li></ul></div>
+                <div class="mission-card"><h3>04: AI DATA OPS (PT. MAINGAMES)</h3><ul class="mission-list"><li>System stability +20% via rigorous training dataset QA.</li></ul></div>
             </div>
 
             <!-- PANEL: ACHIEVEMENTS -->
             <div id="achievements" class="panel">
                 <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Performance Log.</h2>
                 <div class="loot-grid">
-                    <div class="loot-box" onclick="openEvidence('scaling')"><span class="loot-tag">★ SCALING</span><p class="loot-title">400+</p><p>Daily Subs Reached. [VIEW PROOF]</p></div>
-                    <div class="loot-box" onclick="openEvidence('precision')"><span class="loot-tag">★ PRECISION</span><p class="loot-title">90%</p><p>AI Accuracy. [VIEW PROOF]</p></div>
-                    <div class="loot-box" onclick="openEvidence('sentiment')"><span class="loot-tag">★ ANALYSIS</span><p class="loot-title">22K+</p><p>Sentiment Data Points. [VIEW PROOF]</p></div>
+                    <div class="loot-box" onclick="openEvidence('scaling')"><span class="loot-tag">★ SCALING</span><p class="loot-title">400+</p><p>Daily Subs Reached. [VIEW]</p></div>
+                    <div class="loot-box" onclick="openEvidence('precision')"><span class="loot-tag">★ PRECISION</span><p class="loot-title">90%</p><p>AI Accuracy. [VIEW]</p></div>
+                    <div class="loot-box" onclick="openEvidence('sentiment')"><span class="loot-tag">★ ANALYSIS</span><p class="loot-title">22K+</p><p>Sentiment Data Points. [VIEW]</p></div>
                     <div class="loot-box"><span class="loot-tag">★ EFFICIENCY</span><p class="loot-title">80%</p><p>Timeline Acceleration.</p></div>
                 </div>
             </div>
 
-            <!-- PANEL: ARSENAL & SCRAPER CODE -->
+            <!-- PANEL: ARSENAL & SCRAPER (UPGRADED) -->
             <div id="arsenal" class="panel">
                 <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">The Arsenal.</h2>
-                <div class="gear-card rare" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
-                    <span class="loot-tag">★ MULTI_PLATFORM_SCRAPER</span>
-                    <h3>PYTHON OMNI-SCRAPER v1.0</h3>
-                    <p style="font-size:0.8rem; color:var(--dim); margin-top:10px;">Custom engine to extract comments from YouTube, Reddit, X, and TikTok via API Integration.</p>
-                    <button class="nav-btn" style="margin-top:10px; color:var(--accent);">[ CLICK TO VIEW SOURCE CODE ]</button>
+                <div class="mission-card" style="border-color:var(--gold); cursor:pointer;" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
+                    <span class="loot-tag">★ LEGENDARY_TOOL</span>
+                    <h3 style="color:var(--gold);">QUANTUM OMNI-SCRAPER v1.0</h3>
+                    <p style="font-size:0.9rem; color:var(--dim); margin-top:10px;">
+                        <b>Platforms:</b> YouTube, Reddit, X (Twitter), TikTok.<br>
+                        <b>Logic:</b> Automated sentiment extraction engine using Python, PRAW, and Google Cloud API.<br>
+                        <b>Outcome:</b> Processed 22,000+ data points for market intelligence.
+                    </p>
+                    <p style="color:var(--accent); font-weight:bold; margin-top:10px;">[ CLICK TO OPEN SOURCE CODE ON GITHUB ]</p>
                 </div>
                 <div class="loot-grid" style="margin-top:20px;">
-                    <div class="gear-card"><h3>IBM_PROJECT_MGMT</h3></div>
-                    <div class="gear-card"><h3>JIRA_AGILE</h3></div>
+                    <div class="loot-box"><h3>IBM_PROJECT_MGMT</h3></div>
+                    <div class="loot-box"><h3>JIRA_AGILE</h3></div>
                 </div>
             </div>
 
@@ -166,7 +128,6 @@
             <div id="academic" class="panel">
                 <div style="border:1px solid var(--gold); padding:40px; background:rgba(251,191,36,0.05);">
                     <h2 style="font-family:'Archivo Black'; font-size:3rem;">PHILOSOPHY (UGM)</h2>
-                    <p style="margin:20px 0; color:var(--dim);">Mastered Logic & Ethics. Applying Philosophical frameworks to AI leadership.</p>
                     <button class="init-btn" style="border-color:var(--gold); color:var(--gold);" onclick="window.open('ijazah-ugm.jpg')">VIEW IJAZAH</button>
                 </div>
             </div>
@@ -175,7 +136,7 @@
         <button class="showtime-btn" onclick="alert('Contact: alifoctrio@gmail.com')">SHOWTIME!</button>
     </div>
 
-    <!-- EVIDENCE MODAL -->
+    <!-- MODAL -->
     <div id="evidence-modal" class="modal" onclick="this.style.display='none'">
         <div class="modal-container" onclick="event.stopPropagation()">
             <h2 id="ev-title" style="font-family:'Archivo Black'; font-size:2rem; margin-bottom:30px; color:var(--accent);"></h2>
