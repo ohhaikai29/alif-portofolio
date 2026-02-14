@@ -3,707 +3,1033 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alif Octrio | Strategic Product Manager & AI Operations Lead</title>
+    <title>ALIF OCTRIO | Strategic Architect</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        :root {
-            --bg: #0a0e27;
-            --card: #151a2e;
-            --accent: #4f9cf9;
-            --accent-dim: #3b7dd4;
-            --text: #e8ecf5;
-            --text-dim: #9aa5b9;
-            --border: rgba(255, 255, 255, 0.08);
-            --gold: #f5a623;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        
+
+        :root {
+            --neon-cyan: #00fff9;
+            --neon-pink: #ff006e;
+            --neon-purple: #8b5cf6;
+            --dark-bg: #0a0e27;
+            --darker-bg: #050714;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --text-primary: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--darker-bg);
+            color: var(--text-primary);
             overflow-x: hidden;
         }
-        
-        .bg-grid {
+
+        /* Animated Background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(125deg, #050714 0%, #0a0e27 50%, #1a1f3a 100%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 249, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 249, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* Gateway Screen */
+        #gateway {
             position: fixed;
             inset: 0;
-            background-image: 
-                linear-gradient(rgba(79, 156, 249, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(79, 156, 249, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            opacity: 0.4;
+            background: var(--darker-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 1s ease, transform 1s ease;
         }
-        
-        header {
-            max-width: 1200px;
+
+        #gateway.hidden {
+            opacity: 0;
+            transform: scale(1.2);
+            pointer-events: none;
+        }
+
+        .gateway-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glowPulse 3s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 249, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(0, 255, 249, 0.8)); }
+        }
+
+        .gateway-subtitle {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+
+        .initiate-btn {
+            padding: 1.5rem 4rem;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .initiate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--neon-cyan);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .initiate-btn:hover::before {
+            left: 0;
+        }
+
+        .initiate-btn:hover {
+            color: var(--darker-bg);
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+
+        /* Main Interface */
+        #main-interface {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        #main-interface.active {
+            opacity: 1;
+        }
+
+        /* Header */
+        .cyber-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(0, 255, 249, 0.3);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 7, 20, 0.8);
+        }
+
+        .header-content {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
         }
-        
+
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
-        
-        nav {
+
+        .status-bar {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
             display: flex;
             gap: 2rem;
-        }
-        
-        nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-        
-        nav a:hover {
-            color: var(--accent);
-        }
-        
-        .hero {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
             align-items: center;
         }
-        
-        .hero-content h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .hero-content .subtitle {
-            font-size: 1.25rem;
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: blink 2s ease infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
             color: var(--text-dim);
             margin-bottom: 2rem;
+            line-height: 1.6;
         }
-        
-        .cta-group {
+
+        .cta-buttons {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
         }
-        
-        .btn {
-            padding: 0.85rem 1.75rem;
-            border-radius: 6px;
-            font-weight: 600;
+
+        .cyber-btn {
+            padding: 1rem 2rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
             text-decoration: none;
-            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
             cursor: pointer;
             border: none;
-            font-size: 1rem;
         }
-        
-        .btn-primary {
-            background: var(--accent);
-            color: white;
+
+        .cyber-btn-primary {
+            background: var(--neon-cyan);
+            color: var(--darker-bg);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
-        
-        .btn-primary:hover {
-            background: var(--accent-dim);
-            transform: translateY(-2px);
+
+        .cyber-btn-primary:hover {
+            box-shadow: 0 0 30px var(--neon-cyan);
+            transform: translateY(-3px);
         }
-        
-        .btn-secondary {
+
+        .cyber-btn-secondary {
             background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
-        
-        .btn-secondary:hover {
-            background: rgba(79, 156, 249, 0.1);
+
+        .cyber-btn-secondary:hover {
+            background: rgba(0, 255, 249, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
         }
-        
-        .hero-visual {
+
+        /* Profile Card */
+        .profile-display {
             position: relative;
-            height: 400px;
         }
-        
-        .profile-card {
+
+        .profile-frame {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 3/4;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .profile-frame::before {
+            content: '';
             position: absolute;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            inset: -10px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(20px);
         }
-        
+
         .profile-img {
-            width: 280px;
-            height: 320px;
-            border-radius: 8px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 2px solid var(--accent);
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            border: 2px solid var(--neon-cyan);
         }
-        
-        .stats {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
+
+        /* Stats Grid */
+        .stats-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
-        
+
         .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
             padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s;
+            border: 1px solid rgba(0, 255, 249, 0.2);
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
-        
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
         .stat-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.2);
             transform: translateY(-5px);
-            border-color: var(--accent);
         }
-        
+
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(0, 255, 249, 0.5);
         }
-        
+
         .stat-label {
             color: var(--text-dim);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
-        
+
+        /* Section Styling */
         .section {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
         }
-        
+
         .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            display: inline-block;
         }
-        
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), transparent);
+        }
+
+        /* Experience Cards */
         .experience-grid {
             display: grid;
             gap: 2rem;
         }
-        
+
         .experience-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: 8px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 249, 0.2);
+            border-left: 4px solid var(--neon-cyan);
             padding: 2rem;
-            transition: all 0.3s;
+            clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px);
+            transition: all 0.3s ease;
         }
-        
+
         .experience-card:hover {
-            border-left-color: var(--gold);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            border-left-color: var(--neon-pink);
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.1);
+            transform: translateX(10px);
         }
-        
+
         .experience-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
-        
+
         .experience-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
         }
-        
-        .experience-company {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        
+
         .experience-period {
-            color: var(--text-dim);
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-pink);
             font-size: 0.9rem;
         }
-        
+
+        .experience-company {
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
         .experience-description {
             color: var(--text-dim);
-            margin-top: 1rem;
             line-height: 1.7;
+            margin-bottom: 1rem;
         }
-        
+
         .achievement-list {
-            margin-top: 1rem;
-            padding-left: 1.25rem;
+            list-style: none;
+            padding-left: 0;
         }
-        
+
         .achievement-list li {
             color: var(--text-dim);
+            padding-left: 1.5rem;
+            position: relative;
             margin-bottom: 0.5rem;
         }
-        
+
+        .achievement-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+        }
+
+        /* Skills Section */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
-        
+
         .skill-category {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 249, 0.2);
             padding: 2rem;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
         }
-        
+
         .skill-category h3 {
-            color: var(--accent);
-            margin-bottom: 1.25rem;
-            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
         }
-        
+
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
         }
-        
+
         .skill-tag {
-            background: rgba(79, 156, 249, 0.1);
-            color: var(--accent);
+            background: rgba(0, 255, 249, 0.1);
+            border: 1px solid rgba(0, 255, 249, 0.3);
+            color: var(--neon-cyan);
             padding: 0.5rem 1rem;
-            border-radius: 6px;
             font-size: 0.9rem;
-            border: 1px solid rgba(79, 156, 249, 0.2);
+            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+            transition: all 0.3s ease;
         }
-        
+
+        .skill-tag:hover {
+            background: rgba(0, 255, 249, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 249, 0.3);
+        }
+
+        /* Projects */
         .project-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 249, 0.2);
             padding: 2rem;
             margin-bottom: 2rem;
-            transition: all 0.3s;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 255, 249, 0.1), transparent);
+            transform: translate(50%, -50%);
+        }
+
         .project-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-color: var(--neon-pink);
+            box-shadow: 0 10px 40px rgba(0, 255, 249, 0.2);
         }
-        
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-        
+
         .project-badge {
-            background: var(--gold);
-            color: var(--bg);
-            padding: 0.35rem 0.85rem;
-            border-radius: 4px;
+            display: inline-block;
+            background: var(--neon-pink);
+            color: var(--darker-bg);
+            padding: 0.3rem 1rem;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
-            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 1rem;
+            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
         }
-        
+
         .project-title {
-            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
             font-weight: 700;
+            color: var(--neon-cyan);
             margin-bottom: 0.5rem;
         }
-        
+
         .project-tech {
-            color: var(--text-dim);
+            color: var(--neon-purple);
+            font-family: 'Share Tech Mono', monospace;
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
-        
+
         .project-description {
             color: var(--text-dim);
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
-        
+
         .project-link {
-            color: var(--accent);
+            color: var(--neon-cyan);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            transition: all 0.3s ease;
         }
-        
+
         .project-link:hover {
-            text-decoration: underline;
+            color: var(--neon-pink);
+            gap: 1rem;
         }
-        
+
+        /* Chart Container */
         .chart-container {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 249, 0.2);
             padding: 2rem;
             margin-top: 2rem;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
         }
-        
-        footer {
-            max-width: 1200px;
+
+        /* Footer */
+        .cyber-footer {
+            max-width: 1400px;
             margin: 4rem auto 2rem;
-            padding: 2rem 1.5rem;
-            border-top: 1px solid var(--border);
+            padding: 2rem;
+            border-top: 1px solid rgba(0, 255, 249, 0.3);
             text-align: center;
-            color: var(--text-dim);
         }
-        
+
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
-        
+
         .footer-links a {
-            color: var(--text-dim);
+            color: var(--neon-cyan);
             text-decoration: none;
-            transition: color 0.3s;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
         }
-        
+
         .footer-links a:hover {
-            color: var(--accent);
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
         }
-        
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero {
+            .hero-section {
                 grid-template-columns: 1fr;
             }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
+
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
-            
+
             .skills-grid {
                 grid-template-columns: 1fr;
             }
-            
-            nav {
-                display: none;
+
+            .gateway-logo {
+                font-size: 2.5rem;
             }
-            
-            .hero-content h1 {
+
+            .initiate-btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .section-title {
                 font-size: 2rem;
             }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-purple);
         }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    
-    <header>
-        <div class="logo">ALIF OCTRIO</div>
-        <nav>
-            <a href="#experience">Experience</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Strategic Product Manager & AI Operations Lead</h1>
-            <p class="subtitle">Transforming technical R&D into scalable, high-impact products through data-driven strategy and AI optimization.</p>
-            <div class="cta-group">
-                <a href="mailto:alifoctrio@gmail.com" class="btn btn-primary">Get in Touch</a>
-                <a href="https://github.com/ohhaikai29" target="_blank" class="btn btn-secondary">View GitHub</a>
+    <div class="cyber-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Gateway Screen -->
+    <div id="gateway">
+        <div class="gateway-logo">ALIF OCTRIO</div>
+        <div class="gateway-subtitle">Strategic Architect</div>
+        <button class="initiate-btn" onclick="initializeSystem()">[ INITIATE SYSTEM ]</button>
+    </div>
+
+    <!-- Main Interface -->
+    <div id="main-interface">
+        <header class="cyber-header">
+            <div class="header-content">
+                <div class="logo">ALIF OCTRIO</div>
+                <div class="status-bar">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>SYSTEM ONLINE</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span>RANK: S-CLASS</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="hero-visual">
-            <div class="profile-card">
-                <img src="alif.jpg" alt="Alif Octrio" class="profile-img">
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>STRATEGIC PRODUCT MANAGER & AI OPERATIONS LEAD</h1>
+                <p class="hero-subtitle">
+                    Transforming technical R&D into scalable, high-impact products through data-driven strategy and AI optimization.
+                </p>
+                <div class="cta-buttons">
+                    <a href="mailto:alifoctrio@gmail.com" class="cyber-btn cyber-btn-primary">ENGAGE</a>
+                    <a href="https://github.com/ohhaikai29" target="_blank" class="cyber-btn cyber-btn-secondary">GITHUB ARCHIVE</a>
+                </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="stats">
-        <div class="stat-card">
-            <div class="stat-number">400+</div>
-            <div class="stat-label">Daily Subscriptions Scaled</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">90%</div>
-            <div class="stat-label">AI Model Accuracy</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">22K+</div>
-            <div class="stat-label">Data Points Analyzed</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">20%</div>
-            <div class="stat-label">System Stability Increase</div>
-        </div>
-    </section>
-    
-    <section id="experience" class="section">
-        <h2 class="section-title">Professional Experience</h2>
-        <div class="experience-grid">
+            <div class="profile-display">
+                <div class="profile-frame">
+                    <img src="alif.jpg" alt="Alif Octrio" class="profile-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">400+</div>
+                    <div class="stat-label">Daily Subscriptions Scaled</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">AI Model Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">22K+</div>
+                    <div class="stat-label">Data Points Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20%</div>
+                    <div class="stat-label">System Stability Increase</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="section">
+            <h2 class="section-title">Mission Log</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">LEAD AI & DATA OPTIMIZATION</h3>
+                            <p class="experience-company">Product Development</p>
+                        </div>
+                        <span class="experience-period">2024</span>
+                    </div>
+                    <p class="experience-description">
+                        Spearheaded AI model optimization initiatives, improving success rates from 60% to 90% through systematic technical benchmarking and iterative refinement.
+                    </p>
+                    <ul class="achievement-list">
+                        <li>Implemented rigorous A/B testing framework for model evaluation</li>
+                        <li>Reduced false positive rates by 30% through data quality improvements</li>
+                        <li>Established automated monitoring pipelines for model performance</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">AI TECH BENCHMARK LEAD</h3>
+                            <p class="experience-company">Competitive Intelligence</p>
+                        </div>
+                        <span class="experience-period">2024</span>
+                    </div>
+                    <p class="experience-description">
+                        Conducted comprehensive competitive analysis through reverse engineering competitor features to identify market gaps and technical opportunities.
+                    </p>
+                    <ul class="achievement-list">
+                        <li>Analyzed 15+ competitor products to map technical capabilities</li>
+                        <li>Identified 8 critical feature gaps enabling strategic product positioning</li>
+                        <li>Delivered actionable intelligence reports to executive leadership</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">PRODUCT MANAGER & STRATEGY</h3>
+                            <p class="experience-company">Growth & Operations</p>
+                        </div>
+                        <span class="experience-period">2023-2024</span>
+                    </div>
+                    <p class="experience-description">
+                        Led product strategy and execution, scaling daily subscription operations to 400+ through data-driven optimization and cross-functional collaboration.
+                    </p>
+                    <ul class="achievement-list">
+                        <li>Achieved 4x growth in daily active subscriptions within 6 months</li>
+                        <li>Implemented analytics framework tracking 25+ product KPIs</li>
+                        <li>Coordinated cross-functional teams across engineering, design, and marketing</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">AI DATA OPERATIONS SPECIALIST</h3>
+                            <p class="experience-company">PT. Maingames Indonesia</p>
+                        </div>
+                        <span class="experience-period">2023</span>
+                    </div>
+                    <p class="experience-description">
+                        Enhanced system reliability through rigorous training dataset quality assurance, achieving 20% improvement in system stability metrics.
+                    </p>
+                    <ul class="achievement-list">
+                        <li>Developed automated data validation pipelines</li>
+                        <li>Reduced model drift incidents by 35% through proactive monitoring</li>
+                        <li>Established data quality standards adopted company-wide</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>PRODUCT STRATEGY</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Roadmap Planning</span>
+                        <span class="skill-tag">Market Analysis</span>
+                        <span class="skill-tag">KPI Tracking</span>
+                        <span class="skill-tag">Agile/Scrum</span>
+                        <span class="skill-tag">JIRA</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>AI & DATA</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Data Analytics</span>
+                        <span class="skill-tag">ML Operations</span>
+                        <span class="skill-tag">Sentiment Analysis</span>
+                        <span class="skill-tag">NLTK/VADER</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>TOOLS & PLATFORMS</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">IBM Project Mgmt</span>
+                        <span class="skill-tag">Google Cloud</span>
+                        <span class="skill-tag">APIs (REST)</span>
+                        <span class="skill-tag">Web Scraping</span>
+                        <span class="skill-tag">Git/GitHub</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="skillsChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <h2 class="section-title">Featured Operations</h2>
+
+            <div class="project-card">
+                <span class="project-badge">★ PRIMARY</span>
+                <h3 class="project-title">Multi-Platform Sentiment Analysis System</h3>
+                <p class="project-tech">Python • PRAW • YouTube API • NLTK • Pandas</p>
+                <p class="project-description">
+                    Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7 release, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.
+                </p>
+                <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">
+                    ACCESS SOURCE CODE →
+                </a>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">AI Model Benchmarking Framework</h3>
+                <p class="project-tech">Python • Data Analysis • Visualization</p>
+                <p class="project-description">
+                    Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% → 90% accuracy improvement.
+                </p>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <h2 class="section-title">Academic Archives</h2>
             <div class="experience-card">
                 <div class="experience-header">
                     <div>
-                        <h3 class="experience-title">Lead AI & Data Optimization</h3>
-                        <p class="experience-company">Product Development</p>
+                        <h3 class="experience-title">BACHELOR OF PHILOSOPHY</h3>
+                        <p class="experience-company">Universitas Gadjah Mada (UGM)</p>
                     </div>
-                    <span class="experience-period">2024</span>
                 </div>
                 <p class="experience-description">
-                    Spearheaded AI model optimization initiatives, improving success rates from 60% to 90% through systematic technical benchmarking and iterative refinement.
+                    Developed strong analytical and critical thinking skills through rigorous philosophical training, directly applicable to product strategy and decision-making frameworks.
                 </p>
-                <ul class="achievement-list">
-                    <li>Implemented rigorous A/B testing framework for model evaluation</li>
-                    <li>Reduced false positive rates by 30% through data quality improvements</li>
-                    <li>Established automated monitoring pipelines for model performance</li>
-                </ul>
+                <a href="ijazah-ugm.jpg" target="_blank" class="project-link" style="margin-top: 1rem; display: inline-flex;">
+                    VIEW CERTIFICATE →
+                </a>
             </div>
-            
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">AI Technology Benchmark Lead</h3>
-                        <p class="experience-company">Competitive Intelligence</p>
-                    </div>
-                    <span class="experience-period">2024</span>
-                </div>
-                <p class="experience-description">
-                    Conducted comprehensive competitive analysis through reverse engineering competitor features to identify market gaps and technical opportunities.
-                </p>
-                <ul class="achievement-list">
-                    <li>Analyzed 15+ competitor products to map technical capabilities</li>
-                    <li>Identified 8 critical feature gaps enabling strategic product positioning</li>
-                    <li>Delivered actionable intelligence reports to executive leadership</li>
-                </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer class="cyber-footer">
+            <div class="footer-links">
+                <a href="mailto:alifoctrio@gmail.com">EMAIL</a>
+                <a href="https://github.com/ohhaikai29" target="_blank">GITHUB</a>
+                <a href="https://linkedin.com/in/alifoctrio" target="_blank">LINKEDIN</a>
             </div>
-            
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">Product Manager & Strategy</h3>
-                        <p class="experience-company">Growth & Operations</p>
-                    </div>
-                    <span class="experience-period">2023-2024</span>
-                </div>
-                <p class="experience-description">
-                    Led product strategy and execution, scaling daily subscription operations to 400+ through data-driven optimization and cross-functional collaboration.
-                </p>
-                <ul class="achievement-list">
-                    <li>Achieved 4x growth in daily active subscriptions within 6 months</li>
-                    <li>Implemented analytics framework tracking 25+ product KPIs</li>
-                    <li>Coordinated cross-functional teams across engineering, design, and marketing</li>
-                </ul>
-            </div>
-            
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">AI Data Operations Specialist</h3>
-                        <p class="experience-company">PT. Maingames Indonesia</p>
-                    </div>
-                    <span class="experience-period">2023</span>
-                </div>
-                <p class="experience-description">
-                    Enhanced system reliability through rigorous training dataset quality assurance, achieving 20% improvement in system stability metrics.
-                </p>
-                <ul class="achievement-list">
-                    <li>Developed automated data validation pipelines</li>
-                    <li>Reduced model drift incidents by 35% through proactive monitoring</li>
-                    <li>Established data quality standards adopted company-wide</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    
-    <section id="skills" class="section">
-        <h2 class="section-title">Technical Expertise</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3>Product Strategy</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Roadmap Planning</span>
-                    <span class="skill-tag">Market Analysis</span>
-                    <span class="skill-tag">KPI Tracking</span>
-                    <span class="skill-tag">Agile/Scrum</span>
-                    <span class="skill-tag">JIRA</span>
-                </div>
-            </div>
-            
-            <div class="skill-category">
-                <h3>AI & Data</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">Data Analytics</span>
-                    <span class="skill-tag">ML Operations</span>
-                    <span class="skill-tag">Sentiment Analysis</span>
-                    <span class="skill-tag">NLTK/VADER</span>
-                </div>
-            </div>
-            
-            <div class="skill-category">
-                <h3>Tools & Platforms</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">IBM Project Mgmt</span>
-                    <span class="skill-tag">Google Cloud</span>
-                    <span class="skill-tag">APIs (REST)</span>
-                    <span class="skill-tag">Web Scraping</span>
-                    <span class="skill-tag">Git/GitHub</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="chart-container">
-            <canvas id="skillsChart"></canvas>
-        </div>
-    </section>
-    
-    <section id="projects" class="section">
-        <h2 class="section-title">Featured Projects</h2>
-        
-        <div class="project-card">
-            <div class="project-header">
-                <div>
-                    <h3 class="project-title">Multi-Platform Sentiment Analysis System</h3>
-                    <p class="project-tech">Python • PRAW • YouTube API • NLTK • Pandas</p>
-                </div>
-                <span class="project-badge">Featured</span>
-            </div>
-            <p class="project-description">
-                Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7 release, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.
+            <p style="font-family: 'Share Tech Mono', monospace; color: var(--text-dim);">
+                © 2025 ALIF OCTRIO // ALL SYSTEMS OPERATIONAL
             </p>
-            <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">
-                View Source Code →
-            </a>
-        </div>
-        
-        <div class="project-card">
-            <div class="project-header">
-                <div>
-                    <h3 class="project-title">AI Model Benchmarking Framework</h3>
-                    <p class="project-tech">Python • Data Analysis • Visualization</p>
-                </div>
-            </div>
-            <p class="project-description">
-                Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% → 90% accuracy improvement.
-            </p>
-        </div>
-    </section>
-    
-    <section id="contact" class="section">
-        <h2 class="section-title">Education</h2>
-        <div class="experience-card">
-            <div class="experience-header">
-                <div>
-                    <h3 class="experience-title">Bachelor of Philosophy</h3>
-                    <p class="experience-company">Universitas Gadjah Mada (UGM)</p>
-                </div>
-            </div>
-            <p class="experience-description">
-                Developed strong analytical and critical thinking skills through rigorous philosophical training, directly applicable to product strategy and decision-making frameworks.
-            </p>
-            <a href="ijazah-ugm.jpg" target="_blank" class="project-link" style="margin-top: 1rem; display: inline-flex;">
-                View Certificate →
-            </a>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="footer-links">
-            <a href="mailto:alifoctrio@gmail.com">Email</a>
-            <a href="https://github.com/ohhaikai29" target="_blank">GitHub</a>
-            <a href="https://linkedin.com/in/alifoctrio" target="_blank">LinkedIn</a>
-        </div>
-        <p>&copy; 2025 Alif Octrio. All rights reserved.</p>
-    </footer>
-    
+        </footer>
+    </div>
+
     <script>
-        const ctx = document.getElementById('skillsChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: ['Product Strategy', 'AI Operations', 'Data Analysis', 'Technical Benchmarking', 'Cross-functional Leadership'],
-                datasets: [{
-                    label: 'Proficiency',
-                    data: [95, 90, 92, 88, 93],
-                    backgroundColor: 'rgba(79, 156, 249, 0.2)',
-                    borderColor: 'rgba(79, 156, 249, 1)',
-                    borderWidth: 3,
-                    pointBackgroundColor: 'rgba(79, 156, 249, 1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(79, 156, 249, 1)',
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    r: {
-                        min: 0,
-                        max: 100,
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 20,
-                            color: '#9aa5b9',
-                            backdropColor: 'transparent'
+        // Initialize System
+        function initializeSystem() {
+            const gateway = document.getElementById('gateway');
+            const mainInterface = document.getElementById('main-interface');
+
+            gateway.classList.add('hidden');
+            mainInterface.style.display = 'block';
+
+            setTimeout(() => {
+                mainInterface.classList.add('active');
+                renderSkillsChart();
+            }, 500);
+        }
+
+        // Skills Chart
+        function renderSkillsChart() {
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Product Strategy', 'AI Operations', 'Data Analysis', 'Technical Benchmarking', 'Cross-functional Leadership'],
+                    datasets: [{
+                        label: 'Proficiency Level',
+                        data: [95, 90, 92, 88, 93],
+                        backgroundColor: 'rgba(0, 255, 249, 0.2)',
+                        borderColor: 'rgba(0, 255, 249, 1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: 'rgba(0, 255, 249, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 255, 249, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 100,
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 20,
+                                color: '#94a3b8',
+                                backdropColor: 'transparent',
+                                font: {
+                                    family: 'Share Tech Mono'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 255, 249, 0.2)'
+                            },
+                            angleLines: {
+                                color: 'rgba(0, 255, 249, 0.2)'
+                            },
+                            pointLabels: {
+                                color: '#00fff9',
+                                font: {
+                                    size: 12,
+                                    family: 'Rajdhani',
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
                         },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        },
-                        pointLabels: {
-                            color: '#e8ecf5',
-                            font: {
-                                size: 12,
-                                family: 'Inter'
+                        tooltip: {
+                            backgroundColor: 'rgba(5, 7, 20, 0.95)',
+                            titleColor: '#00fff9',
+                            bodyColor: '#e2e8f0',
+                            borderColor: '#00fff9',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: false,
+                            titleFont: {
+                                family: 'Orbitron'
+                            },
+                            bodyFont: {
+                                family: 'Rajdhani'
                             }
                         }
                     }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(21, 26, 46, 0.95)',
-                        titleColor: '#4f9cf9',
-                        bodyColor: '#e8ecf5',
-                        borderColor: '#4f9cf9',
-                        borderWidth: 1,
-                        padding: 12,
-                        displayColors: false
-                    }
                 }
-            }
-        });
+            });
+        }
     </script>
 </body>
 </html>
