@@ -3,263 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIF OCTRIO | STRATEGIC INTELLIGENCE</title>
+    <title>Alif Octrio | Strategic Lead & AI Operations</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FONTS: Inter for cleanliness, JetBrains for tech accents -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            --bg: #020617; --card: #0f172a; --accent: #22d3ee; 
-            --text: #f8fafc; --dim: #94a3b8; --gold: #fbbf24;
+            --bg: #030712; /* Deep Black/Blue */
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --accent: #38bdf8; /* Sky Blue */
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border: rgba(255, 255, 255, 0.08);
+            --emerald: #10b981;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            background-color: var(--bg); color: var(--text); 
-            font-family: 'Inter', sans-serif; overflow-x: hidden;
+            background-color: var(--bg); 
+            color: var(--text-primary); 
+            font-family: 'Inter', sans-serif; 
+            line-height: 1.6;
+            overflow: hidden;
+            height: 100vh;
         }
 
-        /* --- MODERN TECH BG --- */
-        .bg-overlay {
+        /* --- BACKGROUND GRADIENT --- */
+        .ambient-bg {
             position: fixed; inset: 0; z-index: -1;
-            background-image: 
-                radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.05) 0%, transparent 40%);
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
         }
 
-        /* --- LAYOUT --- */
-        #main-ui {
-            display: grid; grid-template-columns: 300px 1fr;
-            min-height: 100vh; max-width: 1600px; margin: auto;
+        /* --- LAYOUT STRUCTURE --- */
+        #app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            height: 100vh;
+            max-width: 1400px;
+            margin: auto;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
         }
-        @media (max-width: 1024px) { #main-ui { grid-template-columns: 1fr; } }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR NAV --- */
         aside {
-            background: var(--card); border-right: 1px solid rgba(255,255,255,0.1);
-            padding: 40px; display: flex; flex-direction: column; gap: 30px;
+            background: rgba(3, 7, 18, 0.8);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border);
         }
-        .profile-img {
-            width: 100%; border-radius: 12px; border: 2px solid var(--accent);
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
-        }
-        .nav-link {
-            color: var(--dim); text-decoration: none; font-weight: 700;
-            font-size: 0.8rem; letter-spacing: 2px; padding: 12px 0;
-            border-bottom: 1px solid transparent; transition: 0.3s;
+
+        .identity { margin-bottom: 50px; }
+        .identity h2 { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .identity p { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 0.7rem; text-transform: uppercase; }
+
+        .nav-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 12px 0;
             cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .nav-link:hover, .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .nav-item:hover, .nav-item.active { color: var(--text-primary); }
+        .nav-item.active::before { content: ''; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
 
-        /* --- CONTENT AREA --- */
-        main { padding: 60px; position: relative; }
-        .section { display: none; animation: fadeIn 0.5s ease-out; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- MAIN CONTENT --- */
+        main { padding: 60px; overflow-y: auto; scroll-behavior: smooth; position: relative; }
 
-        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; }
-        .subtitle { color: var(--accent); font-family: 'JetBrains+Mono', monospace; font-size: 0.9rem; margin-bottom: 40px; }
+        .view-section { display: none; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .view-section.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- CARDS & LOOT --- */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        h1 { font-size: 3rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; }
+        .section-tag { font-family: 'JetBrains Mono'; color: var(--accent); font-size: 0.8rem; margin-bottom: 40px; display: block; }
 
-        .data-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            padding: 30px; border-radius: 8px; transition: 0.3s;
+        /* --- CARDS & GRIDS --- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            transition: 0.3s;
         }
-        .data-card:hover { border-color: var(--accent); background: rgba(34, 211, 238, 0.02); }
+        .glass-card:hover { border-color: rgba(56, 189, 248, 0.3); transform: translateY(-2px); }
+
+        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         
-        .metric { font-size: 2.5rem; font-weight: 900; color: var(--accent); }
-        .loot-tag { 
-            display: inline-block; background: rgba(34, 211, 238, 0.1); 
-            color: var(--accent); padding: 4px 12px; border-radius: 4px;
-            font-size: 0.7rem; font-weight: 900; margin: 5px 5px 0 0;
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        .stat-card:hover { background: rgba(56, 189, 248, 0.05); border-color: var(--accent); }
+        .stat-value { font-size: 2.2rem; font-weight: 800; color: var(--text-primary); display: block; }
+        .stat-label { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
 
         /* --- EVIDENCE MODAL --- */
-        .modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-            z-index: 1000; padding: 40px; overflow-y: auto;
+        #modal {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px);
+            padding: 60px; overflow-y: auto;
         }
         .modal-content { max-width: 1000px; margin: auto; }
-        .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--accent); }
+        .modal-img { width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
 
-        /* --- SHOWTIME --- */
-        .cta-btn {
-            background: var(--accent); color: var(--bg); padding: 15px 40px;
-            font-weight: 900; border-radius: 4px; border: none; cursor: pointer;
-            transition: 0.3s; margin-top: 30px;
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background: var(--text-primary); color: var(--bg);
+            padding: 14px 28px; border-radius: 8px; border: none;
+            font-weight: 700; font-size: 0.9rem; cursor: pointer;
+            transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
         }
-        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--accent); }
+        .btn-primary:hover { background: var(--accent); transform: scale(1.02); }
+
+        .profile-pic { width: 100%; height: 320px; border-radius: 12px; object-fit: cover; margin-bottom: 24px; border: 1px solid var(--border); }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div class="bg-overlay"></div>
+    <div class="ambient-bg"></div>
 
-    <div id="main-ui">
+    <div id="app-container">
+        <!-- NAVIGATION -->
         <aside>
-            <img src="alif.jpg" class="profile-img" alt="Alif Octrio">
-            <div style="text-align: center;">
-                <h2 style="font-size: 1.2rem;">ALIF OCTRIO</h2>
-                <p style="color: var(--dim); font-size: 0.7rem;">LVL 03 // ARCHITECT</p>
+            <div class="identity">
+                <h2>Alif Octrio</h2>
+                <p>Strategic Architect</p>
             </div>
-            <nav style="display: flex; flex-direction: column;">
-                <div class="nav-link active" onclick="switchTab(this, 'overview')">OVERVIEW</div>
-                <div class="nav-link" onclick="switchTab(this, 'missions')">STRATEGIC MISSIONS</div>
-                <div class="nav-link" onclick="switchTab(this, 'achievements')">PERFORMANCE LOG</div>
-                <div class="nav-link" onclick="switchTab(this, 'stack')">TECH STACK</div>
-                <div class="nav-link" onclick="switchTab(this, 'edu')">ACADEMIC</div>
+            <nav>
+                <div class="nav-item active" onclick="switchTab(this, 'overview')">Executive Summary</div>
+                <div class="nav-item" onclick="switchTab(this, 'experience')">Professional Experience</div>
+                <div class="nav-item" onclick="switchTab(this, 'outcomes')">Strategic Outcomes</div>
+                <div class="nav-item" onclick="switchTab(this, 'tech')">Technical Proficiency</div>
+                <div class="nav-item" onclick="switchTab(this, 'academic')">Academic Foundation</div>
             </nav>
+            <div style="margin-top: auto;">
+                <button class="btn-primary" onclick="alert('Contact: alifoctrio@gmail.com')">Get In Touch</button>
+            </div>
         </aside>
 
+        <!-- MAIN VIEW -->
         <main>
-            <!-- SECTION 1: OVERVIEW -->
-            <section id="overview" class="section active">
-                <h1>Intelligence Dossier.</h1>
-                <p class="subtitle">> DECRYPTING AGENT DATA // AUG 2022 - SEP 2025</p>
-                <div class="data-card">
-                    <p style="line-height: 1.8; color: var(--dim);">
-                        Strategic Product Manager & AI Operations Specialist. 
-                        Proven expertise in translating Technical R&D into scalable market solutions. 
-                        Foundation in Philosophy (UGM) providing high-level ethical and logical reasoning in data management.
+            <!-- SECTION: OVERVIEW -->
+            <section id="overview" class="view-section active">
+                <span class="section-tag">// EXECUTIVE_SUMMARY</span>
+                <h1>Engineering Value <br>through Data & Strategy.</h1>
+                <div class="glass-card" style="display: grid; grid-template-columns: 300px 1fr; gap: 40px;">
+                    <div>
+                        <img src="alif.jpg" class="profile-pic" alt="Portrait">
+                        <div class="stat-card" style="text-align: center;">
+                            <span class="stat-label">Seniority Level</span>
+                            <span class="stat-value">L3</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px;">
+                            Strategic Product Manager and AI Operations Specialist with 3.5 years of experience in high-growth gaming platforms. 
+                            Expert in translating complex technical signals into actionable business roadmaps.
+                        </p>
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: EXPERIENCE -->
+            <section id="experience" class="view-section">
+                <span class="section-tag">// PROFESSIONAL_EXPERIENCE</span>
+                <h1>Operational Record.</h1>
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--accent);">Lead AI & Data Optimization</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 15px;">Eklipse.gg | Apr 2024 - Sept 2025</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
+                        <li>Orchestrated end-to-end AI operations, scaling success rates from 60% to 90%.</li>
+                        <li>Directed multi-day technical benchmarking against market leaders.</li>
+                        <li>Translated R&D experiments into high-impact production pipelines.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--accent);">Product Manager & Market Strategy</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 15px;">Hype Games | Feb 2024 - Sept 2025</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
+                        <li>Developed KPI architectures supporting 400+ daily subscriptions.</li>
+                        <li>Engineered sentiment analysis frameworks to drive marketing pivot decisions.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION: OUTCOMES (LOOT) -->
+            <section id="outcomes" class="view-section">
+                <span class="section-tag">// STRATEGIC_OUTCOMES</span>
+                <h1>Quantifiable Impact.</h1>
+                <div class="grid-stats">
+                    <div class="stat-card" onclick="openModal('scaling')">
+                        <span class="stat-label">Product Scaling</span>
+                        <span class="stat-value">400+</span>
+                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Daily Subscriptions Scaled. [Click for Evidence]</p>
+                    </div>
+                    <div class="stat-card" onclick="openModal('precision')">
+                        <span class="stat-label">AI Accuracy</span>
+                        <span class="stat-value">90%</span>
+                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Benchmarked Precision Result. [Click for Evidence]</p>
+                    </div>
+                    <div class="stat-card" onclick="openModal('sentiment')">
+                        <span class="stat-label">Sentiment AI</span>
+                        <span class="stat-value">22K+</span>
+                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Data Points Analyzed. [Click for Evidence]</p>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Team Efficiency</span>
+                        <span class="stat-value">80%</span>
+                        <p style="font-size: 0.7rem; color: var(--text-secondary);">Timeline Acceleration.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: TECH -->
+            <section id="tech" class="view-section">
+                <span class="section-tag">// TECHNICAL_PROFICIENCY</span>
+                <h1>The Stack.</h1>
+                <div class="glass-card" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
+                    <h3 style="color: var(--accent);">Python Sentiment Analysis Engine</h3>
+                    <p style="margin: 10px 0; font-size: 0.9rem; color: var(--text-secondary);">
+                        Custom scraper and analysis tool utilizing VADER and Google API for market intelligence.
                     </p>
-                    <canvas id="radarChart" style="margin-top: 40px; max-height: 300px;"></canvas>
+                    <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; border: 1px solid var(--accent); padding: 4px 10px; border-radius: 4px;">SOURCE_CODE_AVAILABLE</span>
+                </div>
+                <div class="grid-stats" style="margin-top: 24px;">
+                    <div class="stat-card"><h3>Jira Agile</h3></div>
+                    <div class="stat-card"><h3>Prompt Eng.</h3></div>
+                    <div class="stat-card"><h3>Web Scraping</h3></div>
                 </div>
             </section>
 
-            <!-- SECTION 2: MISSIONS (FULL JOB DESC) -->
-            <section id="missions" class="section">
-                <h1>Strategic Missions.</h1>
-                <p class="subtitle">> OPERATIONAL HISTORY // EKLIPSE & MAINGAMES</p>
-                
-                <div class="data-card" style="margin-bottom: 20px;">
-                    <h3 style="color: var(--accent);">PM & MARKET STRATEGY (EKLIPSE)</h3>
-                    <p style="font-size: 0.8rem; margin: 10px 0; color: var(--dim);">Led strategic initiatives by translating AI capabilities into data-driven decisions. Developed KPI tracking for 400+ daily submissions.</p>
-                </div>
-                <div class="data-card" style="margin-bottom: 20px;">
-                    <h3 style="color: var(--accent);">AI TECH BENCHMARK LEAD</h3>
-                    <p style="font-size: 0.8rem; margin: 10px 0; color: var(--dim);">Increased operational success from 60% to 90%. Conducted reverse-engineering of competitor features to identify technical gaps.</p>
-                </div>
-                <div class="data-card">
-                    <h3 style="color: var(--accent);">AI DATA OPS (MAINGAMES)</h3>
-                    <p style="font-size: 0.8rem; margin: 10px 0; color: var(--dim);">Improved system stability by 20% through rigorous QA. Managed labeling validation and dataset audits.</p>
-                </div>
-            </section>
-
-            <!-- SECTION 3: ACHIEVEMENTS (THE LOOT) -->
-            <section id="achievements" class="section">
-                <h1>Performance Log.</h1>
-                <p class="subtitle">> QUANTIFIABLE IMPACT // CLICK CARDS TO EXTRACT DATA</p>
-                
-                <div class="grid-2">
-                    <div class="data-card" onclick="openModal('scaling')">
-                        <span class="loot-tag">★ SCALING</span>
-                        <div class="metric">400+</div>
-                        <p style="font-size: 0.8rem;">Daily Subscriptions Reached</p>
+            <!-- SECTION: ACADEMIC -->
+            <section id="academic" class="view-section">
+                <span class="section-tag">// ACADEMIC_FOUNDATION</span>
+                <h1>Logical Framework.</h1>
+                <div class="glass-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="font-weight: 800;">Universitas Gadjah Mada</h2>
+                        <span style="background: var(--emerald); color: black; font-weight: 800; font-size: 0.7rem; padding: 4px 12px; border-radius: 20px;">GPA 3.06</span>
                     </div>
-                    <div class="data-card" onclick="openModal('precision')">
-                        <span class="loot-tag">★ PRECISION</span>
-                        <div class="metric">90%</div>
-                        <p style="font-size: 0.8rem;">AI Detection Accuracy</p>
-                    </div>
-                    <div class="data-card" onclick="openModal('sentiment')">
-                        <span class="loot-tag">★ ANALYSIS</span>
-                        <div class="metric">22K+</div>
-                        <p style="font-size: 0.8rem;">Comments Analyzed via Sentiment AI</p>
-                    </div>
-                    <div class="data-card">
-                        <span class="loot-tag">★ EFFICIENCY</span>
-                        <div class="metric">80%</div>
-                        <p style="font-size: 0.8rem;">Boost in Team Productivity</p>
-                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        Bachelor of Philosophy. Specialized in Logic and Epistemology. 
+                        Applying philosophical rigor to high-stakes data ethics and product decision-making.
+                    </p>
+                    <button class="btn-primary" onclick="window.open('ijazah-ugm.jpg')">View Certification</button>
+                    <button class="btn-primary" onclick="window.open('ibm-cert.jpg')" style="background: none; border: 1px solid var(--border); color: var(--white); margin-left: 10px;">IBM Project Management</button>
                 </div>
             </section>
-
-            <!-- SECTION 4: STACK -->
-            <section id="stack" class="section">
-                <h1>Tech Stack.</h1>
-                <p class="subtitle">> TOOLS & REPOSITORY</p>
-                <div class="data-card" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
-                    <h3 style="color: var(--accent);">PYTHON SENTIMENT SCRAPER</h3>
-                    <p style="font-size: 0.8rem; margin: 10px 0; color: var(--dim);">Custom engine for market signal extraction. Integrated with Google & Reddit API.</p>
-                    <span class="loot-tag">VIEW SOURCE CODE</span>
-                </div>
-                <div class="grid-2" style="margin-top: 20px;">
-                    <div class="data-card"><h4>JIRA AGILE</h4></div>
-                    <div class="data-card"><h4>PROMPT ENGINEERING</h4></div>
-                </div>
-            </section>
-
-            <!-- SECTION 5: ACADEMIC -->
-            <section id="edu" class="section">
-                <h1>Academic.</h1>
-                <p class="subtitle">> UGM PHILOSOPHY // SOCIAL LINK MAX</p>
-                <div class="data-card">
-                    <h3>BACHELOR OF PHILOSOPHY</h3>
-                    <p style="margin: 15px 0; color: var(--dim);">Mastered Logic, Ethics, and Epistemology. Applying philosophical frameworks to AI decision making.</p>
-                    <button class="cta-btn" onclick="window.open('ijazah-ugm.jpg')">VIEW IJAZAH</button>
-                </div>
-            </section>
-
-            <button class="cta-btn" onclick="switchTab(null, 'overview')">CONTACT: alifoctrio@gmail.com</button>
         </main>
     </div>
 
-    <!-- MODAL -->
-    <div id="modal" class="modal" onclick="this.style.display='none'">
+    <!-- EVIDENCE MODAL -->
+    <div id="modal" onclick="this.style.display='none'">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="modal-title" style="margin-bottom: 20px;"></h2>
+            <h2 id="modal-title" style="margin-bottom: 24px; font-weight: 800;"></h2>
             <div id="modal-gallery"></div>
-            <button class="cta-btn" onclick="document.getElementById('modal').style.display='none'">CLOSE</button>
+            <button class="btn-primary" onclick="document.getElementById('modal').style.display='none'">Close Dossier</button>
         </div>
     </div>
 
     <script>
         function switchTab(btn, id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(btn) btn.classList.add('active');
-            if(id === 'overview') renderChart();
+            if(id === 'overview') initChart();
         }
 
         function openModal(type) {
             const m = document.getElementById('modal');
             const g = document.getElementById('modal-gallery');
             const t = document.getElementById('modal-title');
-            g.innerHTML = '';
-            m.style.display = 'block';
+            g.innerHTML = ''; m.style.display = 'block';
 
             if(type === 'scaling') {
-                t.innerText = "SCALING PROOF: COD & DBD";
+                t.innerText = "Performance Evidence: Scaling Results";
                 g.innerHTML = '<img class="modal-img" src="scaling1.png"><img class="modal-img" src="scaling2.png">';
             } else if(type === 'precision') {
-                t.innerText = "ACCURACY PROOF: R6 BENCHMARK";
+                t.innerText = "Technical Evidence: AI Benchmarking";
                 g.innerHTML = '<img class="modal-img" src="bench1.png"><img class="modal-img" src="bench2.png">';
             } else if(type === 'sentiment') {
-                t.innerText = "SENTIMENT ANALYSIS PROOF";
-                g.innerHTML = '<img class="modal-img" src="hype3.png"><img class="modal-img" src="hype1.png"><img class="modal-img" src="hype4.png">';
+                t.innerText = "Analytical Evidence: Sentiment Engine";
+                g.innerHTML = '<img class="modal-img" src="hype3.png"><img class="modal-img" src="hype1.png"><img class="modal-img" src="hype2.png"><img class="modal-img" src="hype4.png">';
             }
         }
 
-        function renderChart() {
-            const ctx = document.getElementById('radarChart');
-            new Chart(ctx, {
+        function initChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (window.myChart) window.myChart.destroy();
+            window.myChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['STRATEGY', 'AI_OPS', 'BENCHMARK', 'DATA', 'LOGIC'],
+                    labels: ['Strategy', 'AI Ops', 'Benchmark', 'Data', 'Logic'],
                     datasets: [{
                         data: [98, 90, 92, 85, 95],
-                        backgroundColor: 'rgba(34, 211, 238, 0.2)',
-                        borderColor: '#22d3ee', borderWidth: 2, pointRadius: 0
+                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                        borderColor: '#38bdf8', borderWidth: 2, pointRadius: 0
                     }]
                 },
-                options: { scales: { r: { grid: { color: 'rgba(255,255,255,0.05)' }, pointLabels: { color: '#94a3b8' }, ticks: { display: false }, min: 0, max: 100 } }, plugins: { legend: { display: false } } }
+                options: {
+                    scales: {
+                        r: { grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { display: false }, pointLabels: { color: '#9ca3af', font: { size: 10 } }, ticks: { display: false }, min: 0, max: 100 }
+                    },
+                    plugins: { legend: { display: false } }
+                }
             });
         }
-        window.onload = renderChart;
+        window.onload = initChart;
     </script>
 </body>
 </html>
