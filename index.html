@@ -10,46 +10,427 @@
 
     <style>
         :root {
-            --bg: #020617; --card: #0f172a; --accent: #22d3ee; 
-            --text: #f8fafc; --dim: #94a3b8; --gold: #fbbf24;
+            --bg: #020617; 
+            --card: #0f172a; 
+            --accent: #22d3ee; 
+            --text: #f8fafc; 
+            --dim: #94a3b8; 
+            --gold: #fbbf24;
             --border: rgba(255, 255, 255, 0.1);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; }
-        .bg-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 20%, #0c4a6e 0%, #020617 100%); }
-        .grid-dynamic { position: fixed; inset: -50%; width: 200%; height: 200%; background-image: linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.1; transform: rotateX(45deg); animation: gridMove 60s linear infinite; z-index: -1; }
-        @keyframes gridMove { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(50px); } }
-        #gateway { position: fixed; inset: 0; z-index: 10000; background: var(--bg); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1.2s cubic-bezier(0.8, 0, 0.2, 1); }
-        .gateway-title { font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 20px; }
-        .init-btn { padding: 15px 40px; background: none; border: 2px solid var(--accent); color: var(--accent); font-family: 'JetBrains Mono'; font-weight: 700; cursor: pointer; transition: 0.3s; letter-spacing: 5px; }
-        #main-os { display: none; opacity: 0; height: 100vh; padding: 40px; grid-template-columns: 320px 1fr; grid-template-rows: 80px 1fr; gap: 30px; transition: 1.5s; }
-        header { grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding: 0 10px; }
-        .header-title { font-family: 'Archivo Black'; font-size: 1.8rem; letter-spacing: -1px; }
-        .sidebar { display: flex; flex-direction: column; gap: 10px; }
-        .nav-btn { background: transparent; color: var(--dim); padding: 15px 20px; font-weight: 700; font-size: 0.8rem; border: 1px solid transparent; cursor: pointer; transition: 0.3s; text-align: left; letter-spacing: 1px; border-radius: 4px; }
-        .nav-btn:hover, .nav-btn.active { background: rgba(34, 211, 238, 0.1); color: var(--accent); border-color: var(--accent); padding-left: 30px; }
-        .panel { display: none; position: absolute; inset: 0; background: var(--card); border: 1px solid var(--border); padding: 40px; overflow-y: auto; border-radius: 8px; }
-        .panel.active { display: block; animation: panelFade 0.5s ease-out; }
-        @keyframes panelFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 40px; }
-        .portrait-box { width: 100%; height: 380px; border-radius: 8px; border: 1px solid var(--accent); overflow: hidden; }
-        .portrait-box img { width: 100%; height: 100%; object-fit: cover; }
-        .mission-card { background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); padding: 25px; margin-bottom: 20px; }
-        .mission-card h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 10px; }
-        .mission-list { padding-left: 20px; color: var(--dim); font-size: 0.85rem; line-height: 1.8; }
-        .loot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .loot-box { background: #000; border: 1px solid var(--accent); padding: 30px; cursor: pointer; transition: 0.3s; }
-        .loot-box:hover { border-color: #fff; transform: translateY(-5px); }
-        .loot-tag { background: var(--accent); color: #000; padding: 4px 12px; font-weight: 900; font-size: 0.65rem; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 15px; font-family: 'JetBrains Mono'; text-transform: uppercase; }
-        .loot-title { font-family: 'Archivo Black'; font-size: 2.2rem; margin-bottom: 5px; }
-        .showtime-btn { position: fixed; bottom: 40px; left: 40px; background: var(--accent); color: var(--bg); padding: 20px 60px; font-family: 'Archivo Black'; font-size: 2rem; border-radius: 4px; border: none; cursor: pointer; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); z-index: 5000; transition: 0.3s; font-style: italic; }
-        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 30000; padding: 50px; overflow-y: auto; }
-        .modal-container { max-width: 1000px; margin: auto; text-align: center; }
-        .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--accent); }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            min-height: 100vh; 
+        }
+        
+        .bg-overlay { 
+            position: fixed; 
+            inset: 0; 
+            z-index: -2; 
+            background: radial-gradient(circle at 20% 20%, #0c4a6e 0%, #020617 100%); 
+        }
+        
+        .grid-dynamic { 
+            position: fixed; 
+            inset: -50%; 
+            width: 200%; 
+            height: 200%; 
+            background-image: 
+                linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px); 
+            background-size: 50px 50px; 
+            opacity: 0.1; 
+            transform: rotateX(45deg); 
+            animation: gridMove 60s linear infinite; 
+            z-index: -1; 
+        }
+        
+        @keyframes gridMove { 
+            from { transform: rotateX(45deg) translateY(0); } 
+            to { transform: rotateX(45deg) translateY(50px); } 
+        }
+        
+        #gateway { 
+            position: fixed; 
+            inset: 0; 
+            z-index: 10000; 
+            background: var(--bg); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.6s ease; 
+        }
+        
+        .gateway-title { 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            font-weight: 900; 
+            letter-spacing: -3px; 
+            margin-bottom: 20px; 
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .init-btn { 
+            padding: 15px 40px; 
+            background: none; 
+            border: 2px solid var(--accent); 
+            color: var(--accent); 
+            font-family: 'JetBrains Mono', monospace; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            letter-spacing: 5px; 
+        }
+        
+        .init-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+            transform: scale(1.05);
+        }
+        
+        #main-os { 
+            display: none; 
+            opacity: 0; 
+            min-height: 100vh; 
+            padding: 20px;
+            transition: opacity 1.5s ease; 
+        }
+        
+        .os-grid {
+            display: grid; 
+            grid-template-columns: 1fr; 
+            grid-template-rows: auto auto 1fr; 
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            #main-os {
+                padding: 40px;
+            }
+            
+            .os-grid {
+                grid-template-columns: 280px 1fr;
+                grid-template-rows: 80px 1fr;
+                gap: 30px;
+            }
+        }
+        
+        header { 
+            grid-column: 1 / -1; 
+            display: flex; 
+            flex-direction: column;
+            gap: 10px;
+            justify-content: space-between; 
+            align-items: flex-start; 
+            border-bottom: 1px solid var(--border); 
+            padding: 0 10px 20px; 
+        }
+        
+        @media (min-width: 768px) {
+            header {
+                flex-direction: row;
+                align-items: center;
+                padding: 0 10px;
+            }
+        }
+        
+        .header-title { 
+            font-family: 'Archivo Black', sans-serif; 
+            font-size: clamp(1.2rem, 3vw, 1.8rem); 
+            letter-spacing: -1px; 
+        }
+        
+        .sidebar { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        
+        .nav-btn { 
+            background: transparent; 
+            color: var(--dim); 
+            padding: 15px 20px; 
+            font-weight: 700; 
+            font-size: 0.75rem; 
+            border: 1px solid transparent; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            text-align: left; 
+            letter-spacing: 1px; 
+            border-radius: 4px; 
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .nav-btn:hover, 
+        .nav-btn.active { 
+            background: rgba(34, 211, 238, 0.1); 
+            color: var(--accent); 
+            border-color: var(--accent); 
+            padding-left: 30px; 
+        }
+        
+        .content-area {
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .panel { 
+            display: none; 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            padding: 20px; 
+            overflow-y: auto; 
+            border-radius: 8px; 
+        }
+        
+        @media (min-width: 768px) {
+            .panel {
+                padding: 40px;
+            }
+        }
+        
+        .panel.active { 
+            display: block; 
+            animation: panelFade 0.5s ease-out; 
+        }
+        
+        @keyframes panelFade { 
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            } 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
+        }
+        
+        .profile-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 30px; 
+        }
+        
+        @media (min-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 300px 1fr;
+                gap: 40px;
+            }
+        }
+        
+        .portrait-box { 
+            width: 100%; 
+            max-width: 300px;
+            height: 380px; 
+            border-radius: 8px; 
+            border: 1px solid var(--accent); 
+            overflow: hidden; 
+            margin: 0 auto;
+            background: var(--bg);
+        }
+        
+        .portrait-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+        
+        .mission-card { 
+            background: rgba(255,255,255,0.02); 
+            border-left: 4px solid var(--accent); 
+            padding: 20px; 
+            margin-bottom: 20px; 
+        }
+        
+        @media (min-width: 768px) {
+            .mission-card {
+                padding: 25px;
+            }
+        }
+        
+        .mission-card h3 { 
+            color: var(--accent); 
+            font-size: 1rem; 
+            margin-bottom: 10px; 
+        }
+        
+        @media (min-width: 768px) {
+            .mission-card h3 {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .mission-list { 
+            padding-left: 20px; 
+            color: var(--dim); 
+            font-size: 0.85rem; 
+            line-height: 1.8; 
+        }
+        
+        .loot-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px; 
+        }
+        
+        @media (min-width: 768px) {
+            .loot-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+        }
+        
+        .loot-box { 
+            background: #000; 
+            border: 1px solid var(--accent); 
+            padding: 25px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+        
+        @media (min-width: 768px) {
+            .loot-box {
+                padding: 30px;
+            }
+        }
+        
+        .loot-box:hover { 
+            border-color: #fff; 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+        }
+        
+        .loot-tag { 
+            background: var(--accent); 
+            color: #000; 
+            padding: 4px 12px; 
+            font-weight: 900; 
+            font-size: 0.65rem; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 5px; 
+            margin-bottom: 15px; 
+            font-family: 'JetBrains Mono', monospace; 
+            text-transform: uppercase; 
+        }
+        
+        .loot-title { 
+            font-family: 'Archivo Black', sans-serif; 
+            font-size: 2rem; 
+            margin-bottom: 5px; 
+        }
+        
+        @media (min-width: 768px) {
+            .loot-title {
+                font-size: 2.2rem;
+            }
+        }
+        
+        .showtime-btn { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 20px; 
+            background: var(--accent); 
+            color: var(--bg); 
+            padding: 15px 40px; 
+            font-family: 'Archivo Black', sans-serif; 
+            font-size: 1.5rem; 
+            border-radius: 4px; 
+            border: none; 
+            cursor: pointer; 
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); 
+            z-index: 5000; 
+            transition: all 0.3s ease; 
+            font-style: italic; 
+        }
+        
+        @media (min-width: 768px) {
+            .showtime-btn {
+                bottom: 40px;
+                left: 40px;
+                padding: 20px 60px;
+                font-size: 2rem;
+            }
+        }
+        
+        .showtime-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.5);
+        }
+        
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.98); 
+            z-index: 30000; 
+            padding: 20px; 
+            overflow-y: auto; 
+        }
+        
+        @media (min-width: 768px) {
+            .modal {
+                padding: 50px;
+            }
+        }
+        
+        .modal-container { 
+            max-width: 1000px; 
+            margin: auto; 
+            text-align: center; 
+        }
+        
+        .modal-img { 
+            width: 100%; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--accent); 
+        }
+        
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 30001;
+        }
+        
+        .section-title {
+            font-family: 'Archivo Black', sans-serif; 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            margin-bottom: 30px;
+        }
+        
+        .radar-container {
+            max-height: 250px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="bg-layer"></div><div class="grid-dynamic"></div>
+    <div class="bg-overlay"></div>
+    <div class="grid-dynamic"></div>
 
     <div id="gateway">
         <h1 class="gateway-title">ALIF OCTRIO</h1>
@@ -57,98 +438,299 @@
     </div>
 
     <div id="main-os">
-        <header>
-            <div class="header-title">ARCHITECT_OS // v41.0</div>
-            <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--accent);">STATUS: ONLINE // RANK_S</div>
-        </header>
+        <div class="os-grid">
+            <header>
+                <div class="header-title">ARCHITECT_OS // v41.0</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent);">
+                    STATUS: ONLINE // RANK_S
+                </div>
+            </header>
 
-        <div class="sidebar">
-            <button class="nav-btn active" onclick="switchPanel(this, 'profile')">01 // SUMMARY</button>
-            <button class="nav-btn" onclick="switchPanel(this, 'missions')">02 // 4_MAJOR_MISSIONS</button>
-            <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // PERFORMANCE_LOG</button>
-            <button class="nav-btn" onclick="switchPanel(this, 'arsenal')">04 // ARSENAL_&_SCRAPER</button>
-            <button class="nav-btn" onclick="switchPanel(this, 'academic')">05 // ACADEMIC</button>
+            <div class="sidebar">
+                <button class="nav-btn active" onclick="switchPanel(this, 'profile')">01 // SUMMARY</button>
+                <button class="nav-btn" onclick="switchPanel(this, 'missions')">02 // 4_MAJOR_MISSIONS</button>
+                <button class="nav-btn" onclick="switchPanel(this, 'achievements')">03 // PERFORMANCE_LOG</button>
+                <button class="nav-btn" onclick="switchPanel(this, 'arsenal')">04 // ARSENAL_&_SCRAPER</button>
+                <button class="nav-btn" onclick="switchPanel(this, 'academic')">05 // ACADEMIC</button>
+            </div>
+
+            <div class="content-area">
+                <!-- PANEL: SUMMARY -->
+                <div id="profile" class="panel active">
+                    <div class="profile-grid">
+                        <div>
+                            <div class="portrait-box">
+                                <img src="alif.jpg" alt="Alif Octrio" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22380%22%3E%3Crect fill=%22%230f172a%22 width=%22300%22 height=%22380%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2220%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EALIF OCTRIO%3C/text%3E%3C/svg%3E'">
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="section-title">Agent Summary.</h2>
+                            <p style="font-size:1rem; line-height:1.8; color:var(--dim); margin:20px 0;">
+                                Strategic Product Manager & AI Ops Lead. Expert in translating Technical R&D into high-scale products.
+                            </p>
+                            <div class="radar-container">
+                                <canvas id="radarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL: 4 MISSIONS -->
+                <div id="missions" class="panel">
+                    <h2 class="section-title">Strategic Missions.</h2>
+                    <div class="mission-card">
+                        <h3>01: LEAD AI & DATA OPTIMIZATION</h3>
+                        <ul class="mission-list">
+                            <li>Success rates 60% → 90% via technical benchmarking.</li>
+                        </ul>
+                    </div>
+                    <div class="mission-card">
+                        <h3>02: AI TECH BENCHMARK LEAD</h3>
+                        <ul class="mission-list">
+                            <li>Reverse-engineered competitor features to identify technical gaps.</li>
+                        </ul>
+                    </div>
+                    <div class="mission-card">
+                        <h3>03: PRODUCT MANAGER & STRATEGY</h3>
+                        <ul class="mission-list">
+                            <li>Scaled operations to 400+ daily subscriptions.</li>
+                        </ul>
+                    </div>
+                    <div class="mission-card">
+                        <h3>04: AI DATA OPS (PT. MAINGAMES)</h3>
+                        <ul class="mission-list">
+                            <li>System stability +20% via rigorous training dataset QA.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PANEL: ACHIEVEMENTS -->
+                <div id="achievements" class="panel">
+                    <h2 class="section-title">Performance Log.</h2>
+                    <div class="loot-grid">
+                        <div class="loot-box" onclick="openEvidence('scaling')">
+                            <span class="loot-tag">★ SCALING</span>
+                            <p class="loot-title">400+</p>
+                            <p>Daily Subs Reached. [VIEW]</p>
+                        </div>
+                        <div class="loot-box" onclick="openEvidence('precision')">
+                            <span class="loot-tag">★ PRECISION</span>
+                            <p class="loot-title">90%</p>
+                            <p>AI Accuracy. [VIEW]</p>
+                        </div>
+                        <div class="loot-box" onclick="openEvidence('sentiment')">
+                            <span class="loot-tag">★ ANALYSIS</span>
+                            <p class="loot-title">22K+</p>
+                            <p>Sentiment Data Points. [VIEW]</p>
+                        </div>
+                        <div class="loot-box">
+                            <span class="loot-tag">★ EFFICIENCY</span>
+                            <p class="loot-title">80%</p>
+                            <p>Timeline Acceleration.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL: ARSENAL & SCRAPER -->
+                <div id="arsenal" class="panel">
+                    <h2 class="section-title">The Arsenal.</h2>
+                    <div class="mission-card" style="border-color:var(--gold); cursor:pointer;" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb', '_blank')">
+                        <span class="loot-tag" style="background:var(--gold);">★ LEGENDARY_TOOL</span>
+                        <h3 style="color:var(--gold);">QUANTUM OMNI-SCRAPER v1.0</h3>
+                        <p style="font-size:0.9rem; color:var(--dim); margin-top:10px;">
+                            <b>Platforms:</b> YouTube, Reddit, X (Twitter), TikTok.<br>
+                            <b>Logic:</b> Automated sentiment extraction engine using Python, PRAW, and Google Cloud API.<br>
+                            <b>Outcome:</b> Processed 22,000+ data points for market intelligence.
+                        </p>
+                        <p style="color:var(--accent); font-weight:bold; margin-top:10px;">
+                            [ CLICK TO OPEN SOURCE CODE ON GITHUB ]
+                        </p>
+                    </div>
+                    <div class="loot-grid" style="margin-top:20px;">
+                        <div class="loot-box">
+                            <h3>IBM_PROJECT_MGMT</h3>
+                        </div>
+                        <div class="loot-box">
+                            <h3>JIRA_AGILE</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACADEMIC -->
+                <div id="academic" class="panel">
+                    <div style="border:1px solid var(--gold); padding:30px; background:rgba(251,191,36,0.05); border-radius: 8px;">
+                        <h2 class="section-title" style="color:var(--gold);">PHILOSOPHY (UGM)</h2>
+                        <button class="init-btn" style="border-color:var(--gold); color:var(--gold); margin-top: 20px;" onclick="window.open('ijazah-ugm.jpg', '_blank')">
+                            VIEW IJAZAH
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="content-area">
-            <!-- PANEL: SUMMARY -->
-            <div id="profile" class="panel active">
-                <div class="profile-grid">
-                    <div>
-                        <div class="portrait-box"><img src="alif.jpg" alt="Alif Octrio"></div>
-                    </div>
-                    <div>
-                        <h2 style="font-family:'Archivo Black'; font-size:2.5rem;">Agent Summary.</h2>
-                        <p style="font-size:1rem; line-height:1.8; color:var(--dim); margin:20px 0;">Strategic Product Manager & AI Ops Lead. Expert in translating Technical R&D into high-scale products.</p>
-                        <canvas id="radarChart" style="max-height: 250px;"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PANEL: 4 MISSIONS -->
-            <div id="missions" class="panel">
-                <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Strategic Missions.</h2>
-                <div class="mission-card"><h3>01: LEAD AI & DATA OPTIMIZATION</h3><ul class="mission-list"><li>Success rates 60% → 90% via technical benchmarking.</li></ul></div>
-                <div class="mission-card"><h3>02: AI TECH BENCHMARK LEAD</h3><ul class="mission-list"><li>Reverse-engineered competitor features to identify technical gaps.</li></ul></div>
-                <div class="mission-card"><h3>03: PRODUCT MANAGER & STRATEGY</h3><ul class="mission-list"><li>Scaled operations to 400+ daily subscriptions.</li></ul></div>
-                <div class="mission-card"><h3>04: AI DATA OPS (PT. MAINGAMES)</h3><ul class="mission-list"><li>System stability +20% via rigorous training dataset QA.</li></ul></div>
-            </div>
-
-            <!-- PANEL: ACHIEVEMENTS -->
-            <div id="achievements" class="panel">
-                <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">Performance Log.</h2>
-                <div class="loot-grid">
-                    <div class="loot-box" onclick="openEvidence('scaling')"><span class="loot-tag">★ SCALING</span><p class="loot-title">400+</p><p>Daily Subs Reached. [VIEW]</p></div>
-                    <div class="loot-box" onclick="openEvidence('precision')"><span class="loot-tag">★ PRECISION</span><p class="loot-title">90%</p><p>AI Accuracy. [VIEW]</p></div>
-                    <div class="loot-box" onclick="openEvidence('sentiment')"><span class="loot-tag">★ ANALYSIS</span><p class="loot-title">22K+</p><p>Sentiment Data Points. [VIEW]</p></div>
-                    <div class="loot-box"><span class="loot-tag">★ EFFICIENCY</span><p class="loot-title">80%</p><p>Timeline Acceleration.</p></div>
-                </div>
-            </div>
-
-            <!-- PANEL: ARSENAL & SCRAPER (UPGRADED) -->
-            <div id="arsenal" class="panel">
-                <h2 style="font-family:'Archivo Black'; font-size:3rem; margin-bottom:30px;">The Arsenal.</h2>
-                <div class="mission-card" style="border-color:var(--gold); cursor:pointer;" onclick="window.open('https://github.com/ohhaikai29/alif-portofolio/blob/main/Sentiment_Scraper.ipynb')">
-                    <span class="loot-tag">★ LEGENDARY_TOOL</span>
-                    <h3 style="color:var(--gold);">QUANTUM OMNI-SCRAPER v1.0</h3>
-                    <p style="font-size:0.9rem; color:var(--dim); margin-top:10px;">
-                        <b>Platforms:</b> YouTube, Reddit, X (Twitter), TikTok.<br>
-                        <b>Logic:</b> Automated sentiment extraction engine using Python, PRAW, and Google Cloud API.<br>
-                        <b>Outcome:</b> Processed 22,000+ data points for market intelligence.
-                    </p>
-                    <p style="color:var(--accent); font-weight:bold; margin-top:10px;">[ CLICK TO OPEN SOURCE CODE ON GITHUB ]</p>
-                </div>
-                <div class="loot-grid" style="margin-top:20px;">
-                    <div class="loot-box"><h3>IBM_PROJECT_MGMT</h3></div>
-                    <div class="loot-box"><h3>JIRA_AGILE</h3></div>
-                </div>
-            </div>
-
-            <!-- ACADEMIC -->
-            <div id="academic" class="panel">
-                <div style="border:1px solid var(--gold); padding:40px; background:rgba(251,191,36,0.05);">
-                    <h2 style="font-family:'Archivo Black'; font-size:3rem;">PHILOSOPHY (UGM)</h2>
-                    <button class="init-btn" style="border-color:var(--gold); color:var(--gold);" onclick="window.open('ijazah-ugm.jpg')">VIEW IJAZAH</button>
-                </div>
-            </div>
-        </div>
-
-        <button class="showtime-btn" onclick="alert('Contact: alifoctrio@gmail.com')">SHOWTIME!</button>
+        <button class="showtime-btn" onclick="openContact()">SHOWTIME!</button>
     </div>
 
     <!-- MODAL -->
-    <div id="evidence-modal" class="modal" onclick="this.style.display='none'">
+    <div id="evidence-modal" class="modal" onclick="closeModal()">
+        <button class="modal-close" onclick="closeModal()">×</button>
         <div class="modal-container" onclick="event.stopPropagation()">
-            <h2 id="ev-title" style="font-family:'Archivo Black'; font-size:2rem; margin-bottom:30px; color:var(--accent);"></h2>
+            <h2 id="ev-title" style="font-family:'Archivo Black', sans-serif; font-size:2rem; margin-bottom:30px; color:var(--accent);"></h2>
             <div id="ev-gallery" style="display:flex; flex-direction:column; gap:30px;"></div>
         </div>
     </div>
 
     <script>
-        function igniteOS() { document.getElementById('gateway').style.transform = 'translateY(-100%)'; document.getElementById('main-os').style.display = 'grid'; setTimeout(() => { document.getElementById('main-os').style.opacity = '1'; renderR(); }, 600); }
-        function switchPanel(btn, id) { document.querySelectorAll('.panel').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); if(btn) btn.classList.add('active'); if(id === 'profile') renderR(); }
-        function openEvidence(type) { const m = document.getElementById('evidence-modal'); const g = document.getElementById('ev-gallery'); const t = document.getElementById('ev-title'); g.innerHTML = ''; m.style.display = 'block'; if(type === 'scaling') { t.innerText = "SCALING: COD & DBD"; g.innerHTML = '<img class="modal-img" src="scaling1.png"><img class="modal-img" src="scaling2.png">'; } else if(type === 'precision') { t.innerText = "ACCURACY: BENCHMARKING"; g.innerHTML = '<img class="modal-img" src="bench1.png"><img class="modal-img" src="bench2.png">'; } else if(type === 'sentiment') { t.innerText = "SENTIMENT AI ANALYTICS"; g.innerHTML = '<img class="modal-img" src="hype3.png"><img class="modal-img" src="hype1.png"><img class="modal-img" src="hype2.png"><img class="modal-img" src="hype4.png">'; } }
-        function renderR() { const ctx = document.getElementById('radarChart').getContext('2d'); new Chart(ctx, { type: 'radar', data: { labels: ['STRATEGY', 'AI_OPS', 'BENCHMARK', 'DATA', 'LOGIC'], datasets: [{ data: [98, 90, 92, 85, 95], backgroundColor: 'rgba(34, 211, 238, 0.25)', borderColor: '#22d3ee', borderWidth: 4, pointRadius: 0 }] }, options: { scales: { r: { grid: { color: 'rgba(255,255,255,0.1)' }, pointLabels: { color: '#fff', font: { size: 10, family: 'Orbitron' } }, ticks: { display: false }, min: 0, max: 100 } }, plugins: { legend: { display: false } } } }); }
+        let chartInstance = null;
+
+        function igniteOS() {
+            const gateway = document.getElementById('gateway');
+            const mainOS = document.getElementById('main-os');
+            
+            gateway.style.transform = 'translateY(-100%)';
+            gateway.style.opacity = '0';
+            
+            mainOS.style.display = 'block';
+            
+            setTimeout(() => {
+                mainOS.style.opacity = '1';
+                renderRadar();
+            }, 600);
+        }
+
+        function switchPanel(btn, id) {
+            // Remove active class from all panels and buttons
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to selected panel and button
+            document.getElementById(id).classList.add('active');
+            if(btn) btn.classList.add('active');
+            
+            // Render radar chart if profile panel
+            if(id === 'profile') {
+                setTimeout(renderRadar, 100);
+            }
+        }
+
+        function openEvidence(type) {
+            const modal = document.getElementById('evidence-modal');
+            const gallery = document.getElementById('ev-gallery');
+            const title = document.getElementById('ev-title');
+            
+            gallery.innerHTML = '';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            if(type === 'scaling') {
+                title.innerText = "SCALING: COD & DBD";
+                gallery.innerHTML = `
+                    <img class="modal-img" src="scaling1.png" alt="Scaling Evidence 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: scaling1.png%3C/text%3E%3C/svg%3E'">
+                    <img class="modal-img" src="scaling2.png" alt="Scaling Evidence 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: scaling2.png%3C/text%3E%3C/svg%3E'">
+                `;
+            } else if(type === 'precision') {
+                title.innerText = "ACCURACY: BENCHMARKING";
+                gallery.innerHTML = `
+                    <img class="modal-img" src="bench1.png" alt="Benchmark 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: bench1.png%3C/text%3E%3C/svg%3E'">
+                    <img class="modal-img" src="bench2.png" alt="Benchmark 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: bench2.png%3C/text%3E%3C/svg%3E'">
+                `;
+            } else if(type === 'sentiment') {
+                title.innerText = "SENTIMENT AI ANALYTICS";
+                gallery.innerHTML = `
+                    <img class="modal-img" src="hype3.png" alt="Sentiment 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: hype3.png%3C/text%3E%3C/svg%3E'">
+                    <img class="modal-img" src="hype1.png" alt="Sentiment 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: hype1.png%3C/text%3E%3C/svg%3E'">
+                    <img class="modal-img" src="hype2.png" alt="Sentiment 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: hype2.png%3C/text%3E%3C/svg%3E'">
+                    <img class="modal-img" src="hype4.png" alt="Sentiment 4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%230f172a%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%2322d3ee%22 font-family=%22monospace%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImage: hype4.png%3C/text%3E%3C/svg%3E'">
+                `;
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('evidence-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function openContact() {
+            const email = 'alifoctrio@gmail.com';
+            const subject = 'Portfolio Inquiry';
+            const body = 'Hi Alif, I found your portfolio and would like to discuss...';
+            window.open(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+        }
+
+        function renderRadar() {
+            const canvas = document.getElementById('radarChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            
+            chartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['STRATEGY', 'AI_OPS', 'BENCHMARK', 'DATA', 'LOGIC'],
+                    datasets: [{
+                        data: [98, 90, 92, 85, 95],
+                        backgroundColor: 'rgba(34, 211, 238, 0.25)',
+                        borderColor: '#22d3ee',
+                        borderWidth: 4,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            pointLabels: {
+                                color: '#fff',
+                                font: {
+                                    size: 11,
+                                    family: 'JetBrains Mono, monospace',
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                display: false,
+                                stepSize: 20
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#22d3ee',
+                            bodyColor: '#f8fafc',
+                            borderColor: '#22d3ee',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
