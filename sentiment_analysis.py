@@ -1,0 +1,237 @@
+"""
+Sentiment Analysis Module
+Author: Alif Octrio
+Description: Perform sentiment analysis on text data using NLTK VADER
+"""
+
+import pandas as pd
+import numpy as np
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+from typing import Dict, List
+import logging
+from pathlib import Path
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
+class SentimentAnalyzer:
+    """Sentiment analysis using NLTK VADER."""
+    
+    def __init__(self):
+        """Initialize sentiment analyzer and download required NLTK data."""
+        self._download_nltk_data()
+        self.sia = SentimentIntensityAnalyzer()
+        logger.info("✓ Sentiment Analyzer initialized")
+    
+    def _download_nltk_data(self):
+        """Download VADER lexicon if not already present."""
+        try:
+            nltk.data.find('sentiment/vader_lexicon.zip')
+        except LookupError:
+            logger.info("Downloading VADER lexicon...")
+            nltk.download('vader_lexicon', quiet=True)
+            logger.info("✓ VADER lexicon downloaded")
+    
+    def analyze_text(self, text: str) -> Dict[str, float]:
+        """
+        Analyze sentiment of a single text.
+        
+        Args:
+            text: Input text to analyze
+            
+        Returns:
+            Dictionary with sentiment scores (neg, neu, pos, compound)
+        """
+        if not text or not isinstance(text, str):
+            return {
+                'neg': 0.0,
+                'neu': 1.0,
+                'pos': 0.0,
+                'compound': 0.0
+            }
+        
+        return self.sia.polarity_scores(text)
+    
+    def classify_sentiment(self, compound_score: float) -> str:
+        """
+        Classify sentiment based on compound score.
+        
+        Args:
+            compound_score: VADER compound score (-1 to 1)
+            
+        Returns:
+            Sentiment category: 'Positive', 'Negative', or 'Neutral'
+        """
+        if compound_score >= 0.05:
+            return 'Positive'
+        elif compound_score <= -0.05:
+            return 'Negative'
+        else:
+            return 'Neutral'
+    
+    def analyze_dataframe(
+        self, 
+        df: pd.DataFrame, 
+        text_column: str = 'comment'
+    ) -> pd.DataFrame:
+        """
+        Perform sentiment analysis on a DataFrame.
+        
+        Args:
+            df: Input DataFrame
+            text_column: Name of column containing text to analyze
+            
+        Returns:
+            DataFrame with added sentiment columns
+        """
+        logger.info(f"Analyzing sentiment for {len(df)} records...")
+        
+        if text_column not in df.columns:
+            logger.error(f"Column '{text_column}' not found in DataFrame")
+            return df
+        
+        # Ensure text column is string type and handle NaN
+        df[text_column] = df[text_column].astype(str).fillna('')
+        
+        # Calculate sentiment scores
+        sentiment_scores = df[text_column].apply(self.analyze_text)
+        
+        # Extract individual scores
+        df['sentiment_neg'] = sentiment_scores.apply(lambda x: x['neg'])
+        df['sentiment_neu'] = sentiment_scores.apply(lambda x: x['neu'])
+        df['sentiment_pos'] = sentiment_scores.apply(lambda x: x['pos'])
+        df['sentiment_compound'] = sentiment_scores.apply(lambda x: x['compound'])
+        
+        # Classify sentiment
+        df['sentiment_category'] = df['sentiment_compound'].apply(
+            self.classify_sentiment
+        )
+        
+        logger.info("✓ Sentiment analysis completed")
+        
+        return df
+    
+    def get_sentiment_summary(
+        self, 
+        df: pd.DataFrame
+    ) -> Dict[str, any]:
+        """
+        Generate summary statistics for sentiment analysis results.
+        
+        Args:
+            df: DataFrame with sentiment analysis results
+            
+        Returns:
+            Dictionary containing summary statistics
+        """
+        if 'sentiment_category' not in df.columns:
+            logger.error("Sentiment analysis not performed. Run analyze_dataframe() first.")
+            return {}
+        
+        total = len(df)
+        counts = df['sentiment_category'].value_counts()
+        percentages = df['sentiment_category'].value_counts(normalize=True) * 100
+        
+        summary = {
+            'total_records': total,
+            'positive_count': counts.get('Positive', 0),
+            'negative_count': counts.get('Negative', 0),
+            'neutral_count': counts.get('Neutral', 0),
+            'positive_pct': percentages.get('Positive', 0),
+            'negative_pct': percentages.get('Negative', 0),
+            'neutral_pct': percentages.get('Neutral', 0),
+            'avg_compound_score': df['sentiment_compound'].mean(),
+            'median_compound_score': df['sentiment_compound'].median()
+        }
+        
+        return summary
+    
+    def print_summary(self, summary: Dict[str, any]):
+        """
+        Print formatted sentiment analysis summary.
+        
+        Args:
+            summary: Summary dictionary from get_sentiment_summary()
+        """
+        print("\n" + "="*60)
+        print("SENTIMENT ANALYSIS SUMMARY")
+        print("="*60)
+        print(f"Total Records Analyzed: {summary['total_records']:,}")
+        print()
+        print(f"Positive: {summary['positive_count']:,} ({summary['positive_pct']:.2f}%)")
+        print(f"Negative: {summary['negative_count']:,} ({summary['negative_pct']:.2f}%)")
+        print(f"Neutral:  {summary['neutral_count']:,} ({summary['neutral_pct']:.2f}%)")
+        print()
+        print(f"Average Compound Score: {summary['avg_compound_score']:.4f}")
+        print(f"Median Compound Score:  {summary['median_compound_score']:.4f}")
+        print("="*60)
+    
+    def export_results(
+        self, 
+        df: pd.DataFrame, 
+        output_path: str
+    ):
+        """
+        Export sentiment analysis results to CSV.
+        
+        Args:
+            df: DataFrame with sentiment results
+            output_path: Path to save CSV file
+        """
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        df.to_csv(output_path, index=False, encoding='utf-8')
+        logger.info(f"✓ Results exported to {output_path}")
+
+
+def main():
+    """Example usage of SentimentAnalyzer."""
+    
+    # Initialize analyzer
+    analyzer = SentimentAnalyzer()
+    
+    # Example 1: Analyze single text
+    sample_text = "This product is amazing! I absolutely love it."
+    scores = analyzer.analyze_text(sample_text)
+    print("\nSingle Text Analysis:")
+    print(f"Text: {sample_text}")
+    print(f"Scores: {scores}")
+    print(f"Category: {analyzer.classify_sentiment(scores['compound'])}")
+    
+    # Example 2: Analyze DataFrame
+    sample_data = pd.DataFrame({
+        'comment': [
+            "This game is absolutely incredible!",
+            "Worst update ever. Very disappointing.",
+            "It's okay, nothing special.",
+            "I love the new features, highly recommend!",
+            "Terrible experience, waste of money."
+        ],
+        'author': ['user1', 'user2', 'user3', 'user4', 'user5'],
+        'score': [100, 20, 50, 150, 10]
+    })
+    
+    # Perform analysis
+    analyzed_df = analyzer.analyze_dataframe(sample_data, text_column='comment')
+    
+    # Get and print summary
+    summary = analyzer.get_sentiment_summary(analyzed_df)
+    analyzer.print_summary(summary)
+    
+    # Display sample results
+    print("\nSample Results:")
+    print(analyzed_df[['comment', 'sentiment_compound', 'sentiment_category']].head())
+    
+    # Export results (optional)
+    # analyzer.export_results(analyzed_df, 'data/sentiment_results.csv')
+
+
+if __name__ == "__main__":
+    main()
