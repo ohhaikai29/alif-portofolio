@@ -36,7 +36,7 @@
             z-index: 0;
         }
 
-        /* ── GATEWAY ── */
+        /* GATEWAY */
         #gateway { position: fixed; inset: 0; background: var(--bg-base); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; transition: opacity 0.8s ease; }
         #gateway.hidden { opacity: 0; pointer-events: none; }
         .gateway-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
@@ -46,11 +46,11 @@
         .enter-btn { padding: 0.875rem 2.5rem; background: var(--accent); color: #080808; border: none; font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.05em; text-transform: uppercase; }
         .enter-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,255,71,0.25); }
 
-        /* ── MAIN ── */
+        /* MAIN */
         #main-interface { display: none; opacity: 0; transition: opacity 1s ease; position: relative; z-index: 1; }
         #main-interface.active { opacity: 1; }
 
-        /* ── HEADER ── */
+        /* HEADER */
         header { background: rgba(8,8,8,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
         .header-content { max-width: 1200px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.01em; }
@@ -60,12 +60,12 @@
         .nav-btn:hover, .nav-btn.active { color: var(--accent); }
         .nav-btn.active { background: var(--accent-dim); }
 
-        /* ── PAGES ── */
+        /* PAGES */
         .page { display: none; animation: fadeUp 0.5s ease; }
         .page.active { display: block; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ── HERO ── */
+        /* HERO */
         .hero-section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem 4rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
         .hero-eyebrow { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
         .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
@@ -83,14 +83,14 @@
         .profile-frame::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, var(--accent) 0%, transparent 60%); z-index: 0; }
         .profile-img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; display: block; filter: grayscale(20%); }
 
-        /* ── SECTION COMMON ── */
+        /* SECTION COMMON */
         .stats-section, .section { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
         .section-tag { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; }
         .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
         .section-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; }
         .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-        /* ── STATS ── */
+        /* STATS */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5px; background: var(--border); }
         .stat-card { background: var(--bg-surface); padding: 2.5rem 2rem; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
         .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s ease; }
@@ -101,7 +101,7 @@
         .stat-number { font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: -0.03em; line-height: 1; }
         .stat-label { font-family: var(--font-mono); color: var(--text-secondary); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
 
-        /* ── EXPERIENCE ── */
+        /* EXPERIENCE */
         .experience-grid { display: grid; gap: 1.5px; background: var(--border); }
         .experience-card { background: var(--bg-surface); padding: 2.5rem 2rem; transition: all 0.3s ease; position: relative; }
         .experience-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0; background: var(--accent); transition: height 0.3s ease; }
@@ -109,14 +109,14 @@
         .experience-card:hover::before { height: 100%; }
         .experience-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
         .experience-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
-        .experience-period { font-family: var(--font-mono); color: var(--accent); font-size: 0.75rem; letter-spacing: 0.1em; }
+        .experience-period { font-family: var(--font-mono); color: var(--accent); font-size: 0.72rem; letter-spacing: 0.05em; white-space: nowrap; padding-top: 0.2rem; }
         .experience-company { font-family: var(--font-mono); color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
         .experience-description { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem; }
         .achievement-list { list-style: none; }
         .achievement-list li { font-family: var(--font-mono); color: var(--text-secondary); padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; font-size: 0.82rem; line-height: 1.7; }
-        .achievement-list li::before { content: '&#8594;'; position: absolute; left: 0; color: var(--accent); }
+        .achievement-list li::before { content: '\2192'; position: absolute; left: 0; color: var(--accent); }
 
-        /* ── SKILLS ── */
+        /* SKILLS */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5px; background: var(--border); }
         .skill-category { background: var(--bg-surface); padding: 2rem; }
         .skill-category h3 { font-family: var(--font-mono); color: var(--accent); margin-bottom: 1.5rem; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
@@ -126,7 +126,7 @@
         .skill-tag.clickable { cursor: pointer; }
         .chart-container { background: var(--bg-surface); padding: 2.5rem; margin-top: 1.5px; }
 
-        /* ── PROJECTS ── */
+        /* PROJECTS */
         .project-card { background: var(--bg-surface); padding: 2.5rem 2rem; margin-bottom: 1.5px; transition: all 0.3s ease; border: 1px solid transparent; }
         .project-card:hover { border-color: var(--border-hover); background: var(--bg-raised); }
         .project-badge { display: inline-block; background: var(--accent); color: #080808; padding: 0.25rem 0.75rem; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.25rem; }
@@ -137,7 +137,7 @@
         .project-link { font-family: var(--font-mono); color: var(--accent); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease; border-bottom: 1px solid rgba(232,255,71,0.3); padding-bottom: 2px; }
         .project-link:hover { gap: 1rem; }
 
-        /* ── FOOTER ── */
+        /* FOOTER */
         footer { max-width: 1200px; margin: 4rem auto 2rem; padding: 2rem; border-top: 1px solid var(--border); }
         .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
         .footer-links { display: flex; gap: 2rem; }
@@ -145,7 +145,7 @@
         .footer-links a:hover { color: var(--accent); }
         .footer-copy { font-family: var(--font-mono); color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.1em; }
 
-        /* ── DARK MODALS ── */
+        /* DARK MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; padding: 2rem; overflow-y: auto; backdrop-filter: blur(4px); }
         .modal.active { display: flex; align-items: flex-start; justify-content: center; padding-top: 3rem; }
         .modal-content { background: var(--bg-surface); border: 1px solid var(--border); padding: 2.5rem; max-width: 900px; width: 100%; position: relative; margin-bottom: 3rem; }
@@ -158,7 +158,7 @@
         .modal-img { width: 100%; display: block; border: 1px solid var(--border); transition: border-color 0.2s; }
         .modal-img:hover { border-color: var(--accent); }
 
-        /* ── NEWSPAPER CONTACT MODAL ── */
+        /* NEWSPAPER CONTACT MODAL */
         #modal-contact { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
         #modal-contact.active { display: flex; }
         .newspaper-wrap { position: relative; max-width: 560px; width: 90%; animation: newsIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275); }
@@ -185,7 +185,7 @@
         .news-close { position: absolute; top: -13px; right: -13px; width: 34px; height: 34px; background: var(--accent); border: 2px solid #111; color: #111; font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: transform 0.25s ease; font-family: var(--font-mono); line-height: 1; }
         .news-close:hover { transform: scale(1.12) rotate(90deg); }
 
-        /* ── RESPONSIVE ── */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero-section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
             .profile-display { order: -1; }
@@ -198,12 +198,13 @@
             .news-name { font-size: 1.5rem; }
             .news-dateline { flex-direction: column; gap: 0.2rem; align-items: flex-start; }
             .modal-imgs { grid-template-columns: 1fr; }
+            .experience-period { font-size: 0.68rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- ═══ GATEWAY ═══ -->
+<!-- GATEWAY -->
 <div id="gateway">
     <div class="gateway-tag">// Portfolio v2025</div>
     <div class="gateway-logo">Alif<br><span>Octrio</span></div>
@@ -211,7 +212,7 @@
     <button class="enter-btn" onclick="initializeSystem()">Enter &rarr;</button>
 </div>
 
-<!-- ═══ MAIN INTERFACE ═══ -->
+<!-- MAIN INTERFACE -->
 <div id="main-interface">
 
     <header>
@@ -292,64 +293,64 @@
                 <div class="experience-card">
                     <div class="experience-header">
                         <div>
+                            <h3 class="experience-title">AI &amp; Data Optimization</h3>
+                            <p class="experience-company">Data Operations</p>
+                        </div>
+                        <span class="experience-period">Aug 2022 &ndash; Apr 2024</span>
+                    </div>
+                    <p class="experience-description">Drove end-to-end data optimization across AI pipelines, building the foundation for high-accuracy model performance through rigorous dataset management and quality assurance processes.</p>
+                    <ul class="achievement-list">
+                        <li>Developed automated data validation and cleaning pipelines to ensure consistent training data quality</li>
+                        <li>Improved dataset integrity, contributing to a 30% reduction in model error rates over time</li>
+                        <li>Established data quality standards and documentation adopted across the team</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">AI Technical Benchmarking &amp; Competitive Analysis</h3>
+                            <p class="experience-company">Competitive Intelligence</p>
+                        </div>
+                        <span class="experience-period">May 2023 &ndash; Sep 2025</span>
+                    </div>
+                    <p class="experience-description">Led systematic competitive benchmarking of AI technologies, reverse-engineering competitor products to identify capability gaps and strategic opportunities for product positioning.</p>
+                    <ul class="achievement-list">
+                        <li>Analyzed 15+ competitor AI products to map technical capabilities and performance benchmarks</li>
+                        <li>Identified 8 critical feature gaps enabling data-driven strategic product differentiation</li>
+                        <li>Delivered quarterly competitive intelligence reports to executive and product leadership</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
                             <h3 class="experience-title">Lead AI &amp; Data Optimization</h3>
                             <p class="experience-company">Product Development</p>
                         </div>
-                        <span class="experience-period">2024</span>
+                        <span class="experience-period">Apr 2024 &ndash; Aug 2025</span>
                     </div>
-                    <p class="experience-description">Spearheaded AI model optimization initiatives, improving success rates from 60% to 90% through systematic technical benchmarking and iterative refinement.</p>
+                    <p class="experience-description">Spearheaded AI model optimization as lead, driving accuracy from 60% to 90% through systematic technical benchmarking, A/B testing, and iterative data-driven refinement at scale.</p>
                     <ul class="achievement-list">
-                        <li>Implemented rigorous A/B testing framework for model evaluation</li>
-                        <li>Reduced false positive rates by 30% through data quality improvements</li>
-                        <li>Established automated monitoring pipelines for model performance</li>
+                        <li>Implemented rigorous A/B testing framework for model evaluation across multiple iterations</li>
+                        <li>Reduced false positive rates by 30% through targeted data quality improvements</li>
+                        <li>Established automated monitoring pipelines to proactively track and sustain model performance</li>
                     </ul>
                 </div>
 
                 <div class="experience-card">
                     <div class="experience-header">
                         <div>
-                            <h3 class="experience-title">AI Technology Benchmark Lead</h3>
-                            <p class="experience-company">Competitive Intelligence</p>
-                        </div>
-                        <span class="experience-period">2024</span>
-                    </div>
-                    <p class="experience-description">Conducted comprehensive competitive analysis through reverse engineering competitor features to identify market gaps and technical opportunities.</p>
-                    <ul class="achievement-list">
-                        <li>Analyzed 15+ competitor products to map technical capabilities</li>
-                        <li>Identified 8 critical feature gaps enabling strategic product positioning</li>
-                        <li>Delivered actionable intelligence reports to executive leadership</li>
-                    </ul>
-                </div>
-
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">Product Manager &amp; Strategy</h3>
+                            <h3 class="experience-title">Project Manager &amp; Market Strategy</h3>
                             <p class="experience-company">Growth &amp; Operations</p>
                         </div>
-                        <span class="experience-period">2023&ndash;2024</span>
+                        <span class="experience-period">Feb 2024 &ndash; Sep 2025</span>
                     </div>
-                    <p class="experience-description">Led product strategy and execution, scaling daily subscription operations to 400+ through data-driven optimization and cross-functional collaboration.</p>
+                    <p class="experience-description">Led product strategy and go-to-market execution, scaling daily subscription operations to 400+ through market analysis, structured sprint planning, and cross-functional team coordination.</p>
                     <ul class="achievement-list">
                         <li>Achieved 4x growth in daily active subscriptions within 6 months</li>
-                        <li>Implemented analytics framework tracking 25+ product KPIs</li>
+                        <li>Implemented analytics framework tracking 25+ product KPIs to surface growth levers</li>
                         <li>Coordinated cross-functional teams across engineering, design, and marketing</li>
-                    </ul>
-                </div>
-
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">AI Data Operations Specialist</h3>
-                            <p class="experience-company">PT. Maingames Indonesia</p>
-                        </div>
-                        <span class="experience-period">2023</span>
-                    </div>
-                    <p class="experience-description">Enhanced system reliability through rigorous training dataset quality assurance, achieving 20% improvement in system stability metrics.</p>
-                    <ul class="achievement-list">
-                        <li>Developed automated data validation pipelines</li>
-                        <li>Reduced model drift incidents by 35% through proactive monitoring</li>
-                        <li>Established data quality standards adopted company-wide</li>
                     </ul>
                 </div>
 
@@ -369,7 +370,7 @@
                         <span class="skill-tag">Roadmap Planning</span>
                         <span class="skill-tag">Market Analysis</span>
                         <span class="skill-tag">KPI Tracking</span>
-                        <span class="skill-tag">Agile/Scrum</span>
+                        <span class="skill-tag">Agile / Scrum</span>
                         <span class="skill-tag">JIRA</span>
                     </div>
                 </div>
@@ -380,16 +381,16 @@
                         <span class="skill-tag clickable" onclick="openModal('analytics')">Data Analytics &rarr;</span>
                         <span class="skill-tag">ML Operations</span>
                         <span class="skill-tag clickable" onclick="openModal('sentiment-skill')">Sentiment Analysis &rarr;</span>
-                        <span class="skill-tag">NLTK/VADER</span>
+                        <span class="skill-tag">NLTK / VADER</span>
                     </div>
                 </div>
                 <div class="skill-category">
                     <h3>Tools &amp; Platforms</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Google Cloud</span>
-                        <span class="skill-tag">APIs (REST)</span>
+                        <span class="skill-tag">REST APIs</span>
                         <span class="skill-tag">Web Scraping</span>
-                        <span class="skill-tag">Git/GitHub</span>
+                        <span class="skill-tag">Git / GitHub</span>
                     </div>
                 </div>
             </div>
@@ -409,7 +410,7 @@
                 <span class="project-badge">Primary Project</span>
                 <h3 class="project-title">Multi-Platform Sentiment Analysis System</h3>
                 <p class="project-tech">Python &bull; PRAW &bull; YouTube API &bull; NLTK &bull; Pandas</p>
-                <p class="project-description">Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7 release, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.</p>
+                <p class="project-description">Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.</p>
                 <div class="project-links">
                     <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">Web Scraping Code &rarr;</a>
                     <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/sentiment_analysis.py" target="_blank" class="project-link">Sentiment Analysis Code &rarr;</a>
@@ -419,7 +420,7 @@
             <div class="project-card">
                 <h3 class="project-title">AI Model Benchmarking Framework</h3>
                 <p class="project-tech">Python &bull; Data Analysis &bull; Visualization</p>
-                <p class="project-description">Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% &rarr; 90% accuracy improvement.</p>
+                <p class="project-description">Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. The framework enabled systematic comparison of model iterations, identifying bottlenecks and optimization opportunities that contributed to a 60% &rarr; 90% accuracy improvement.</p>
                 <div class="project-links">
                     <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/benchmarking_framework.py" target="_blank" class="project-link">View Source Code &rarr;</a>
                 </div>
@@ -453,7 +454,7 @@
                             <p class="experience-company">IBM Skills Network</p>
                         </div>
                     </div>
-                    <p class="experience-description">Comprehensive certification covering Agile methodologies, JIRA workflows, stakeholder management, and cross-functional team coordination. Applied these skills to scale daily operations from 100 to 400+ subscriptions.</p>
+                    <p class="experience-description">Comprehensive certification covering Agile methodologies, JIRA workflows, stakeholder management, and cross-functional team coordination. Applied directly to scale daily operations from 100 to 400+ subscriptions.</p>
                     <a href="ibm-cert.jpg" target="_blank" class="project-link" style="margin-top:1rem;display:inline-flex;">View Certificate &rarr;</a>
                 </div>
 
@@ -472,9 +473,9 @@
         </div>
     </footer>
 
-</div><!-- end #main-interface -->
+</div>
 
-<!-- ═══ NEWSPAPER CONTACT MODAL ═══ -->
+<!-- NEWSPAPER CONTACT MODAL -->
 <div id="modal-contact" onclick="if(event.target===this)closeContact()">
     <div class="newspaper-wrap">
         <button class="news-close" onclick="closeContact()">&#10005;</button>
@@ -512,7 +513,7 @@
     </div>
 </div>
 
-<!-- ═══ ACHIEVEMENT MODALS ═══ -->
+<!-- ACHIEVEMENT MODALS -->
 <div id="modal-scaling" class="modal" onclick="if(event.target===this)closeModal('scaling')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('scaling')">&#10005;</button>
@@ -567,7 +568,7 @@
     </div>
 </div>
 
-<!-- ═══ SKILL MODALS ═══ -->
+<!-- SKILL MODALS -->
 <div id="modal-python" class="modal" onclick="if(event.target===this)closeModal('python')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('python')">&#10005;</button>
@@ -595,7 +596,7 @@
     </div>
 </div>
 
-<!-- ═══ SCRIPTS ═══ -->
+<!-- SCRIPTS -->
 <script>
     function initializeSystem() {
         document.getElementById('gateway').classList.add('hidden');
