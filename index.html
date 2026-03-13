@@ -160,7 +160,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(5, 7, 20, 0.8);
+            background: rgba(5, 7, 20, 0.9);
         }
 
         .header-content {
@@ -183,7 +183,7 @@
 
         .nav-menu {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -192,9 +192,9 @@
             background: transparent;
             border: 1px solid rgba(0, 255, 249, 0.3);
             color: var(--text-dim);
-            padding: 0.5rem 1.2rem;
+            padding: 0.5rem 1rem;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.3s ease;
             clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
@@ -800,7 +800,7 @@
             }
 
             .nav-btn {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 padding: 0.4rem 0.8rem;
             }
         }
@@ -843,10 +843,12 @@
                     <button class="nav-btn" onclick="showPage('experience')">EXPERIENCE</button>
                     <button class="nav-btn" onclick="showPage('skills')">SKILLS</button>
                     <button class="nav-btn" onclick="showPage('projects')">PROJECTS</button>
+                    <button class="nav-btn" onclick="showPage('education')">EDUCATION</button>
                 </nav>
             </div>
         </header>
 
+        <!-- PAGE: ABOUT -->
         <div id="page-about" class="page active">
             <section class="hero-section">
                 <div class="hero-content">
@@ -867,6 +869,7 @@
             </section>
         </div>
 
+        <!-- PAGE: ACHIEVEMENTS -->
         <div id="page-achievements" class="page">
             <section class="stats-section">
                 <h2 class="section-title">Key Achievements</h2>
@@ -891,6 +894,7 @@
             </section>
         </div>
 
+        <!-- PAGE: EXPERIENCE -->
         <div id="page-experience" class="page">
             <section class="section">
                 <h2 class="section-title">Professional Experience</h2>
@@ -970,6 +974,7 @@
             </section>
         </div>
 
+        <!-- PAGE: SKILLS -->
         <div id="page-skills" class="page">
             <section class="section">
                 <h2 class="section-title">Technical Expertise</h2>
@@ -1014,6 +1019,7 @@
             </section>
         </div>
 
+        <!-- PAGE: PROJECTS -->
         <div id="page-projects" class="page">
             <section class="section">
                 <h2 class="section-title">Featured Projects</h2>
@@ -1036,9 +1042,19 @@
                     <p class="project-description">
                         Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% → 90% accuracy improvement.
                     </p>
+                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/benchmarking_framework.py" target="_blank" class="project-link">
+                        VIEW SOURCE CODE →
+                    </a>
                 </div>
+            </section>
+        </div>
 
-                <div class="experience-card" style="margin-top: 3rem;">
+        <!-- PAGE: EDUCATION -->
+        <div id="page-education" class="page">
+            <section class="section">
+                <h2 class="section-title">Education & Certifications</h2>
+                
+                <div class="experience-card">
                     <div class="experience-header">
                         <div>
                             <h3 class="experience-title">BACHELOR OF PHILOSOPHY</h3>
@@ -1049,6 +1065,21 @@
                         Developed strong analytical and critical thinking skills through rigorous philosophical training, directly applicable to product strategy and decision-making frameworks.
                     </p>
                     <a href="ijazah-ugm.jpg" target="_blank" class="project-link" style="margin-top: 1rem; display: inline-flex;">
+                        VIEW CERTIFICATE →
+                    </a>
+                </div>
+
+                <div class="experience-card" style="margin-top: 2rem;">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">IBM PROJECT MANAGEMENT PROFESSIONAL</h3>
+                            <p class="experience-company">IBM Skills Network</p>
+                        </div>
+                    </div>
+                    <p class="experience-description">
+                        Comprehensive certification covering Agile methodologies, JIRA workflows, stakeholder management, and cross-functional team coordination. Applied these skills to scale daily operations from 100 to 400+ subscriptions.
+                    </p>
+                    <a href="ibm-cert.jpg" target="_blank" class="project-link" style="margin-top: 1rem; display: inline-flex;">
                         VIEW CERTIFICATE →
                     </a>
                 </div>
