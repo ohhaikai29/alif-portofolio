@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIF OCTRIO | Strategic Architect</title>
+    <title>ALIF OCTRIO | Strategic Product Manager</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -274,6 +274,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             border: none;
+            display: inline-block;
         }
 
         .cyber-btn-primary {
@@ -415,8 +416,9 @@
 
         .modal.active {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            padding-top: 2rem;
         }
 
         @keyframes modalFade {
@@ -429,10 +431,11 @@
             border: 2px solid var(--neon-cyan);
             clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
             padding: 3rem;
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
             position: relative;
             backdrop-filter: blur(20px);
+            margin-bottom: 2rem;
         }
 
         .modal-close {
@@ -472,14 +475,24 @@
 
         .evidence-img {
             width: 100%;
+            max-width: 100%;
             border: 2px solid var(--neon-cyan);
             border-radius: 8px;
             transition: transform 0.3s ease;
+            display: block;
         }
 
         .evidence-img:hover {
-            transform: scale(1.02);
+            transform: scale(1.01);
             box-shadow: 0 0 30px rgba(0, 255, 249, 0.3);
+        }
+
+        .evidence-text {
+            color: var(--text-dim);
+            text-align: center;
+            padding: 2rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
 
         .section {
@@ -620,7 +633,6 @@
             font-size: 0.9rem;
             clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .skill-tag:hover {
@@ -635,6 +647,7 @@
 
         .skill-tag.clickable::after {
             content: ' →';
+            margin-left: 0.3rem;
         }
 
         .project-card {
@@ -816,8 +829,8 @@
 
     <div id="gateway">
         <div class="gateway-logo">ALIF OCTRIO</div>
-        <div class="gateway-subtitle">Strategic Architect</div>
-        <button class="initiate-btn" onclick="initializeSystem()">[ INITIATE SYSTEM ]</button>
+        <div class="gateway-subtitle">Strategic Product Manager</div>
+        <button class="initiate-btn" onclick="initializeSystem()">[ ENTER PORTFOLIO ]</button>
     </div>
 
     <div id="main-interface">
@@ -842,8 +855,8 @@
                         Transforming technical R&D into scalable, high-impact products through data-driven strategy and AI optimization.
                     </p>
                     <div class="cta-buttons">
-                        <a href="mailto:alifoctrio@gmail.com" class="cyber-btn cyber-btn-primary">ENGAGE</a>
-                        <a href="https://github.com/ohhaikai29" target="_blank" class="cyber-btn cyber-btn-secondary">GITHUB ARCHIVE</a>
+                        <a href="mailto:alifoctrio@gmail.com" class="cyber-btn cyber-btn-primary">GET IN TOUCH</a>
+                        <a href="https://github.com/ohhaikai29" target="_blank" class="cyber-btn cyber-btn-secondary">VIEW GITHUB</a>
                     </div>
                 </div>
                 <div class="profile-display">
@@ -856,7 +869,7 @@
 
         <div id="page-achievements" class="page">
             <section class="stats-section">
-                <h2 class="section-title">Performance Metrics</h2>
+                <h2 class="section-title">Key Achievements</h2>
                 <div class="stats-grid">
                     <div class="stat-card" onclick="openModal('scaling')">
                         <div class="stat-number">400+</div>
@@ -880,7 +893,7 @@
 
         <div id="page-experience" class="page">
             <section class="section">
-                <h2 class="section-title">Mission Log</h2>
+                <h2 class="section-title">Professional Experience</h2>
                 <div class="experience-grid">
                     <div class="experience-card">
                         <div class="experience-header">
@@ -903,7 +916,7 @@
                     <div class="experience-card">
                         <div class="experience-header">
                             <div>
-                                <h3 class="experience-title">AI TECH BENCHMARK LEAD</h3>
+                                <h3 class="experience-title">AI TECHNOLOGY BENCHMARK LEAD</h3>
                                 <p class="experience-company">Competitive Intelligence</p>
                             </div>
                             <span class="experience-period">2024</span>
@@ -959,7 +972,7 @@
 
         <div id="page-skills" class="page">
             <section class="section">
-                <h2 class="section-title">Technical Arsenal</h2>
+                <h2 class="section-title">Technical Expertise</h2>
                 <div class="skills-grid">
                     <div class="skill-category">
                         <h3>PRODUCT STRATEGY</h3>
@@ -975,10 +988,10 @@
                     <div class="skill-category">
                         <h3>AI & DATA</h3>
                         <div class="skill-tags">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Data Analytics</span>
+                            <span class="skill-tag clickable" onclick="openModal('python')">Python →</span>
+                            <span class="skill-tag clickable" onclick="openModal('analytics')">Data Analytics →</span>
                             <span class="skill-tag">ML Operations</span>
-                            <span class="skill-tag">Sentiment Analysis</span>
+                            <span class="skill-tag clickable" onclick="openModal('sentiment-skill')">Sentiment Analysis →</span>
                             <span class="skill-tag">NLTK/VADER</span>
                         </div>
                     </div>
@@ -1003,7 +1016,7 @@
 
         <div id="page-projects" class="page">
             <section class="section">
-                <h2 class="section-title">Featured Operations</h2>
+                <h2 class="section-title">Featured Projects</h2>
 
                 <div class="project-card">
                     <span class="project-badge">★ PRIMARY</span>
@@ -1013,7 +1026,7 @@
                         Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7 release, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.
                     </p>
                     <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">
-                        ACCESS SOURCE CODE →
+                        VIEW SOURCE CODE →
                     </a>
                 </div>
 
@@ -1049,11 +1062,12 @@
                 <a href="https://linkedin.com/in/alifoctrio" target="_blank">LINKEDIN</a>
             </div>
             <p style="font-family: 'Share Tech Mono', monospace; color: var(--text-dim);">
-                © 2025 ALIF OCTRIO // ALL SYSTEMS OPERATIONAL
+                © 2025 ALIF OCTRIO // STRATEGIC PRODUCT MANAGER
             </p>
         </footer>
     </div>
 
+    <!-- Achievement Modals -->
     <div id="modal-scaling" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('scaling')">×</button>
@@ -1068,7 +1082,7 @@
     <div id="modal-precision" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('precision')">×</button>
-            <h2 class="modal-title">PRECISION: 90% AI ACCURACY</h2>
+            <h2 class="modal-title">AI MODEL ACCURACY: 90%</h2>
             <div class="evidence-gallery">
                 <img src="bench1.png" alt="Benchmark 1" class="evidence-img">
                 <img src="bench2.png" alt="Benchmark 2" class="evidence-img">
@@ -1079,12 +1093,12 @@
     <div id="modal-sentiment" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('sentiment')">×</button>
-            <h2 class="modal-title">SENTIMENT ANALYSIS: 22K+ DATA POINTS</h2>
+            <h2 class="modal-title">SENTIMENT ANALYSIS: 22,000+ DATA POINTS</h2>
             <div class="evidence-gallery">
-                <img src="hype3.png" alt="Sentiment 3" class="evidence-img">
-                <img src="hype1.png" alt="Sentiment 1" class="evidence-img">
-                <img src="hype2.png" alt="Sentiment 2" class="evidence-img">
-                <img src="hype4.png" alt="Sentiment 4" class="evidence-img">
+                <img src="hype3.png" alt="Sentiment Analysis 3" class="evidence-img">
+                <img src="hype1.png" alt="Sentiment Analysis 1" class="evidence-img">
+                <img src="hype2.png" alt="Sentiment Analysis 2" class="evidence-img">
+                <img src="hype4.png" alt="Sentiment Analysis 4" class="evidence-img">
             </div>
         </div>
     </div>
@@ -1094,9 +1108,52 @@
             <button class="modal-close" onclick="closeModal('efficiency')">×</button>
             <h2 class="modal-title">SYSTEM STABILITY: +20% IMPROVEMENT</h2>
             <div class="evidence-gallery">
-                <p style="color: var(--text-dim); text-align: center; padding: 2rem;">
-                    Achieved through rigorous training dataset quality assurance and automated validation pipelines at PT. Maingames Indonesia.
+                <p class="evidence-text">
+                    Achieved through rigorous training dataset quality assurance and automated validation pipelines at PT. Maingames Indonesia. Implemented comprehensive data quality standards that were adopted company-wide, resulting in 35% reduction in model drift incidents.
                 </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Modals -->
+    <div id="modal-python" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('python')">×</button>
+            <h2 class="modal-title">PYTHON DEVELOPMENT</h2>
+            <div class="evidence-gallery">
+                <p class="evidence-text">
+                    Extensive experience developing production-grade Python applications for data processing, API integration, and machine learning workflows. Built sentiment analysis engines, web scrapers, and data pipelines used to process 20,000+ records daily.
+                </p>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="cyber-btn cyber-btn-primary">VIEW SOURCE CODE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-analytics" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('analytics')">×</button>
+            <h2 class="modal-title">DATA ANALYTICS</h2>
+            <div class="evidence-gallery">
+                <p class="evidence-text">
+                    Proficient in data analysis using Pandas, NumPy, and visualization libraries. Conducted market intelligence analysis on 22,000+ user feedback data points, identifying key trends and actionable insights for product strategy.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-sentiment-skill" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('sentiment-skill')">×</button>
+            <h2 class="modal-title">SENTIMENT ANALYSIS</h2>
+            <div class="evidence-gallery">
+                <p class="evidence-text">
+                    Developed and deployed sentiment analysis systems using NLTK VADER and custom NLP pipelines. Achieved 90% classification accuracy across multi-platform data sources including YouTube, Reddit, and Twitter.
+                </p>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/sentiment_analysis.py" target="_blank" class="cyber-btn cyber-btn-primary">VIEW SOURCE CODE</a>
+                </div>
             </div>
         </div>
     </div>
