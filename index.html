@@ -24,201 +24,73 @@
             --font-mono: 'Space Mono', monospace;
         }
 
-        body {
-            font-family: var(--font-display);
-            background: var(--bg-base);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        body { font-family: var(--font-display); background: var(--bg-base); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
 
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
             background-size: 60px 60px;
             pointer-events: none;
             z-index: 0;
         }
 
-        /* GATEWAY */
-        #gateway {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-base);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease;
-        }
+        /* ── GATEWAY ── */
+        #gateway { position: fixed; inset: 0; background: var(--bg-base); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; transition: opacity 0.8s ease; }
         #gateway.hidden { opacity: 0; pointer-events: none; }
-        .gateway-tag {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
-        .gateway-logo {
-            font-family: var(--font-display);
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
+        .gateway-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .gateway-logo { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 6rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.03em; line-height: 1; margin-bottom: 1.5rem; text-align: center; }
         .gateway-logo span { color: var(--accent); }
-        .gateway-subtitle {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 3.5rem;
-            letter-spacing: 0.05em;
-            text-align: center;
-            padding: 0 1rem;
-        }
-        .enter-btn {
-            padding: 0.875rem 2.5rem;
-            background: var(--accent);
-            color: #080808;
-            border: none;
-            font-family: var(--font-display);
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+        .gateway-subtitle { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 3.5rem; letter-spacing: 0.05em; text-align: center; padding: 0 1rem; }
+        .enter-btn { padding: 0.875rem 2.5rem; background: var(--accent); color: #080808; border: none; font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.05em; text-transform: uppercase; }
         .enter-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,255,71,0.25); }
 
-        /* MAIN */
+        /* ── MAIN ── */
         #main-interface { display: none; opacity: 0; transition: opacity 1s ease; position: relative; z-index: 1; }
         #main-interface.active { opacity: 1; }
 
-        /* HEADER */
-        header {
-            background: rgba(8,8,8,0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.25rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+        /* ── HEADER ── */
+        header { background: rgba(8,8,8,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.01em; }
         .logo span { color: var(--accent); }
         .nav-menu { display: flex; gap: 0.25rem; flex-wrap: wrap; }
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+        .nav-btn { background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.78rem; cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.05em; text-transform: uppercase; }
         .nav-btn:hover, .nav-btn.active { color: var(--accent); }
         .nav-btn.active { background: var(--accent-dim); }
 
-        /* PAGES */
+        /* ── PAGES ── */
         .page { display: none; animation: fadeUp 0.5s ease; }
         .page.active { display: block; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* HERO */
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 5rem 2rem 4rem;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-        .hero-eyebrow {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+        /* ── HERO ── */
+        .hero-section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem 4rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
+        .hero-eyebrow { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
         .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-        .hero-content h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.03em;
-        }
+        .hero-content h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; color: var(--text-primary); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
         .hero-content h1 em { font-style: normal; color: var(--accent); }
         .hero-subtitle { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.9; }
         .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn {
-            padding: 0.8rem 1.75rem;
-            font-family: var(--font-display);
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-            border: none;
-            cursor: pointer;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-        }
+        .btn { padding: 0.8rem 1.75rem; font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.3s ease; display: inline-block; border: none; cursor: pointer; letter-spacing: 0.03em; text-transform: uppercase; }
         .btn-primary { background: var(--accent); color: #080808; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,255,71,0.25); }
         .btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
         .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
         .profile-display { position: relative; }
         .profile-frame { width: 100%; max-width: 380px; aspect-ratio: 3/4; margin: 0 auto; position: relative; }
-        .profile-frame::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
-            z-index: 0;
-        }
+        .profile-frame::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, var(--accent) 0%, transparent 60%); z-index: 0; }
         .profile-img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; display: block; filter: grayscale(20%); }
 
-        /* SECTIONS */
+        /* ── SECTION COMMON ── */
         .stats-section, .section { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
         .section-tag { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; }
         .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
         .section-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; }
         .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-        /* STATS */
+        /* ── STATS ── */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5px; background: var(--border); }
         .stat-card { background: var(--bg-surface); padding: 2.5rem 2rem; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
         .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s ease; }
@@ -229,7 +101,7 @@
         .stat-number { font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: -0.03em; line-height: 1; }
         .stat-label { font-family: var(--font-mono); color: var(--text-secondary); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
 
-        /* EXPERIENCE */
+        /* ── EXPERIENCE ── */
         .experience-grid { display: grid; gap: 1.5px; background: var(--border); }
         .experience-card { background: var(--bg-surface); padding: 2.5rem 2rem; transition: all 0.3s ease; position: relative; }
         .experience-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0; background: var(--accent); transition: height 0.3s ease; }
@@ -242,9 +114,9 @@
         .experience-description { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem; }
         .achievement-list { list-style: none; }
         .achievement-list li { font-family: var(--font-mono); color: var(--text-secondary); padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; font-size: 0.82rem; line-height: 1.7; }
-        .achievement-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+        .achievement-list li::before { content: '&#8594;'; position: absolute; left: 0; color: var(--accent); }
 
-        /* SKILLS */
+        /* ── SKILLS ── */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5px; background: var(--border); }
         .skill-category { background: var(--bg-surface); padding: 2rem; }
         .skill-category h3 { font-family: var(--font-mono); color: var(--accent); margin-bottom: 1.5rem; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
@@ -254,17 +126,18 @@
         .skill-tag.clickable { cursor: pointer; }
         .chart-container { background: var(--bg-surface); padding: 2.5rem; margin-top: 1.5px; }
 
-        /* PROJECTS */
+        /* ── PROJECTS ── */
         .project-card { background: var(--bg-surface); padding: 2.5rem 2rem; margin-bottom: 1.5px; transition: all 0.3s ease; border: 1px solid transparent; }
         .project-card:hover { border-color: var(--border-hover); background: var(--bg-raised); }
         .project-badge { display: inline-block; background: var(--accent); color: #080808; padding: 0.25rem 0.75rem; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.25rem; }
         .project-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
         .project-tech { font-family: var(--font-mono); color: var(--text-muted); font-size: 0.75rem; margin-bottom: 1.25rem; letter-spacing: 0.05em; }
         .project-description { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .project-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
         .project-link { font-family: var(--font-mono); color: var(--accent); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease; border-bottom: 1px solid rgba(232,255,71,0.3); padding-bottom: 2px; }
         .project-link:hover { gap: 1rem; }
 
-        /* FOOTER */
+        /* ── FOOTER ── */
         footer { max-width: 1200px; margin: 4rem auto 2rem; padding: 2rem; border-top: 1px solid var(--border); }
         .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
         .footer-links { display: flex; gap: 2rem; }
@@ -272,7 +145,7 @@
         .footer-links a:hover { color: var(--accent); }
         .footer-copy { font-family: var(--font-mono); color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.1em; }
 
-        /* DARK MODALS */
+        /* ── DARK MODALS ── */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; padding: 2rem; overflow-y: auto; backdrop-filter: blur(4px); }
         .modal.active { display: flex; align-items: flex-start; justify-content: center; padding-top: 3rem; }
         .modal-content { background: var(--bg-surface); border: 1px solid var(--border); padding: 2.5rem; max-width: 900px; width: 100%; position: relative; margin-bottom: 3rem; }
@@ -281,60 +154,38 @@
         .modal-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; }
         .modal-subtitle { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
         .evidence-text { font-family: var(--font-mono); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.9; padding: 1.5rem; background: var(--bg-raised); border-left: 2px solid var(--accent); }
+        .modal-imgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .modal-img { width: 100%; display: block; border: 1px solid var(--border); transition: border-color 0.2s; }
+        .modal-img:hover { border-color: var(--accent); }
 
-        /* NEWSPAPER CONTACT MODAL */
-        #modal-contact {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.88);
-            z-index: 99999;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(6px);
-        }
+        /* ── NEWSPAPER CONTACT MODAL ── */
+        #modal-contact { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
         #modal-contact.active { display: flex; }
-
-        .newspaper-wrap {
-            position: relative;
-            max-width: 560px;
-            width: 90%;
-            animation: newsIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes newsIn {
-            from { opacity: 0; transform: scale(0.86) rotate(-1.5deg); }
-            to   { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
+        .newspaper-wrap { position: relative; max-width: 560px; width: 90%; animation: newsIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275); }
+        @keyframes newsIn { from { opacity: 0; transform: scale(0.86) rotate(-1.5deg); } to { opacity: 1; transform: scale(1) rotate(0deg); } }
         .newspaper { background: #f5f0e8; border: 2px solid #1a1a1a; box-shadow: 7px 7px 0 #1a1a1a; overflow: hidden; position: relative; }
-        .newspaper::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.055) 27px, rgba(0,0,0,0.055) 28px);
-            pointer-events: none;
-            z-index: 0;
-        }
+        .newspaper::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.055) 27px, rgba(0,0,0,0.055) 28px); pointer-events: none; z-index: 0; }
         .news-header { background: #111; padding: 1.1rem 1.5rem 1rem; text-align: center; border-bottom: 3px double rgba(245,240,232,0.4); position: relative; z-index: 1; }
-        .news-masthead { font-family: 'Georgia', 'Times New Roman', serif; font-size: 0.58rem; color: #f5f0e8; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.3rem; }
-        .news-name { font-family: 'Georgia', 'Times New Roman', serif; font-size: 2rem; font-weight: 700; color: #f5f0e8; letter-spacing: 0.02em; line-height: 1.1; }
+        .news-masthead { font-family: 'Georgia','Times New Roman',serif; font-size: 0.58rem; color: #f5f0e8; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.3rem; }
+        .news-name { font-family: 'Georgia','Times New Roman',serif; font-size: 2rem; font-weight: 700; color: #f5f0e8; letter-spacing: 0.02em; line-height: 1.1; }
         .news-dateline { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 1.5rem; background: #222; border-bottom: 1px solid #3a3a3a; position: relative; z-index: 1; }
-        .news-dateline span { font-family: 'Georgia', serif; font-size: 0.62rem; color: #999; letter-spacing: 0.07em; }
+        .news-dateline span { font-family: 'Georgia',serif; font-size: 0.62rem; color: #999; letter-spacing: 0.07em; }
         .news-body { padding: 1.5rem 1.75rem 1.75rem; position: relative; z-index: 1; }
-        .news-headline { font-family: 'Georgia', 'Times New Roman', serif; font-size: 1.45rem; font-weight: 700; color: #111; line-height: 1.2; margin-bottom: 0.45rem; border-bottom: 2px solid #111; padding-bottom: 0.7rem; text-align: center; }
-        .news-subhead { font-family: 'Georgia', serif; font-size: 0.76rem; color: #555; text-align: center; font-style: italic; margin-bottom: 1.4rem; }
+        .news-headline { font-family: 'Georgia','Times New Roman',serif; font-size: 1.45rem; font-weight: 700; color: #111; line-height: 1.2; margin-bottom: 0.45rem; border-bottom: 2px solid #111; padding-bottom: 0.7rem; text-align: center; }
+        .news-subhead { font-family: 'Georgia',serif; font-size: 0.76rem; color: #555; text-align: center; font-style: italic; margin-bottom: 1.4rem; }
         .news-columns { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 1.5rem; margin-bottom: 1.4rem; }
         .news-col-divider { background: #ccc; }
         .news-contact-item { display: flex; flex-direction: column; gap: 0.25rem; }
-        .news-col-label { font-family: 'Georgia', serif; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: #888; font-style: italic; margin-bottom: 0.25rem; }
-        .news-contact-type { font-family: 'Georgia', serif; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: #999; }
-        .news-contact-value { font-family: 'Georgia', 'Times New Roman', serif; font-size: 1rem; font-weight: 700; color: #111; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; word-break: break-all; }
+        .news-col-label { font-family: 'Georgia',serif; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: #888; font-style: italic; margin-bottom: 0.25rem; }
+        .news-contact-type { font-family: 'Georgia',serif; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: #999; }
+        .news-contact-value { font-family: 'Georgia','Times New Roman',serif; font-size: 1rem; font-weight: 700; color: #111; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; word-break: break-all; }
         .news-contact-value:hover { border-color: #111; }
         .news-footer-strip { border-top: 2px solid #111; padding-top: 0.8rem; text-align: center; }
-        .news-footer-strip p { font-family: 'Georgia', serif; font-size: 0.7rem; color: #666; font-style: italic; }
+        .news-footer-strip p { font-family: 'Georgia',serif; font-size: 0.7rem; color: #666; font-style: italic; }
         .news-close { position: absolute; top: -13px; right: -13px; width: 34px; height: 34px; background: var(--accent); border: 2px solid #111; color: #111; font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: transform 0.25s ease; font-family: var(--font-mono); line-height: 1; }
         .news-close:hover { transform: scale(1.12) rotate(90deg); }
 
-        /* RESPONSIVE */
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             .hero-section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
             .profile-display { order: -1; }
@@ -346,20 +197,21 @@
             .news-headline { font-size: 1.15rem; }
             .news-name { font-size: 1.5rem; }
             .news-dateline { flex-direction: column; gap: 0.2rem; align-items: flex-start; }
+            .modal-imgs { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<!-- GATEWAY -->
+<!-- ═══ GATEWAY ═══ -->
 <div id="gateway">
     <div class="gateway-tag">// Portfolio v2025</div>
     <div class="gateway-logo">Alif<br><span>Octrio</span></div>
     <div class="gateway-subtitle">Strategic Product Manager &amp; AI Operations Lead</div>
-    <button class="enter-btn" onclick="initializeSystem()">Enter &#8594;</button>
+    <button class="enter-btn" onclick="initializeSystem()">Enter &rarr;</button>
 </div>
 
-<!-- MAIN INTERFACE -->
+<!-- ═══ MAIN INTERFACE ═══ -->
 <div id="main-interface">
 
     <header>
@@ -376,7 +228,7 @@
         </div>
     </header>
 
-    <!-- ABOUT PAGE -->
+    <!-- ABOUT -->
     <div id="page-about" class="page active">
         <section class="hero-section">
             <div class="hero-content">
@@ -389,7 +241,7 @@
                 </p>
                 <div class="cta-buttons">
                     <button onclick="openContact()" class="btn btn-primary">Get in Touch</button>
-                    <a href="https://github.com/ohhaikai29" target="_blank" class="btn btn-secondary">GitHub &#8594;</a>
+                    <a href="https://github.com/ohhaikai29" target="_blank" class="btn btn-secondary">GitHub &rarr;</a>
                 </div>
             </div>
             <div class="profile-display">
@@ -400,7 +252,7 @@
         </section>
     </div>
 
-    <!-- ACHIEVEMENTS PAGE -->
+    <!-- ACHIEVEMENTS -->
     <div id="page-achievements" class="page">
         <section class="stats-section">
             <div class="section-divider"><span class="section-tag">// Metrics</span></div>
@@ -419,7 +271,7 @@
                 <div class="stat-card" onclick="openModal('sentiment')">
                     <div class="stat-arrow">[ click for details ]</div>
                     <div class="stat-number">22K+</div>
-                    <div class="stat-label">Data Points Analyzed</div>
+                    <div class="stat-label">Sentiment Data Points Analyzed</div>
                 </div>
                 <div class="stat-card" onclick="openModal('efficiency')">
                     <div class="stat-arrow">[ click for details ]</div>
@@ -430,7 +282,7 @@
         </section>
     </div>
 
-    <!-- EXPERIENCE PAGE -->
+    <!-- EXPERIENCE -->
     <div id="page-experience" class="page">
         <section class="section">
             <div class="section-divider"><span class="section-tag">// Work History</span></div>
@@ -475,7 +327,7 @@
                             <h3 class="experience-title">Product Manager &amp; Strategy</h3>
                             <p class="experience-company">Growth &amp; Operations</p>
                         </div>
-                        <span class="experience-period">2023&#8211;2024</span>
+                        <span class="experience-period">2023&ndash;2024</span>
                     </div>
                     <p class="experience-description">Led product strategy and execution, scaling daily subscription operations to 400+ through data-driven optimization and cross-functional collaboration.</p>
                     <ul class="achievement-list">
@@ -505,7 +357,7 @@
         </section>
     </div>
 
-    <!-- SKILLS PAGE -->
+    <!-- SKILLS -->
     <div id="page-skills" class="page">
         <section class="section">
             <div class="section-divider"><span class="section-tag">// Capabilities</span></div>
@@ -524,17 +376,16 @@
                 <div class="skill-category">
                     <h3>AI &amp; Data</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag clickable" onclick="openModal('python')">Python &#8594;</span>
-                        <span class="skill-tag clickable" onclick="openModal('analytics')">Data Analytics &#8594;</span>
+                        <span class="skill-tag clickable" onclick="openModal('python')">Python &rarr;</span>
+                        <span class="skill-tag clickable" onclick="openModal('analytics')">Data Analytics &rarr;</span>
                         <span class="skill-tag">ML Operations</span>
-                        <span class="skill-tag clickable" onclick="openModal('sentiment-skill')">Sentiment Analysis &#8594;</span>
+                        <span class="skill-tag clickable" onclick="openModal('sentiment-skill')">Sentiment Analysis &rarr;</span>
                         <span class="skill-tag">NLTK/VADER</span>
                     </div>
                 </div>
                 <div class="skill-category">
                     <h3>Tools &amp; Platforms</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag clickable" onclick="openModal('ibm')">IBM Project Mgmt &#8594;</span>
                         <span class="skill-tag">Google Cloud</span>
                         <span class="skill-tag">APIs (REST)</span>
                         <span class="skill-tag">Web Scraping</span>
@@ -548,7 +399,7 @@
         </section>
     </div>
 
-    <!-- PROJECTS PAGE -->
+    <!-- PROJECTS -->
     <div id="page-projects" class="page">
         <section class="section">
             <div class="section-divider"><span class="section-tag">// Work</span></div>
@@ -557,21 +408,27 @@
             <div class="project-card">
                 <span class="project-badge">Primary Project</span>
                 <h3 class="project-title">Multi-Platform Sentiment Analysis System</h3>
-                <p class="project-tech">Python &#8226; PRAW &#8226; YouTube API &#8226; NLTK &#8226; Pandas</p>
+                <p class="project-tech">Python &bull; PRAW &bull; YouTube API &bull; NLTK &bull; Pandas</p>
                 <p class="project-description">Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7 release, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.</p>
-                <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">View Source Code &#8594;</a>
+                <div class="project-links">
+                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">Web Scraping Code &rarr;</a>
+                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/sentiment_analysis.py" target="_blank" class="project-link">Sentiment Analysis Code &rarr;</a>
+                </div>
             </div>
 
             <div class="project-card">
                 <h3 class="project-title">AI Model Benchmarking Framework</h3>
-                <p class="project-tech">Python &#8226; Data Analysis &#8226; Visualization</p>
-                <p class="project-description">Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% &#8594; 90% accuracy improvement.</p>
-                <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/benchmarking_framework.py" target="_blank" class="project-link">View Source Code &#8594;</a>
+                <p class="project-tech">Python &bull; Data Analysis &bull; Visualization</p>
+                <p class="project-description">Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% &rarr; 90% accuracy improvement.</p>
+                <div class="project-links">
+                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/benchmarking_framework.py" target="_blank" class="project-link">View Source Code &rarr;</a>
+                </div>
             </div>
+
         </section>
     </div>
 
-    <!-- EDUCATION PAGE -->
+    <!-- EDUCATION -->
     <div id="page-education" class="page">
         <section class="section">
             <div class="section-divider"><span class="section-tag">// Background</span></div>
@@ -586,7 +443,7 @@
                         </div>
                     </div>
                     <p class="experience-description">Developed strong analytical and critical thinking skills through rigorous philosophical training, directly applicable to product strategy and decision-making frameworks.</p>
-                    <a href="ijazah-ugm.jpg" target="_blank" class="project-link" style="margin-top:1rem;display:inline-flex;">View Certificate &#8594;</a>
+                    <a href="ijazah-ugm.jpg" target="_blank" class="project-link" style="margin-top:1rem;display:inline-flex;">View Certificate &rarr;</a>
                 </div>
 
                 <div class="experience-card">
@@ -597,7 +454,7 @@
                         </div>
                     </div>
                     <p class="experience-description">Comprehensive certification covering Agile methodologies, JIRA workflows, stakeholder management, and cross-functional team coordination. Applied these skills to scale daily operations from 100 to 400+ subscriptions.</p>
-                    <a href="ibm-cert.jpg" target="_blank" class="project-link" style="margin-top:1rem;display:inline-flex;">View Certificate &#8594;</a>
+                    <a href="ibm-cert.jpg" target="_blank" class="project-link" style="margin-top:1rem;display:inline-flex;">View Certificate &rarr;</a>
                 </div>
 
             </div>
@@ -611,19 +468,19 @@
                 <a href="https://github.com/ohhaikai29" target="_blank">GitHub</a>
                 <a href="https://linkedin.com/in/alifoctrio" target="_blank">LinkedIn</a>
             </div>
-            <span class="footer-copy">&#169; 2025 Alif Octrio</span>
+            <span class="footer-copy">&copy; 2025 Alif Octrio</span>
         </div>
     </footer>
 
 </div><!-- end #main-interface -->
 
-<!-- NEWSPAPER CONTACT MODAL -->
+<!-- ═══ NEWSPAPER CONTACT MODAL ═══ -->
 <div id="modal-contact" onclick="if(event.target===this)closeContact()">
     <div class="newspaper-wrap">
         <button class="news-close" onclick="closeContact()">&#10005;</button>
         <div class="newspaper">
             <div class="news-header">
-                <div class="news-masthead">The Professional Gazette &#8212; Est. 2025</div>
+                <div class="news-masthead">The Professional Gazette &mdash; Est. 2025</div>
                 <div class="news-name">Alif Octrio</div>
             </div>
             <div class="news-dateline">
@@ -633,7 +490,7 @@
             </div>
             <div class="news-body">
                 <h2 class="news-headline">Reach Out &amp; Let's Build Something</h2>
-                <p class="news-subhead">Direct lines of communication &#8212; no middlemen, no delays</p>
+                <p class="news-subhead">Direct lines of communication &mdash; no middlemen, no delays</p>
                 <div class="news-columns">
                     <div class="news-contact-item">
                         <span class="news-col-label">Electronic Mail</span>
@@ -648,20 +505,24 @@
                     </div>
                 </div>
                 <div class="news-footer-strip">
-                    <p>&#8220;Available for full-time, contract, and consulting engagements.&#8221;</p>
+                    <p>&ldquo;Available for full-time, contract, and consulting engagements.&rdquo;</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ACHIEVEMENT MODALS -->
+<!-- ═══ ACHIEVEMENT MODALS ═══ -->
 <div id="modal-scaling" class="modal" onclick="if(event.target===this)closeModal('scaling')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('scaling')">&#10005;</button>
         <div class="modal-subtitle">// Achievement Detail</div>
         <h2 class="modal-title">400+ Daily Subscriptions</h2>
         <div class="evidence-text">Led end-to-end product strategy to scale subscription operations from ~100 to 400+ daily active subscriptions within 6 months. Implemented data-driven acquisition funnels, optimized onboarding flows, and established a 25+ KPI analytics framework that surfaced growth levers and reduced churn. Coordinated cross-functional execution across engineering, design, and marketing teams.</div>
+        <div class="modal-imgs">
+            <img src="scaling1.png" alt="Scaling evidence 1" class="modal-img">
+            <img src="scaling2.png" alt="Scaling evidence 2" class="modal-img">
+        </div>
     </div>
 </div>
 
@@ -671,6 +532,10 @@
         <div class="modal-subtitle">// Achievement Detail</div>
         <h2 class="modal-title">90% AI Model Accuracy</h2>
         <div class="evidence-text">Drove AI model accuracy from 60% to 90% through systematic A/B testing, data quality improvements, and iterative benchmarking. Reduced false positive rates by 30% and established automated monitoring pipelines to sustain performance over time. Built and maintained a custom evaluation framework to track model drift and performance degradation proactively.</div>
+        <div class="modal-imgs">
+            <img src="bench1.png" alt="Benchmarking evidence 1" class="modal-img">
+            <img src="bench2.png" alt="Benchmarking evidence 2" class="modal-img">
+        </div>
     </div>
 </div>
 
@@ -678,8 +543,18 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('sentiment')">&#10005;</button>
         <div class="modal-subtitle">// Achievement Detail</div>
-        <h2 class="modal-title">22,000+ Data Points Analyzed</h2>
+        <h2 class="modal-title">22K+ Sentiment Data Points Analyzed</h2>
         <div class="evidence-text">Built a multi-platform sentiment extraction engine processing 22,000+ data points from YouTube, Reddit, X (Twitter), and TikTok. Used VADER NLP and custom pipelines to achieve 90% classification accuracy. Project delivered actionable competitive market intelligence on the Call of Duty: Black Ops 7 release for product and marketing teams.</div>
+        <div class="modal-imgs">
+            <img src="hype1.png" alt="Sentiment analysis 1" class="modal-img">
+            <img src="hype2.png" alt="Sentiment analysis 2" class="modal-img">
+            <img src="hype3.png" alt="Sentiment analysis 3" class="modal-img">
+            <img src="hype4.png" alt="Sentiment analysis 4" class="modal-img">
+            <img src="bench1.png" alt="Benchmark data 1" class="modal-img">
+            <img src="bench2.png" alt="Benchmark data 2" class="modal-img">
+            <img src="scaling1.png" alt="Scaling data 1" class="modal-img">
+            <img src="scaling2.png" alt="Scaling data 2" class="modal-img">
+        </div>
     </div>
 </div>
 
@@ -692,7 +567,7 @@
     </div>
 </div>
 
-<!-- SKILL MODALS -->
+<!-- ═══ SKILL MODALS ═══ -->
 <div id="modal-python" class="modal" onclick="if(event.target===this)closeModal('python')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('python')">&#10005;</button>
@@ -720,15 +595,7 @@
     </div>
 </div>
 
-<div id="modal-ibm" class="modal" onclick="if(event.target===this)closeModal('ibm')">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('ibm')">&#10005;</button>
-        <div class="modal-subtitle">// Certification</div>
-        <h2 class="modal-title">IBM Project Management Professional</h2>
-        <div class="evidence-text">IBM-certified in Agile methodologies, JIRA workflows, stakeholder management, and cross-functional team coordination. Certification was applied directly to scale daily subscription operations from 100 to 400+ through structured sprint planning and backlog management.</div>
-    </div>
-</div>
-
+<!-- ═══ SCRIPTS ═══ -->
 <script>
     function initializeSystem() {
         document.getElementById('gateway').classList.add('hidden');
@@ -754,7 +621,6 @@
         var m = document.getElementById('modal-' + id);
         if (m) { m.classList.remove('active'); document.body.style.overflow = 'auto'; }
     }
-
     function openContact() {
         document.getElementById('modal-contact').classList.add('active');
         document.body.style.overflow = 'hidden';
