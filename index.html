@@ -1,990 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alif Octrio | Strategic Product Manager</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #0066cc;
-            --dark-blue: #004999;
-            --light-blue: #e6f2ff;
-            --text-dark: #1a1a1a;
-            --text-gray: #666666;
-            --text-light: #999999;
-            --border-gray: #e0e0e0;
-            --bg-white: #ffffff;
-            --bg-light: #f8f9fa;
-            --success-green: #28a745;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Gateway - Simple Fade */
-        #gateway {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-white);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease;
-        }
-
-        #gateway.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .gateway-logo {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .gateway-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-gray);
-            margin-bottom: 3rem;
-            font-weight: 400;
-        }
-
-        .enter-btn {
-            padding: 1rem 2.5rem;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .enter-btn:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-        }
-
-        #main-interface {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        #main-interface.active {
-            opacity: 1;
-        }
-
-        /* Header */
-        header {
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-gray);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            letter-spacing: -0.01em;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-gray);
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: 6px;
-        }
-
-        .nav-btn:hover,
-        .nav-btn.active {
-            color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Section */
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            line-height: 1.2;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.875rem 1.75rem;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: inline-block;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-        }
-
-        .btn-secondary:hover {
-            background: var(--light-blue);
-        }
-
-        .profile-display {
-            position: relative;
-        }
-
-        .profile-frame {
-            width: 100%;
-            max-width: 400px;
-            aspect-ratio: 3/4;
-            margin: 0 auto;
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }
-
-        /* Stats Section */
-        .stats-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .stat-card:hover {
-            border-color: var(--primary-blue);
-            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
-            transform: translateY(-4px);
-        }
-
-        .stat-card::after {
-            content: 'Click to view details →';
-            display: block;
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--primary-blue);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .stat-card:hover::after {
-            opacity: 1;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-gray);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 2rem;
-        }
-
-        .modal-content {
-            background: var(--bg-white);
-            border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 1000px;
-            width: 100%;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            margin-bottom: 2rem;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--bg-light);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-gray);
-        }
-
-        .modal-close:hover {
-            background: var(--border-gray);
-            color: var(--text-dark);
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .evidence-gallery {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .evidence-img {
-            width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .evidence-text {
-            color: var(--text-gray);
-            text-align: center;
-            padding: 2rem;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        /* Section */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 3rem;
-            letter-spacing: -0.02em;
-        }
-
-        /* Experience Cards */
-        .experience-grid {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .experience-card {
-            background: var(--bg-white);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary-blue);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-        }
-
-        .experience-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            transform: translateX(4px);
-        }
-
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .experience-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        .experience-period {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .experience-company {
-            color: var(--text-dark);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .experience-description {
-            color: var(--text-gray);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
-        .achievement-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .achievement-list li {
-            color: var(--text-gray);
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 0.5rem;
-        }
-
-        .achievement-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--success-green);
-            font-weight: 700;
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .skill-category h3 {
-            color: var(--primary-blue);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .skill-tag {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .skill-tag:hover {
-            background: var(--primary-blue);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .skill-tag.clickable {
-            cursor: pointer;
-        }
-
-        .skill-tag.clickable::after {
-            content: ' →';
-        }
-
-        /* Projects */
-        .project-card {
-            background: var(--bg-white);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }
-
-        .project-badge {
-            display: inline-block;
-            background: var(--success-green);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .project-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .project-tech {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-description {
-            color: var(--text-gray);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-link {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s ease;
-        }
-
-        .project-link:hover {
-            gap: 1rem;
-        }
-
-        .chart-container {
-            background: var(--bg-white);
-            padding: 2rem;
-            margin-top: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        /* Footer */
-        footer {
-            max-width: 1200px;
-            margin: 4rem auto 2rem;
-            padding: 2rem;
-            border-top: 1px solid var(--border-gray);
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-gray);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-blue);
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alif Octrio | Strategic Product Manager</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--primary-blue:#4da3ff;
+--dark-blue:#1a73e8;
+--light-blue:rgba(77,163,255,0.12);
+
+--text-dark:#ffffff;
+--text-gray:#b3b3b3;
+--text-light:#777;
+
+--border-gray:#242424;
+
+--bg-white:#0f0f0f;
+--bg-light:#050505;
+
+--success-green:#3ddc84;
+
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:radial-gradient(circle at top,#111 0%,#050505 70%);
+color:var(--text-dark);
+line-height:1.6;
+overflow-x:hidden;
+}
+
+/* gateway */
+
+#gateway{
+position:fixed;
+inset:0;
+background:#050505;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:10000;
+transition:opacity .8s ease;
+}
+
+#gateway.hidden{
+opacity:0;
+pointer-events:none;
+}
+
+.gateway-logo{
+font-size:clamp(2.5rem,8vw,5rem);
+font-weight:800;
+color:var(--primary-blue);
+margin-bottom:1rem;
+}
+
+.gateway-subtitle{
+color:var(--text-gray);
+margin-bottom:2rem;
+}
+
+.enter-btn{
+padding:1rem 2rem;
+background:var(--primary-blue);
+border:none;
+color:white;
+font-weight:600;
+border-radius:8px;
+cursor:pointer;
+transition:.3s;
+}
+
+.enter-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 40px rgba(77,163,255,0.3);
+}
+
+/* main */
+
+#main-interface{
+display:none;
+opacity:0;
+transition:1s;
+}
+
+#main-interface.active{
+opacity:1;
+}
+
+/* header */
+
+header{
+background:rgba(10,10,10,.7);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--border-gray);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.header-content{
+max-width:1200px;
+margin:auto;
+padding:1.5rem 2rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.logo{
+font-weight:700;
+color:var(--primary-blue);
+font-size:1.5rem;
+}
+
+.nav-menu{
+display:flex;
+gap:.5rem;
+}
+
+.nav-btn{
+background:transparent;
+border:none;
+color:var(--text-gray);
+padding:.5rem 1rem;
+cursor:pointer;
+border-radius:6px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+background:var(--light-blue);
+color:var(--primary-blue);
+}
+
+/* page */
+
+.page{
+display:none;
+animation:fade .4s ease;
+}
+
+.page.active{
+display:block;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1}
+}
+
+/* hero */
+
+.hero-section{
+max-width:1200px;
+margin:auto;
+padding:4rem 2rem;
+display:grid;
+grid-template-columns:1.2fr 1fr;
+gap:4rem;
+align-items:center;
+}
+
+.hero-content h1{
+font-size:clamp(2.2rem,5vw,3.2rem);
+font-weight:800;
+margin-bottom:1rem;
+}
+
+.hero-subtitle{
+color:var(--text-gray);
+margin-bottom:2rem;
+}
+
+.cta-buttons{
+display:flex;
+gap:1rem;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:.9rem 1.6rem;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+.btn-primary{
+background:var(--primary-blue);
+color:white;
+}
+
+.btn-primary:hover{
+box-shadow:0 10px 40px rgba(77,163,255,.4);
+}
+
+.btn-secondary{
+border:2px solid var(--primary-blue);
+color:var(--primary-blue);
+}
+
+.profile-img{
+width:100%;
+border-radius:12px;
+box-shadow:0 10px 40px rgba(0,0,0,.7);
+}
+
+/* stats */
+
+.stats-section{
+max-width:1200px;
+margin:auto;
+padding:4rem 2rem;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:2rem;
+}
+
+.stat-card{
+background:#111;
+padding:2rem;
+border-radius:12px;
+border:1px solid #1f1f1f;
+cursor:pointer;
+transition:.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-5px);
+border-color:var(--primary-blue);
+box-shadow:0 10px 40px rgba(77,163,255,.2);
+}
+
+.stat-number{
+font-size:3rem;
+color:var(--primary-blue);
+font-weight:800;
+}
+
+.stat-label{
+color:var(--text-gray);
+}
+
+/* sections */
+
+.section{
+max-width:1200px;
+margin:auto;
+padding:4rem 2rem;
+}
+
+.section-title{
+font-size:2.3rem;
+margin-bottom:2rem;
+}
+
+/* experience */
+
+.experience-grid{
+display:grid;
+gap:2rem;
+}
+
+.experience-card{
+background:#111;
+padding:2rem;
+border-radius:12px;
+border-left:4px solid var(--primary-blue);
+border:1px solid #1f1f1f;
+}
+
+.experience-title{
+color:var(--primary-blue);
+font-size:1.3rem;
+}
+
+.experience-company{
+font-weight:600;
+margin-bottom:1rem;
+}
+
+.experience-description{
+color:var(--text-gray);
+margin-bottom:1rem;
+}
+
+.achievement-list{
+list-style:none;
+}
+
+.achievement-list li{
+padding-left:1.2rem;
+position:relative;
+margin-bottom:.5rem;
+color:var(--text-gray);
+}
+
+.achievement-list li::before{
+content:'✓';
+position:absolute;
+left:0;
+color:var(--success-green);
+}
+
+/* skills */
+
+.skills-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:2rem;
+}
+
+.skill-category{
+background:#111;
+padding:2rem;
+border-radius:12px;
+border:1px solid #1f1f1f;
+}
+
+.skill-category h3{
+color:var(--primary-blue);
+margin-bottom:1rem;
+}
+
+.skill-tags{
+display:flex;
+flex-wrap:wrap;
+gap:.6rem;
+}
+
+.skill-tag{
+background:var(--light-blue);
+padding:.4rem .9rem;
+border-radius:6px;
+font-size:.9rem;
+cursor:pointer;
+}
+
+.skill-tag:hover{
+background:var(--primary-blue);
+color:white;
+}
+
+/* projects */
+
+.project-card{
+background:#111;
+padding:2rem;
+margin-bottom:2rem;
+border-radius:12px;
+border:1px solid #1f1f1f;
+}
+
+.project-title{
+font-size:1.6rem;
+margin-bottom:.5rem;
+}
+
+.project-tech{
+color:var(--text-light);
+margin-bottom:1rem;
+}
+
+.project-description{
+color:var(--text-gray);
+margin-bottom:1rem;
+}
+
+.project-link{
+color:var(--primary-blue);
+text-decoration:none;
+font-weight:600;
+}
+
+/* chart */
+
+.chart-container{
+background:#111;
+padding:2rem;
+border-radius:12px;
+border:1px solid #1f1f1f;
+margin-top:2rem;
+}
+
+/* footer */
+
+footer{
+text-align:center;
+padding:2rem;
+border-top:1px solid var(--border-gray);
+margin-top:4rem;
+}
+
+.footer-links{
+display:flex;
+justify-content:center;
+gap:2rem;
+margin-bottom:1rem;
+}
+
+.footer-links a{
+color:var(--text-gray);
+text-decoration:none;
+}
+
+.footer-links a:hover{
+color:var(--primary-blue);
+}
+
+</style>
 </head>
+
 <body>
-    <div id="gateway">
-        <div class="gateway-logo">Alif Octrio</div>
-        <div class="gateway-subtitle">Strategic Product Manager & AI Operations Lead</div>
-        <button class="enter-btn" onclick="initializeSystem()">View Portfolio</button>
-    </div>
 
-    <div id="main-interface">
-        <header>
-            <div class="header-content">
-                <div class="logo">Alif Octrio</div>
-                <nav class="nav-menu">
-                    <button class="nav-btn active" onclick="showPage('about')">About</button>
-                    <button class="nav-btn" onclick="showPage('achievements')">Achievements</button>
-                    <button class="nav-btn" onclick="showPage('experience')">Experience</button>
-                    <button class="nav-btn" onclick="showPage('skills')">Skills</button>
-                    <button class="nav-btn" onclick="showPage('projects')">Projects</button>
-                    <button class="nav-btn" onclick="showPage('education')">Education</button>
-                </nav>
-            </div>
-        </header>
+<div id="gateway">
+<div class="gateway-logo">Alif Octrio</div>
+<div class="gateway-subtitle">Strategic Product Manager & AI Operations Lead</div>
+<button class="enter-btn" onclick="initializeSystem()">View Portfolio</button>
+</div>
 
-        <!-- ABOUT PAGE -->
-        <div id="page-about" class="page active">
-            <section class="hero-section">
-                <div class="hero-content">
-                    <h1>Strategic Product Manager & AI Operations Lead</h1>
-                    <p class="hero-subtitle">
-                        Transforming technical R&D into scalable, high-impact products through data-driven strategy and AI optimization.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="mailto:alifoctrio@gmail.com" class="btn btn-primary">Get in Touch</a>
-                        <a href="https://github.com/ohhaikai29" target="_blank" class="btn btn-secondary">View GitHub</a>
-                    </div>
-                </div>
-                <div class="profile-display">
-                    <div class="profile-frame">
-                        <img src="alif.jpg" alt="Alif Octrio" class="profile-img">
-                    </div>
-                </div>
-            </section>
-        </div>
+<div id="main-interface">
 
-        <!-- ACHIEVEMENTS PAGE -->
-        <div id="page-achievements" class="page">
-            <section class="stats-section">
-                <h2 class="section-title">Key Achievements</h2>
-                <div class="stats-grid">
-                    <div class="stat-card" onclick="openModal('scaling')">
-                        <div class="stat-number">400+</div>
-                        <div class="stat-label">Daily Subscriptions Scaled</div>
-                    </div>
-                    <div class="stat-card" onclick="openModal('precision')">
-                        <div class="stat-number">90%</div>
-                        <div class="stat-label">AI Model Accuracy</div>
-                    </div>
-                    <div class="stat-card" onclick="openModal('sentiment')">
-                        <div class="stat-number">22K+</div>
-                        <div class="stat-label">Data Points Analyzed</div>
-                    </div>
-                    <div class="stat-card" onclick="openModal('efficiency')">
-                        <div class="stat-number">20%</div>
-                        <div class="stat-label">System Stability Increase</div>
-                    </div>
-                </div>
-            </section>
-        </div>
+<header>
+<div class="header-content">
 
-        <!-- EXPERIENCE PAGE -->
-        <div id="page-experience" class="page">
-            <section class="section">
-                <h2 class="section-title">Professional Experience</h2>
-                <div class="experience-grid">
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Lead AI & Data Optimization</h3>
-                                <p class="experience-company">Product Development</p>
-                            </div>
-                            <span class="experience-period">2024</span>
-                        </div>
-                        <p class="experience-description">
-                            Spearheaded AI model optimization initiatives, improving success rates from 60% to 90% through systematic technical benchmarking and iterative refinement.
-                        </p>
-                        <ul class="achievement-list">
-                            <li>Implemented rigorous A/B testing framework for model evaluation</li>
-                            <li>Reduced false positive rates by 30% through data quality improvements</li>
-                            <li>Established automated monitoring pipelines for model performance</li>
-                        </ul>
-                    </div>
+<div class="logo">Alif Octrio</div>
 
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">AI Technology Benchmark Lead</h3>
-                                <p class="experience-company">Competitive Intelligence</p>
-                            </div>
-                            <span class="experience-period">2024</span>
-                        </div>
-                        <p class="experience-description">
-                            Conducted comprehensive competitive analysis through reverse engineering competitor features to identify market gaps and technical opportunities.
-                        </p>
-                        <ul class="achievement-list">
-                            <li>Analyzed 15+ competitor products to map technical capabilities</li>
-                            <li>Identified 8 critical feature gaps enabling strategic product positioning</li>
-                            <li>Delivered actionable intelligence reports to executive leadership</li>
-                        </ul>
-                    </div>
+<nav class="nav-menu">
 
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Product Manager & Strategy</h3>
-                                <p class="experience-company">Growth & Operations</p>
-                            </div>
-                            <span class="experience-period">2023-2024</span>
-                        </div>
-                        <p class="experience-description">
-                            Led product strategy and execution, scaling daily subscription operations to 400+ through data-driven optimization and cross-functional collaboration.
-                        </p>
-                        <ul class="achievement-list">
-                            <li>Achieved 4x growth in daily active subscriptions within 6 months</li>
-                            <li>Implemented analytics framework tracking 25+ product KPIs</li>
-                            <li>Coordinated cross-functional teams across engineering, design, and marketing</li>
-                        </ul>
-                    </div>
+<button class="nav-btn active" onclick="showPage('about')">About</button>
+<button class="nav-btn" onclick="showPage('achievements')">Achievements</button>
+<button class="nav-btn" onclick="showPage('experience')">Experience</button>
+<button class="nav-btn" onclick="showPage('skills')">Skills</button>
+<button class="nav-btn" onclick="showPage('projects')">Projects</button>
+<button class="nav-btn" onclick="showPage('education')">Education</button>
 
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">AI Data Operations Specialist</h3>
-                                <p class="experience-company">PT. Maingames Indonesia</p>
-                            </div>
-                            <span class="experience-period">2023</span>
-                        </div>
-                        <p class="experience-description">
-                            Enhanced system reliability through rigorous training dataset quality assurance, achieving 20% improvement in system stability metrics.
-                        </p>
-                        <ul class="achievement-list">
-                            <li>Developed automated data validation pipelines</li>
-                            <li>Reduced model drift incidents by 35% through proactive monitoring</li>
-                            <li>Established data quality standards adopted company-wide</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </div>
+</nav>
+</div>
+</header>
 
-        <!-- SKILLS PAGE -->
-        <div id="page-skills" class="page">
-            <section class="section">
-                <h2 class="section-title">Technical Expertise</h2>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3>Product Strategy</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Roadmap Planning</span>
-                            <span class="skill-tag">Market Analysis</span>
-                            <span class="skill-tag">KPI Tracking</span>
-                            <span class="skill-tag">Agile/Scrum</span>
-                            <span class="skill-tag">JIRA</span>
-                        </div>
-                    </div>
+<!-- ABOUT -->
 
-                    <div class="skill-category">
-                        <h3>AI & Data</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag clickable" onclick="openModal('python')">Python →</span>
-                            <span class="skill-tag clickable" onclick="openModal('analytics')">Data Analytics →</span>
-                            <span class="skill-tag">ML Operations</span>
-                            <span class="skill-tag clickable" onclick="openModal('sentiment-skill')">Sentiment Analysis →</span>
-                            <span class="skill-tag">NLTK/VADER</span>
-                        </div>
-                    </div>
+<div id="page-about" class="page active">
 
-                    <div class="skill-category">
-                        <h3>Tools & Platforms</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag clickable" onclick="openModal('ibm')">IBM Project Mgmt →</span>
-                            <span class="skill-tag">Google Cloud</span>
-                            <span class="skill-tag">APIs (REST)</span>
-                            <span class="skill-tag">Web Scraping</span>
-                            <span class="skill-tag">Git/GitHub</span>
-                        </div>
-                    </div>
-                </div>
+<section class="hero-section">
 
-                <div class="chart-container">
-                    <canvas id="skillsChart"></canvas>
-                </div>
-            </section>
-        </div>
+<div class="hero-content">
 
-        <!-- PROJECTS PAGE -->
-        <div id="page-projects" class="page">
-            <section class="section">
-                <h2 class="section-title">Featured Projects</h2>
+<h1>Strategic Product Manager & AI Operations Lead</h1>
 
-                <div class="project-card">
-                    <span class="project-badge">Primary Project</span>
-                    <h3 class="project-title">Multi-Platform Sentiment Analysis System</h3>
-                    <p class="project-tech">Python • PRAW • YouTube API • NLTK • Pandas</p>
-                    <p class="project-description">
-                        Developed an automated sentiment extraction engine capable of analyzing user feedback across YouTube, Reddit, X (Twitter), and TikTok. Successfully processed 22,000+ data points for market intelligence on Call of Duty: Black Ops 7 release, achieving 90% sentiment classification accuracy using VADER and custom NLP pipelines.
-                    </p>
-                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/web_scraping.py" target="_blank" class="project-link">
-                        View Source Code →
-                    </a>
-                </div>
+<p class="hero-subtitle">
+Transforming technical R&D into scalable products through data-driven strategy and AI optimization.
+</p>
 
-                <div class="project-card">
-                    <h3 class="project-title">AI Model Benchmarking Framework</h3>
-                    <p class="project-tech">Python • Data Analysis • Visualization</p>
-                    <p class="project-description">
-                        Built comprehensive testing infrastructure to evaluate AI model performance across multiple metrics. Framework enabled systematic comparison of model iterations, identifying performance bottlenecks and optimization opportunities that contributed to 60% → 90% accuracy improvement.
-                    </p>
-                    <a href="https://github.com/ohhaikai29/alif-portofolio/blob/main/benchmarking_framework.py" target="_blank" class="project-link">
-                        View Source Code →
-                    </a>
-                </div>
-            </section>
-        </div>
+<div class="cta-buttons">
 
-        <!-- EDUCATION PAGE -->
-        <div id="page-education" class="page">
-            <section class="section">
-                <h2 class="section-title">Education & Certifications</h2>
-                
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">Bachelor of Philosophy</h3>
-                            <p class="experience-company">Universitas Gadjah Mada (UGM)</p>
-                        </div>
-                    </div>
-                    <p class="experience-description">
-                        Developed strong analytical and critical thinking skills through rigorous philosophical training, directly applicable to product strategy and decision-making frameworks.
-                    </p>
-                    <a href="ijazah-ugm.jpg" target="_blank" class="project-link" style="margin-top: 1rem; display: inline-flex;">
-                        View Certificate →
-                    </a>
-                </div>
+<a href="mailto:alifoctrio@gmail.com" class="btn btn-primary">Get in Touch</a>
 
-                <div class="experience-card" style="margin-top: 2rem;">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">IBM Project Management Professional</h3>
-                            <p class="experience-company">IBM Skills Network</p>
-                        </div>
-                    </div>
-                    <p class="experience-description">
-                        Comprehensive certification covering Agile methodologies, JIRA workflows, stakeholder management, and cross-functional team coordination. Applied these skills to scale daily operations from 100 to 400+ subscriptions.
-                    </p>
-                    <a href="ibm-cert.jpg" target="_blank" class="project-link" style="margin-top: 1rem; display: inline-flex;">
-                        View Certificate →
-                    </a>
-                </div>
-            </section>
-        </div>
+<a href="https://github.com/ohhaikai29" target="_blank" class="btn btn-secondary">View GitHub</a>
 
-        <footer>
-            <div class="footer-links">
-                <a href="mailto:alifoctrio@gmail.com">Email</a>
-                <a href="https://github.com/ohhaikai29" target="_blank">GitHub</a>
-                <a href="https://linkedin.com/in/alifoctrio" target="_blank">LinkedIn</a>
-            </div>
-            <p style="color: var(--text-light); font-size: 0.9rem;">
-                © 2025 Alif Octrio. All rights reserved.
-            </p>
-        </footer>
-    </div>
+</div>
 
-    <!-- Modals (same structure, I'll skip for brevity - let me know if you need them) -->
-    
-    <script>
-        function initializeSystem() {
-            document.getElementById('gateway').classList.add('hidden');
-            const main = document.getElementById('main-interface');
-            main.style.display = 'block';
-            setTimeout(() => main.classList.add('active'), 100);
-        }
+</div>
 
-        function showPage(pageName) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(`page-${pageName}`).classList.add('active');
-            event.target.classList.add('active');
-            
-            if (pageName === 'skills') setTimeout(renderSkillsChart, 100);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+<div>
 
-        function openModal(id) {
-            document.getElementById(`modal-${id}`).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+<img src="alif.jpg" class="profile-img">
 
-        function closeModal(id) {
-            document.getElementById(`modal-${id}`).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+</div>
 
-        function renderSkillsChart() {
-            const canvas = document.getElementById('skillsChart');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            if (window.skillsChartInstance) window.skillsChartInstance.destroy();
-            
-            window.skillsChartInstance = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Product Strategy', 'AI Operations', 'Data Analysis', 'Technical Benchmarking', 'Cross-functional Leadership'],
-                    datasets: [{
-                        label: 'Proficiency',
-                        data: [95, 90, 92, 88, 93],
-                        backgroundColor: 'rgba(0, 102, 204, 0.1)',
-                        borderColor: '#0066cc',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#0066cc',
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: {
-                            min: 0,
-                            max: 100,
-                            ticks: { stepSize: 20, color: '#666' },
-                            grid: { color: '#e0e0e0' },
-                            angleLines: { color: '#e0e0e0' },
-                            pointLabels: { color: '#1a1a1a', font: { size: 11 } }
-                        }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
+</section>
 
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-                document.body.style.overflow = 'auto';
-            }
-        });
-    </script>
+</div>
+
+<!-- achievements -->
+
+<div id="page-achievements" class="page">
+
+<section class="stats-section">
+
+<h2 class="section-title">Key Achievements</h2>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<div class="stat-number">400+</div>
+<div class="stat-label">Daily Subscriptions</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-number">90%</div>
+<div class="stat-label">AI Accuracy</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-number">22K+</div>
+<div class="stat-label">Data Points</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-number">20%</div>
+<div class="stat-label">System Stability</div>
+</div>
+
+</div>
+
+</section>
+</div>
+
+<footer>
+
+<div class="footer-links">
+
+<a href="mailto:alifoctrio@gmail.com">Email</a>
+<a href="https://github.com/ohhaikai29">GitHub</a>
+<a href="https://linkedin.com/in/alifoctrio">LinkedIn</a>
+
+</div>
+
+<p style="color:var(--text-light)">© 2025 Alif Octrio</p>
+
+</footer>
+
+</div>
+
+<script>
+
+function initializeSystem(){
+
+document.getElementById("gateway").classList.add("hidden")
+
+const main=document.getElementById("main-interface")
+
+main.style.display="block"
+
+setTimeout(()=>main.classList.add("active"),100)
+
+}
+
+function showPage(page){
+
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+
+document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"))
+
+document.getElementById("page-"+page).classList.add("active")
+
+event.target.classList.add("active")
+
+}
+
+</script>
+
 </body>
 </html>
